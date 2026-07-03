@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/QACopilot.API/QACopilot.API.csproj" />
+    <Project Path="src/QACopilot.Application/QACopilot.Application.csproj" />
+    <Project Path="src/QACopilot.Domain/QACopilot.Domain.csproj" />
+    <Project Path="src/QACopilot.Infrastructure/QACopilot.Infrastructure.csproj" />
+  </Folder>
+</Solution>

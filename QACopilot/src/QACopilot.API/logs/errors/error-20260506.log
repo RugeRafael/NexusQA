@@ -1,0 +1,15 @@
+2026-05-06 19:59:58.399 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 905.9284ms with message 'null'
+2026-05-06 19:59:58.437 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 1340.3580 ms
+2026-05-06 19:59:58.439 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [35A46703] GET /health responded 503 in 1345ms
+2026-05-06 20:01:10.849 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 634.6442ms with message 'null'
+2026-05-06 20:01:10.913 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 880.9831 ms
+2026-05-06 20:01:10.918 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [F17CA183] GET /health responded 503 in 900ms
+2026-05-06 20:02:41.101 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 15447.8364ms with message 'null'
+2026-05-06 20:02:41.162 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 15663.8056 ms
+2026-05-06 20:02:41.166 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [B3E234B1] GET /health responded 503 in 15684ms
+2026-05-06 20:08:14.229 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 15441.4761ms with message 'null'
+2026-05-06 20:08:14.289 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 15769.9866 ms
+2026-05-06 20:08:14.292 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [16C7FAA4] GET /health responded 503 in 15791ms
+2026-05-06 20:09:50.210 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 15361.2269ms with message 'null'
+2026-05-06 20:09:50.262 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 15591.6513 ms
+2026-05-06 20:09:50.267 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [456A53E6] GET /health responded 503 in 15611ms

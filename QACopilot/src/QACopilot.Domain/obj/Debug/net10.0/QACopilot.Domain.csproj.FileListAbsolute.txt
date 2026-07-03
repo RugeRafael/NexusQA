@@ -1,0 +1,11 @@
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\bin\Debug\net10.0\QACopilot.Domain.deps.json
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\bin\Debug\net10.0\QACopilot.Domain.dll
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\bin\Debug\net10.0\QACopilot.Domain.pdb
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.AssemblyInfoInputs.cache
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.AssemblyInfo.cs
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.csproj.CoreCompileInputs.cache
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.dll
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\refint\QACopilot.Domain.dll
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.pdb
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\ref\QACopilot.Domain.dll

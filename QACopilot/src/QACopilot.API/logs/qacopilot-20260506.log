@@ -1,0 +1,172 @@
+2026-05-06 19:59:09.686 -05:00 [INF]  - QA Copilot API started on Development
+2026-05-06 19:59:09.754 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-06 19:59:09.766 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - Creating key {d026e908-ca5f-41ba-b64b-03e2d7a87614} with creation date 2026-05-07 00:59:09Z, activation date 2026-05-07 00:59:09Z, and expiration date 2026-08-05 00:59:09Z.
+2026-05-06 19:59:09.793 -05:00 [INF] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository - Writing data to file 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys\key-d026e908-ca5f-41ba-b64b-03e2d7a87614.xml'.
+2026-05-06 19:59:10.244 -05:00 [INF] Microsoft.Hosting.Lifetime - Now listening on: http://localhost:5199
+2026-05-06 19:59:10.246 -05:00 [INF] Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2026-05-06 19:59:10.248 -05:00 [INF] Microsoft.Hosting.Lifetime - Hosting environment: Development
+2026-05-06 19:59:10.250 -05:00 [INF] Microsoft.Hosting.Lifetime - Content root path: C:\QA COPILOT 2.0\QACopilot\src\QACopilot.API
+2026-05-06 19:59:22.956 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/ - null null
+2026-05-06 19:59:23.078 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [9C848552] GET / started
+2026-05-06 19:59:23.112 -05:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware - Failed to determine the https port for redirect.
+2026-05-06 19:59:24.132 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET / responded 404 in 1045.8899 ms
+2026-05-06 19:59:24.155 -05:00 [WRN] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [9C848552] GET / responded 404 in 1089ms
+2026-05-06 19:59:24.296 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/ - 404 0 null 1342.4364ms
+2026-05-06 19:59:24.303 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5199/, Response status code: 404
+2026-05-06 19:59:26.612 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/ - null null
+2026-05-06 19:59:26.619 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [C1DF4783] GET / started
+2026-05-06 19:59:26.627 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET / responded 404 in 4.5590 ms
+2026-05-06 19:59:26.632 -05:00 [WRN] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [C1DF4783] GET / responded 404 in 13ms
+2026-05-06 19:59:26.636 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/ - 404 0 null 24.4745ms
+2026-05-06 19:59:26.641 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5199/, Response status code: 404
+2026-05-06 19:59:34.433 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger - null null
+2026-05-06 19:59:34.439 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [A16E9DB7] GET /swagger started
+2026-05-06 19:59:34.442 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger responded 301 in 0.6001 ms
+2026-05-06 19:59:34.444 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [A16E9DB7] GET /swagger responded 301 in 5ms
+2026-05-06 19:59:34.448 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger - 301 0 null 14.9565ms
+2026-05-06 19:59:34.460 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/index.html - null null
+2026-05-06 19:59:34.466 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [0F48E02C] GET /swagger/index.html started
+2026-05-06 19:59:34.530 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/index.html responded 200 in 61.1481 ms
+2026-05-06 19:59:34.533 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [0F48E02C] GET /swagger/index.html responded 200 in 66ms
+2026-05-06 19:59:34.536 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/index.html - 200 null text/html;charset=utf-8 75.5745ms
+2026-05-06 19:59:34.897 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui.css - null null
+2026-05-06 19:59:34.901 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/index.css - null null
+2026-05-06 19:59:34.901 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui-bundle.js - null null
+2026-05-06 19:59:34.903 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [C4798295] GET /swagger/swagger-ui.css started
+2026-05-06 19:59:34.905 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/index.js - null null
+2026-05-06 19:59:34.905 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [30DB45A1] GET /swagger/index.css started
+2026-05-06 19:59:34.906 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui-standalone-preset.js - null null
+2026-05-06 19:59:34.910 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [0978FC98] GET /swagger/swagger-ui-bundle.js started
+2026-05-06 19:59:34.915 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [A38464B6] GET /swagger/index.js started
+2026-05-06 19:59:34.920 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [D00C1B6B] GET /swagger/swagger-ui-standalone-preset.js started
+2026-05-06 19:59:34.925 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/index.js responded 200 in 0.8400 ms
+2026-05-06 19:59:34.930 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [A38464B6] GET /swagger/index.js responded 200 in 15ms
+2026-05-06 19:59:34.933 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/index.js - 200 null application/javascript;charset=utf-8 27.7154ms
+2026-05-06 19:59:34.935 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/index.css responded 200 in 18.2883 ms
+2026-05-06 19:59:34.935 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/swagger-ui.css responded 200 in 22.4599 ms
+2026-05-06 19:59:34.941 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [30DB45A1] GET /swagger/index.css responded 200 in 35ms
+2026-05-06 19:59:34.943 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 17.4798 ms
+2026-05-06 19:59:34.943 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 21.6596 ms
+2026-05-06 19:59:34.944 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [C4798295] GET /swagger/swagger-ui.css responded 200 in 40ms
+2026-05-06 19:59:34.946 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/index.css - 200 152 text/css 45.4185ms
+2026-05-06 19:59:34.949 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [D00C1B6B] GET /swagger/swagger-ui-standalone-preset.js responded 200 in 28ms
+2026-05-06 19:59:34.951 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [0978FC98] GET /swagger/swagger-ui-bundle.js responded 200 in 40ms
+2026-05-06 19:59:34.954 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui.css - 200 26479 text/css 57.1928ms
+2026-05-06 19:59:34.961 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui-standalone-preset.js - 200 76613 text/javascript 55.3477ms
+2026-05-06 19:59:34.963 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui-bundle.js - 200 418181 text/javascript 61.179ms
+2026-05-06 19:59:35.527 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/openapi/v1.json - null null
+2026-05-06 19:59:35.532 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [171E29F3] GET /openapi/v1.json started
+2026-05-06 19:59:35.539 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-05-06 19:59:35.545 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/favicon-32x32.png - null null
+2026-05-06 19:59:35.549 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [1E638A1D] GET /swagger/favicon-32x32.png started
+2026-05-06 19:59:35.553 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/favicon-32x32.png responded 200 in 1.9796 ms
+2026-05-06 19:59:35.556 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [1E638A1D] GET /swagger/favicon-32x32.png responded 200 in 6ms
+2026-05-06 19:59:35.559 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/favicon-32x32.png - 200 628 image/png 13.7068ms
+2026-05-06 19:59:35.708 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-05-06 19:59:35.710 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /openapi/v1.json responded 200 in 176.4762 ms
+2026-05-06 19:59:35.713 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [171E29F3] GET /openapi/v1.json responded 200 in 181ms
+2026-05-06 19:59:35.716 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 189.4309ms
+2026-05-06 19:59:57.091 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-05-06 19:59:57.094 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [35A46703] GET /health started
+2026-05-06 19:59:57.097 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Health checks'
+2026-05-06 19:59:58.399 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 905.9284ms with message 'null'
+2026-05-06 19:59:58.434 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Health checks'
+2026-05-06 19:59:58.437 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 1340.3580 ms
+2026-05-06 19:59:58.439 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [35A46703] GET /health responded 503 in 1345ms
+2026-05-06 19:59:58.442 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/health - 503 null application/json 1351.6263ms
+2026-05-06 19:59:58.494 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/favicon.ico - null null
+2026-05-06 19:59:58.498 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [DA5759F6] GET /favicon.ico started
+2026-05-06 19:59:58.501 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /favicon.ico responded 404 in 0.2475 ms
+2026-05-06 19:59:58.503 -05:00 [WRN] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [DA5759F6] GET /favicon.ico responded 404 in 5ms
+2026-05-06 19:59:58.506 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/favicon.ico - 404 0 null 11.6802ms
+2026-05-06 19:59:58.510 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5199/favicon.ico, Response status code: 404
+2026-05-06 20:00:43.376 -05:00 [INF] Microsoft.Hosting.Lifetime - Application is shutting down...
+2026-05-06 20:01:05.633 -05:00 [INF]  - QA Copilot API started on Development
+2026-05-06 20:01:05.702 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-06 20:01:05.801 -05:00 [INF] Microsoft.Hosting.Lifetime - Now listening on: http://localhost:5199
+2026-05-06 20:01:05.805 -05:00 [INF] Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2026-05-06 20:01:05.806 -05:00 [INF] Microsoft.Hosting.Lifetime - Hosting environment: Development
+2026-05-06 20:01:05.808 -05:00 [INF] Microsoft.Hosting.Lifetime - Content root path: C:\QA COPILOT 2.0\QACopilot\src\QACopilot.API
+2026-05-06 20:01:10.000 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-05-06 20:01:10.027 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [F17CA183] GET /health started
+2026-05-06 20:01:10.041 -05:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware - Failed to determine the https port for redirect.
+2026-05-06 20:01:10.085 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Health checks'
+2026-05-06 20:01:10.849 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 634.6442ms with message 'null'
+2026-05-06 20:01:10.906 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Health checks'
+2026-05-06 20:01:10.913 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 880.9831 ms
+2026-05-06 20:01:10.918 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [F17CA183] GET /health responded 503 in 900ms
+2026-05-06 20:01:10.923 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/health - 503 null application/json 924.6562ms
+2026-05-06 20:01:33.660 -05:00 [INF] Microsoft.Hosting.Lifetime - Application is shutting down...
+2026-05-06 20:02:22.904 -05:00 [INF]  - QA Copilot API started on Development
+2026-05-06 20:02:22.973 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-06 20:02:23.059 -05:00 [INF] Microsoft.Hosting.Lifetime - Now listening on: http://localhost:5199
+2026-05-06 20:02:23.062 -05:00 [INF] Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2026-05-06 20:02:23.063 -05:00 [INF] Microsoft.Hosting.Lifetime - Hosting environment: Development
+2026-05-06 20:02:23.065 -05:00 [INF] Microsoft.Hosting.Lifetime - Content root path: C:\QA COPILOT 2.0\QACopilot\src\QACopilot.API
+2026-05-06 20:02:25.454 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-05-06 20:02:25.493 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [B3E234B1] GET /health started
+2026-05-06 20:02:25.511 -05:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware - Failed to determine the https port for redirect.
+2026-05-06 20:02:25.556 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Health checks'
+2026-05-06 20:02:41.101 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 15447.8364ms with message 'null'
+2026-05-06 20:02:41.157 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Health checks'
+2026-05-06 20:02:41.162 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 15663.8056 ms
+2026-05-06 20:02:41.166 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [B3E234B1] GET /health responded 503 in 15684ms
+2026-05-06 20:02:41.172 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/health - 503 null application/json 15719.3723ms
+2026-05-06 20:03:14.901 -05:00 [INF] Microsoft.Hosting.Lifetime - Application is shutting down...
+2026-05-06 20:07:55.009 -05:00 [INF]  - QA Copilot API started on Development
+2026-05-06 20:07:55.090 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-06 20:07:55.199 -05:00 [INF] Microsoft.Hosting.Lifetime - Now listening on: http://localhost:5199
+2026-05-06 20:07:55.202 -05:00 [INF] Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2026-05-06 20:07:55.203 -05:00 [INF] Microsoft.Hosting.Lifetime - Hosting environment: Development
+2026-05-06 20:07:55.205 -05:00 [INF] Microsoft.Hosting.Lifetime - Content root path: C:\QA COPILOT 2.0\QACopilot\src\QACopilot.API
+2026-05-06 20:07:58.468 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-05-06 20:07:58.513 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [16C7FAA4] GET /health started
+2026-05-06 20:07:58.531 -05:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware - Failed to determine the https port for redirect.
+2026-05-06 20:07:58.593 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Health checks'
+2026-05-06 20:08:14.229 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 15441.4761ms with message 'null'
+2026-05-06 20:08:14.284 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Health checks'
+2026-05-06 20:08:14.289 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 15769.9866 ms
+2026-05-06 20:08:14.292 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [16C7FAA4] GET /health responded 503 in 15791ms
+2026-05-06 20:08:14.298 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/health - 503 null application/json 15833.2542ms
+2026-05-06 20:08:36.203 -05:00 [INF] Microsoft.Hosting.Lifetime - Application is shutting down...
+2026-05-06 20:09:31.075 -05:00 [INF]  - QA Copilot API started on Development
+2026-05-06 20:09:31.147 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-06 20:09:31.245 -05:00 [INF] Microsoft.Hosting.Lifetime - Now listening on: http://localhost:5199
+2026-05-06 20:09:31.249 -05:00 [INF] Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2026-05-06 20:09:31.250 -05:00 [INF] Microsoft.Hosting.Lifetime - Hosting environment: Development
+2026-05-06 20:09:31.252 -05:00 [INF] Microsoft.Hosting.Lifetime - Content root path: C:\QA COPILOT 2.0\QACopilot\src\QACopilot.API
+2026-05-06 20:09:34.630 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-05-06 20:09:34.666 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [456A53E6] GET /health started
+2026-05-06 20:09:34.683 -05:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware - Failed to determine the https port for redirect.
+2026-05-06 20:09:34.726 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Health checks'
+2026-05-06 20:09:50.210 -05:00 [ERR] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService - Health check sqlserver with status "Unhealthy" completed after 15361.2269ms with message 'null'
+2026-05-06 20:09:50.257 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Health checks'
+2026-05-06 20:09:50.262 -05:00 [ERR] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 503 in 15591.6513 ms
+2026-05-06 20:09:50.267 -05:00 [ERR] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [456A53E6] GET /health responded 503 in 15611ms
+2026-05-06 20:09:50.272 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/health - 503 null application/json 15643.5312ms
+2026-05-06 20:10:06.021 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-05-06 20:10:06.026 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [35523397] GET /health started
+2026-05-06 20:10:06.030 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Health checks'
+2026-05-06 20:10:06.231 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-06 20:10:06.244 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Health checks'
+2026-05-06 20:10:06.245 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 200 in 216.9074 ms
+2026-05-06 20:10:06.247 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [35523397] GET /health responded 200 in 221ms
+2026-05-06 20:10:06.252 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/health - 200 null application/json 231.2029ms
+2026-05-06 20:10:14.446 -05:00 [INF] Microsoft.Hosting.Lifetime - Application is shutting down...
+2026-05-06 20:10:20.468 -05:00 [INF]  - QA Copilot API started on Development
+2026-05-06 20:10:20.538 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-06 20:10:20.627 -05:00 [INF] Microsoft.Hosting.Lifetime - Now listening on: http://localhost:5199
+2026-05-06 20:10:20.630 -05:00 [INF] Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2026-05-06 20:10:20.631 -05:00 [INF] Microsoft.Hosting.Lifetime - Hosting environment: Development
+2026-05-06 20:10:20.633 -05:00 [INF] Microsoft.Hosting.Lifetime - Content root path: C:\QA COPILOT 2.0\QACopilot\src\QACopilot.API
+2026-05-06 20:10:23.382 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-05-06 20:10:23.421 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [05A8C63B] GET /health started
+2026-05-06 20:10:23.440 -05:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware - Failed to determine the https port for redirect.
+2026-05-06 20:10:23.489 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Health checks'
+2026-05-06 20:10:24.330 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-06 20:10:24.381 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Health checks'
+2026-05-06 20:10:24.386 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /health responded 200 in 959.8030 ms
+2026-05-06 20:10:24.390 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [05A8C63B] GET /health responded 200 in 980ms
+2026-05-06 20:10:24.395 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/health - 200 null application/json 1014.3236ms

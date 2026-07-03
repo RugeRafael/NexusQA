@@ -1,0 +1,573 @@
+2026-05-22 14:13:03.404 -05:00 [INF]  - QA Copilot API started on Development
+2026-05-22 14:13:03.506 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-22 14:13:03.986 -05:00 [INF] Microsoft.Hosting.Lifetime - Now listening on: http://localhost:5199
+2026-05-22 14:13:03.990 -05:00 [INF] Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2026-05-22 14:13:03.992 -05:00 [INF] Microsoft.Hosting.Lifetime - Hosting environment: Development
+2026-05-22 14:13:03.994 -05:00 [INF] Microsoft.Hosting.Lifetime - Content root path: C:\QA COPILOT 2.0\QACopilot\src\QACopilot.API
+2026-05-22 14:13:21.468 -05:00 [INF] Microsoft.Hosting.Lifetime - Application is shutting down...
+2026-05-22 15:46:14.439 -05:00 [INF]  - QA Copilot API started on Development
+2026-05-22 15:46:14.554 -05:00 [INF] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\Rafael Ruge\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-22 15:46:14.720 -05:00 [INF] Microsoft.Hosting.Lifetime - Now listening on: http://localhost:5199
+2026-05-22 15:46:14.723 -05:00 [INF] Microsoft.Hosting.Lifetime - Application started. Press Ctrl+C to shut down.
+2026-05-22 15:46:14.725 -05:00 [INF] Microsoft.Hosting.Lifetime - Hosting environment: Development
+2026-05-22 15:46:14.727 -05:00 [INF] Microsoft.Hosting.Lifetime - Content root path: C:\QA COPILOT 2.0\QACopilot\src\QACopilot.API
+2026-05-22 15:46:44.705 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger - null null
+2026-05-22 15:46:44.785 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [AE89A4FF] GET /swagger started
+2026-05-22 15:46:46.523 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger responded 301 in 162.3865 ms
+2026-05-22 15:46:46.529 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [AE89A4FF] GET /swagger responded 301 in 1760ms
+2026-05-22 15:46:46.669 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger - 301 0 null 1968.9237ms
+2026-05-22 15:46:46.683 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/index.html - null null
+2026-05-22 15:46:46.689 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [AC08C390] GET /swagger/index.html started
+2026-05-22 15:46:46.814 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/index.html responded 200 in 107.3082 ms
+2026-05-22 15:46:46.818 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [AC08C390] GET /swagger/index.html responded 200 in 129ms
+2026-05-22 15:46:46.823 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/index.html - 200 null text/html;charset=utf-8 140.6799ms
+2026-05-22 15:46:46.933 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui.css - null null
+2026-05-22 15:46:46.938 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui-bundle.js - null null
+2026-05-22 15:46:46.938 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/index.css - null null
+2026-05-22 15:46:46.944 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [31F85CCF] GET /swagger/swagger-ui.css started
+2026-05-22 15:46:46.953 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [69C848D4] GET /swagger/swagger-ui-bundle.js started
+2026-05-22 15:46:46.956 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [B38F7929] GET /swagger/index.css started
+2026-05-22 15:46:46.995 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/index.css responded 200 in 25.7439 ms
+2026-05-22 15:46:46.996 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/swagger-ui.css responded 200 in 25.9604 ms
+2026-05-22 15:46:47.000 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [B38F7929] GET /swagger/index.css responded 200 in 43ms
+2026-05-22 15:46:47.015 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [31F85CCF] GET /swagger/swagger-ui.css responded 200 in 71ms
+2026-05-22 15:46:47.019 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/index.css - 200 152 text/css 81.1194ms
+2026-05-22 15:46:47.031 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui.css - 200 26479 text/css 97.3601ms
+2026-05-22 15:46:47.034 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 64.8271 ms
+2026-05-22 15:46:47.037 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/index.js - null null
+2026-05-22 15:46:47.044 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui-standalone-preset.js - null null
+2026-05-22 15:46:47.047 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [69C848D4] GET /swagger/swagger-ui-bundle.js responded 200 in 94ms
+2026-05-22 15:46:47.052 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [ABD646B0] GET /swagger/index.js started
+2026-05-22 15:46:47.056 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [26BFFD94] GET /swagger/swagger-ui-standalone-preset.js started
+2026-05-22 15:46:47.069 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui-bundle.js - 200 418181 text/javascript 131.6184ms
+2026-05-22 15:46:47.072 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/index.js responded 200 in 1.4650 ms
+2026-05-22 15:46:47.083 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 9.3273 ms
+2026-05-22 15:46:47.097 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [ABD646B0] GET /swagger/index.js responded 200 in 45ms
+2026-05-22 15:46:47.102 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [26BFFD94] GET /swagger/swagger-ui-standalone-preset.js responded 200 in 45ms
+2026-05-22 15:46:47.105 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/index.js - 200 null application/javascript;charset=utf-8 68.2962ms
+2026-05-22 15:46:47.114 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/swagger-ui-standalone-preset.js - 200 76613 text/javascript 69.8276ms
+2026-05-22 15:46:47.482 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/openapi/v1.json - null null
+2026-05-22 15:46:47.490 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [98F6CD7C] GET /openapi/v1.json started
+2026-05-22 15:46:47.506 -05:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware - Failed to determine the https port for redirect.
+2026-05-22 15:46:47.512 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/swagger/favicon-32x32.png - null null
+2026-05-22 15:46:47.516 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [D1E04B43] GET /swagger/favicon-32x32.png started
+2026-05-22 15:46:47.525 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /swagger/favicon-32x32.png responded 200 in 2.4856 ms
+2026-05-22 15:46:47.537 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [D1E04B43] GET /swagger/favicon-32x32.png responded 200 in 21ms
+2026-05-22 15:46:47.545 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/swagger/favicon-32x32.png - 200 628 image/png 33.9436ms
+2026-05-22 15:46:50.953 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-05-22 15:46:51.281 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-05-22 15:46:51.284 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /openapi/v1.json responded 200 in 3782.5797 ms
+2026-05-22 15:46:51.286 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [98F6CD7C] GET /openapi/v1.json responded 200 in 3796ms
+2026-05-22 15:46:51.288 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 3806.6626ms
+2026-05-22 15:46:57.587 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/test-connection - null null
+2026-05-22 15:46:57.590 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [744CEFF0] GET /api/jira/test-connection started
+2026-05-22 15:46:57.608 -05:00 [INF] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService - Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-05-22 15:46:57.618 -05:00 [INF] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler - AuthenticationScheme: Bearer was challenged.
+2026-05-22 15:46:57.620 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/test-connection responded 401 in 25.2231 ms
+2026-05-22 15:46:57.622 -05:00 [WRN] QACopilot.API.Middleware.SecurityAuditMiddleware - SECURITY_BLOCKED | Status: 401 | Path: /api/jira/test-connection | IP: ::1
+2026-05-22 15:46:57.624 -05:00 [WRN] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [744CEFF0] GET /api/jira/test-connection responded 401 in 33ms
+2026-05-22 15:46:57.626 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/test-connection - 401 0 null 38.7792ms
+2026-05-22 15:47:11.686 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/test-connection - null null
+2026-05-22 15:47:11.691 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [E574A53F] GET /api/jira/test-connection started
+2026-05-22 15:47:11.701 -05:00 [INF] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService - Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-05-22 15:47:11.710 -05:00 [INF] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler - AuthenticationScheme: Bearer was challenged.
+2026-05-22 15:47:11.713 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/test-connection responded 401 in 19.5957 ms
+2026-05-22 15:47:11.715 -05:00 [WRN] QACopilot.API.Middleware.SecurityAuditMiddleware - SECURITY_BLOCKED | Status: 401 | Path: /api/jira/test-connection | IP: ::1
+2026-05-22 15:47:11.717 -05:00 [WRN] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [E574A53F] GET /api/jira/test-connection responded 401 in 25ms
+2026-05-22 15:47:11.720 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/test-connection - 401 0 null 33.8402ms
+2026-05-22 16:20:51.668 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/auth/login - null null
+2026-05-22 16:20:51.699 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [01D3218D] OPTIONS /api/auth/login started
+2026-05-22 16:20:51.783 -05:00 [INF] QACopilot.API.Middleware.SecurityAuditMiddleware - SECURITY_AUDIT | Path: /api/auth/login | Method: OPTIONS | UserId: anonymous | IP: ::1
+2026-05-22 16:20:51.866 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:20:51.899 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/auth/login responded 204 in 109.2424 ms
+2026-05-22 16:20:51.906 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [01D3218D] OPTIONS /api/auth/login responded 204 in 210ms
+2026-05-22 16:20:51.918 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/auth/login - 204 null null 257.946ms
+2026-05-22 16:20:51.946 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/api/auth/login - application/json 58
+2026-05-22 16:20:51.970 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [44F22BE1] POST /api/auth/login started
+2026-05-22 16:20:51.983 -05:00 [INF] QACopilot.API.Middleware.SecurityAuditMiddleware - SECURITY_AUDIT | Path: /api/auth/login | Method: POST | UserId: anonymous | IP: ::1
+2026-05-22 16:20:51.989 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:20:52.453 -05:00 [INF] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler - Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '21/05/2026 12:25:07 a. m.', Current time (UTC): '22/05/2026 9:20:52 p. m.'.
+   at Microsoft.IdentityModel.Tokens.ValidatorUtilities.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-05-22 16:20:52.544 -05:00 [WRN] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents - JWT authentication failed: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '21/05/2026 12:25:07 a. m.', Current time (UTC): '22/05/2026 9:20:52 p. m.'.
+2026-05-22 16:20:52.560 -05:00 [INF] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler - Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '21/05/2026 12:25:07 a. m.', Current time (UTC): '22/05/2026 9:20:52 p. m.'.
+2026-05-22 16:20:52.571 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.AuthController.Login (QACopilot.API)'
+2026-05-22 16:20:52.738 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QACopilot.Application.DTOs.Auth.LoginRequestDto) on controller QACopilot.API.Controllers.AuthController (QACopilot.API).
+2026-05-22 16:21:04.087 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (347ms) [Parameters=[@request_Email='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [LoginAttempts] AS [l]
+WHERE [l].[Email] = @request_Email AND [l].[Success] = CAST(0 AS bit) AND [l].[AttemptedAt] >= DATEADD(minute, CAST(-15.0E0 AS int), GETUTCDATE())
+2026-05-22 16:21:04.305 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (35ms) [Parameters=[@request_Email='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[LastLoginAt], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @request_Email AND [u].[IsActive] = CAST(1 AS bit)
+2026-05-22 16:21:05.049 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (19ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 200), @p3='?' (Size = 200), @p4='?' (Size = 50), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [LoginAttempts] ([Id], [AttemptedAt], [Email], [FailureReason], [IpAddress], [IsBlocked], [Success])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-05-22 16:21:05.250 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (40ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Boolean), @p4='?' (Size = 500), @p5='?' (DbType = Guid), @p7='?' (DbType = Guid), @p6='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [RefreshTokens] ([Id], [CreatedAt], [ExpiresAt], [IsRevoked], [Token], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+UPDATE [Users] SET [LastLoginAt] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+2026-05-22 16:21:05.282 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.Application.DTOs.Auth.AuthResponseDto'.
+2026-05-22 16:21:05.302 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.AuthController.Login (QACopilot.API) in 12542.8219ms
+2026-05-22 16:21:05.306 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.AuthController.Login (QACopilot.API)'
+2026-05-22 16:21:05.308 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /api/auth/login responded 200 in 13321.4327 ms
+2026-05-22 16:21:05.396 -05:00 [ERR] Microsoft.EntityFrameworkCore.Database.Command - Failed executing DbCommand (52ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 100), @p2='?' (DbType = Int64), @p3='?' (Size = 500), @p4='?' (Size = 50), @p5='?' (Size = 100), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Boolean), @p8='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AuditMetrics] ([Id], [Action], [DurationMs], [ErrorMessage], [IpAddress], [Module], [OccurredAt], [Success], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-05-22 16:21:05.471 -05:00 [ERR] Microsoft.EntityFrameworkCore.Update - An exception occurred in the database while saving changes for context type 'QACopilot.Infrastructure.Data.Context.QACopilotDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_AuditMetrics_Users_UserId". The conflict occurred in database "QACopilotDB", table "dbo.Users", column 'Id'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__195_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:78466482-0a24-45a4-ab7d-4afeae8a9733
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_AuditMetrics_Users_UserId". The conflict occurred in database "QACopilotDB", table "dbo.Users", column 'Id'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__195_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:78466482-0a24-45a4-ab7d-4afeae8a9733
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-05-22 16:21:05.488 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [44F22BE1] POST /api/auth/login responded 200 in 13518ms
+2026-05-22 16:21:05.498 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/api/auth/login - 200 null application/json; charset=utf-8 13552.6567ms
+2026-05-22 16:21:06.992 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/metrics/dashboard - null null
+2026-05-22 16:21:06.999 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [CFCE9CA4] OPTIONS /api/metrics/dashboard started
+2026-05-22 16:21:07.005 -05:00 [INF] QACopilot.API.Middleware.SecurityAuditMiddleware - SECURITY_AUDIT | Path: /api/metrics/dashboard | Method: OPTIONS | UserId: anonymous | IP: ::1
+2026-05-22 16:21:07.011 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:07.014 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/metrics/dashboard responded 204 in 3.6706 ms
+2026-05-22 16:21:07.020 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [CFCE9CA4] OPTIONS /api/metrics/dashboard responded 204 in 20ms
+2026-05-22 16:21:07.025 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/metrics/dashboard - 204 null null 33.7698ms
+2026-05-22 16:21:07.036 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/metrics/dashboard - null null
+2026-05-22 16:21:07.048 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [A2FA296A] GET /api/metrics/dashboard started
+2026-05-22 16:21:07.053 -05:00 [INF] QACopilot.API.Middleware.SecurityAuditMiddleware - SECURITY_AUDIT | Path: /api/metrics/dashboard | Method: GET | UserId: anonymous | IP: ::1
+2026-05-22 16:21:07.061 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:07.106 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.MetricsController.GetDashboard (QACopilot.API)'
+2026-05-22 16:21:07.130 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetDashboard", controller = "Metrics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetDashboard() on controller QACopilot.API.Controllers.MetricsController (QACopilot.API).
+2026-05-22 16:21:07.163 -05:00 [INF] QACopilot.Infrastructure.Services.MetricsService - Fetching dashboard metrics
+2026-05-22 16:21:07.408 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Documents] AS [d]
+2026-05-22 16:21:07.452 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[TotalTestCases]), 0)
+FROM [TestCaseHistories] AS [t]
+2026-05-22 16:21:07.478 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/hubs/notifications/negotiate?negotiateVersion=1 - null null
+2026-05-22 16:21:07.491 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [AF5404C3] OPTIONS /hubs/notifications/negotiate started
+2026-05-22 16:21:07.514 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:07.528 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /hubs/notifications/negotiate responded 204 in 14.2088 ms
+2026-05-22 16:21:07.542 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [AF5404C3] OPTIONS /hubs/notifications/negotiate responded 204 in 50ms
+2026-05-22 16:21:07.550 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/hubs/notifications/negotiate?negotiateVersion=1 - 204 null null 71.6791ms
+2026-05-22 16:21:07.564 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/hubs/notifications/negotiate?negotiateVersion=1 - null 0
+2026-05-22 16:21:07.584 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [TestCaseHistories] AS [t]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-22 16:21:07.585 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [0E8E5600] POST /hubs/notifications/negotiate started
+2026-05-22 16:21:07.599 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:07.614 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/notifications/negotiate'
+2026-05-22 16:21:07.630 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/notifications/negotiate'
+2026-05-22 16:21:07.633 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /hubs/notifications/negotiate responded 200 in 34.9105 ms
+2026-05-22 16:21:07.643 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [0E8E5600] POST /hubs/notifications/negotiate responded 200 in 58ms
+2026-05-22 16:21:07.649 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/hubs/notifications/negotiate?negotiateVersion=1 - 200 316 application/json 85.6322ms
+2026-05-22 16:21:07.650 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[ConfidenceScore]
+FROM [TestCaseHistories] AS [t]
+2026-05-22 16:21:07.695 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+WHERE [u].[IsActive] = CAST(1 AS bit)
+2026-05-22 16:21:07.812 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (46ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Module], COUNT(*) AS [TotalActions], COUNT(CASE
+    WHEN [a].[Success] = CAST(1 AS bit) THEN 1
+END) AS [SuccessCount], COUNT(CASE
+    WHEN [a].[Success] = CAST(0 AS bit) THEN 1
+END) AS [FailureCount]
+FROM [AuditMetrics] AS [a]
+GROUP BY [a].[Module]
+2026-05-22 16:21:07.819 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[QACopilot.Application.DTOs.Metrics.DashboardDto, QACopilot.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-22 16:21:07.837 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.MetricsController.GetDashboard (QACopilot.API) in 691.5077ms
+2026-05-22 16:21:07.842 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.MetricsController.GetDashboard (QACopilot.API)'
+2026-05-22 16:21:07.844 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/metrics/dashboard responded 200 in 784.9248 ms
+2026-05-22 16:21:07.866 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (16ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 100), @p2='?' (DbType = Int64), @p3='?' (Size = 500), @p4='?' (Size = 50), @p5='?' (Size = 100), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Boolean), @p8='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AuditMetrics] ([Id], [Action], [DurationMs], [ErrorMessage], [IpAddress], [Module], [OccurredAt], [Success], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-05-22 16:21:07.878 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [A2FA296A] GET /api/metrics/dashboard responded 200 in 830ms
+2026-05-22 16:21:07.891 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/metrics/dashboard - 200 null application/json; charset=utf-8 854.6565ms
+2026-05-22 16:21:08.224 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/hubs/notifications?id=KVESKj1eujSj2CfS7_nnkg&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - null null
+2026-05-22 16:21:08.233 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [4B59700F] GET /hubs/notifications started
+2026-05-22 16:21:08.242 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:08.250 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/notifications'
+2026-05-22 16:21:08.669 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/hubs/projects/negotiate?negotiateVersion=1 - null null
+2026-05-22 16:21:08.678 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [2C4C06A5] OPTIONS /hubs/projects/negotiate started
+2026-05-22 16:21:08.692 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:08.694 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /hubs/projects/negotiate responded 204 in 2.3345 ms
+2026-05-22 16:21:08.705 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [2C4C06A5] OPTIONS /hubs/projects/negotiate responded 204 in 27ms
+2026-05-22 16:21:08.709 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/hubs/projects/negotiate?negotiateVersion=1 - 204 null null 39.681ms
+2026-05-22 16:21:08.734 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/hubs/projects/negotiate?negotiateVersion=1 - null 0
+2026-05-22 16:21:08.742 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [85C38F60] POST /hubs/projects/negotiate started
+2026-05-22 16:21:08.751 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:08.758 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/projects/negotiate'
+2026-05-22 16:21:08.766 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/projects/negotiate'
+2026-05-22 16:21:08.769 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /hubs/projects/negotiate responded 200 in 18.5786 ms
+2026-05-22 16:21:08.774 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [85C38F60] POST /hubs/projects/negotiate responded 200 in 31ms
+2026-05-22 16:21:08.779 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/hubs/projects/negotiate?negotiateVersion=1 - 200 316 application/json 44.8381ms
+2026-05-22 16:21:08.901 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/hubs/projects?id=9syWbnNn2v8cDNEwLJIFPw&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - null null
+2026-05-22 16:21:08.916 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [1B4D21B8] GET /hubs/projects started
+2026-05-22 16:21:08.930 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:08.934 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/projects'
+2026-05-22 16:21:08.963 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/hubs/activity/negotiate?negotiateVersion=1 - null null
+2026-05-22 16:21:08.968 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [35D2D713] OPTIONS /hubs/activity/negotiate started
+2026-05-22 16:21:08.977 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:08.979 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /hubs/activity/negotiate responded 204 in 3.6554 ms
+2026-05-22 16:21:08.986 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [35D2D713] OPTIONS /hubs/activity/negotiate responded 204 in 18ms
+2026-05-22 16:21:08.992 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/hubs/activity/negotiate?negotiateVersion=1 - 204 null null 29.2084ms
+2026-05-22 16:21:09.005 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/hubs/activity/negotiate?negotiateVersion=1 - null 0
+2026-05-22 16:21:09.014 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [7C006170] POST /hubs/activity/negotiate started
+2026-05-22 16:21:09.016 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:09.020 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/activity/negotiate'
+2026-05-22 16:21:09.026 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/activity/negotiate'
+2026-05-22 16:21:09.028 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /hubs/activity/negotiate responded 200 in 12.2651 ms
+2026-05-22 16:21:09.037 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [7C006170] POST /hubs/activity/negotiate responded 200 in 23ms
+2026-05-22 16:21:09.055 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/hubs/activity/negotiate?negotiateVersion=1 - 200 316 application/json 49.9224ms
+2026-05-22 16:21:09.163 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/hubs/activity?id=nmZd8ic73oMTZWE-BbPKsA&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - null null
+2026-05-22 16:21:09.269 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [EE20631F] GET /hubs/activity started
+2026-05-22 16:21:09.285 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:09.293 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/activity'
+2026-05-22 16:21:33.175 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/metrics/dashboard - null null
+2026-05-22 16:21:33.179 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [6217A7AF] OPTIONS /api/metrics/dashboard started
+2026-05-22 16:21:33.183 -05:00 [INF] QACopilot.API.Middleware.SecurityAuditMiddleware - SECURITY_AUDIT | Path: /api/metrics/dashboard | Method: OPTIONS | UserId: anonymous | IP: ::1
+2026-05-22 16:21:33.188 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:33.191 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/metrics/dashboard responded 204 in 3.0761 ms
+2026-05-22 16:21:33.194 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [6217A7AF] OPTIONS /api/metrics/dashboard responded 204 in 14ms
+2026-05-22 16:21:33.197 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/metrics/dashboard - 204 null null 21.4372ms
+2026-05-22 16:21:33.205 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/metrics/dashboard - null null
+2026-05-22 16:21:33.208 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [7B1D3207] GET /api/metrics/dashboard started
+2026-05-22 16:21:33.211 -05:00 [INF] QACopilot.API.Middleware.SecurityAuditMiddleware - SECURITY_AUDIT | Path: /api/metrics/dashboard | Method: GET | UserId: anonymous | IP: ::1
+2026-05-22 16:21:33.213 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:33.215 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.MetricsController.GetDashboard (QACopilot.API)'
+2026-05-22 16:21:33.217 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetDashboard", controller = "Metrics"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetDashboard() on controller QACopilot.API.Controllers.MetricsController (QACopilot.API).
+2026-05-22 16:21:33.221 -05:00 [INF] QACopilot.Infrastructure.Services.MetricsService - Fetching dashboard metrics
+2026-05-22 16:21:33.259 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Documents] AS [d]
+2026-05-22 16:21:33.281 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(SUM([t].[TotalTestCases]), 0)
+FROM [TestCaseHistories] AS [t]
+2026-05-22 16:21:33.291 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [TestCaseHistories] AS [t]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-22 16:21:33.297 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[ConfidenceScore]
+FROM [TestCaseHistories] AS [t]
+2026-05-22 16:21:33.304 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Users] AS [u]
+WHERE [u].[IsActive] = CAST(1 AS bit)
+2026-05-22 16:21:33.317 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Module], COUNT(*) AS [TotalActions], COUNT(CASE
+    WHEN [a].[Success] = CAST(1 AS bit) THEN 1
+END) AS [SuccessCount], COUNT(CASE
+    WHEN [a].[Success] = CAST(0 AS bit) THEN 1
+END) AS [FailureCount]
+FROM [AuditMetrics] AS [a]
+GROUP BY [a].[Module]
+2026-05-22 16:21:33.321 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[QACopilot.Application.DTOs.Metrics.DashboardDto, QACopilot.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-05-22 16:21:33.323 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.MetricsController.GetDashboard (QACopilot.API) in 103.0157ms
+2026-05-22 16:21:33.325 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.MetricsController.GetDashboard (QACopilot.API)'
+2026-05-22 16:21:33.327 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/metrics/dashboard responded 200 in 113.4267 ms
+2026-05-22 16:21:33.337 -05:00 [INF] Microsoft.EntityFrameworkCore.Database.Command - Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 100), @p2='?' (DbType = Int64), @p3='?' (Size = 500), @p4='?' (Size = 50), @p5='?' (Size = 100), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Boolean), @p8='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AuditMetrics] ([Id], [Action], [DurationMs], [ErrorMessage], [IpAddress], [Module], [OccurredAt], [Success], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-05-22 16:21:33.340 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [7B1D3207] GET /api/metrics/dashboard responded 200 in 131ms
+2026-05-22 16:21:33.343 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/metrics/dashboard - 200 null application/json; charset=utf-8 138.6214ms
+2026-05-22 16:21:52.151 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/activity'
+2026-05-22 16:21:52.151 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/projects'
+2026-05-22 16:21:52.151 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/notifications'
+2026-05-22 16:21:52.157 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /hubs/activity responded 101 in 42872.8111 ms
+2026-05-22 16:21:52.159 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /hubs/projects responded 101 in 43228.9773 ms
+2026-05-22 16:21:52.160 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /hubs/notifications responded 101 in 43918.3822 ms
+2026-05-22 16:21:52.164 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [EE20631F] GET /hubs/activity responded 101 in 42894ms
+2026-05-22 16:21:52.173 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [1B4D21B8] GET /hubs/projects responded 101 in 43256ms
+2026-05-22 16:21:52.190 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [4B59700F] GET /hubs/notifications responded 101 in 43956ms
+2026-05-22 16:21:52.194 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/hubs/activity?id=nmZd8ic73oMTZWE-BbPKsA&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - 101 null null 43030.7356ms
+2026-05-22 16:21:52.198 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/hubs/projects?id=9syWbnNn2v8cDNEwLJIFPw&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - 101 null null 43296.9218ms
+2026-05-22 16:21:52.210 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/hubs/notifications?id=KVESKj1eujSj2CfS7_nnkg&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - 101 null null 43985.6809ms
+2026-05-22 16:21:52.438 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/jira/test - null null
+2026-05-22 16:21:52.442 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [4EDDCEE9] OPTIONS /api/jira/test started
+2026-05-22 16:21:52.446 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.447 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/jira/test responded 204 in 1.7770 ms
+2026-05-22 16:21:52.450 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/hubs/notifications/negotiate?negotiateVersion=1 - null null
+2026-05-22 16:21:52.451 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [4EDDCEE9] OPTIONS /api/jira/test responded 204 in 9ms
+2026-05-22 16:21:52.456 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [2CC52ADD] OPTIONS /hubs/notifications/negotiate started
+2026-05-22 16:21:52.458 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/jira/test - 204 null null 20.5696ms
+2026-05-22 16:21:52.480 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.491 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/test - null null
+2026-05-22 16:21:52.493 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /hubs/notifications/negotiate responded 204 in 13.6309 ms
+2026-05-22 16:21:52.497 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [753E317F] GET /api/jira/test started
+2026-05-22 16:21:52.503 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [2CC52ADD] OPTIONS /hubs/notifications/negotiate responded 204 in 47ms
+2026-05-22 16:21:52.506 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.510 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/hubs/notifications/negotiate?negotiateVersion=1 - 204 null null 59.8111ms
+2026-05-22 16:21:52.513 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API)'
+2026-05-22 16:21:52.521 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/hubs/notifications/negotiate?negotiateVersion=1 - null 0
+2026-05-22 16:21:52.529 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [9E690FB0] POST /hubs/notifications/negotiate started
+2026-05-22 16:21:52.535 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.535 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "TestConnection", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestConnection() on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:21:52.540 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/notifications/negotiate'
+2026-05-22 16:21:52.544 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/notifications/negotiate'
+2026-05-22 16:21:52.546 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /hubs/notifications/negotiate responded 200 in 12.4124 ms
+2026-05-22 16:21:52.548 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [9E690FB0] POST /hubs/notifications/negotiate responded 200 in 19ms
+2026-05-22 16:21:52.553 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/hubs/notifications/negotiate?negotiateVersion=1 - 200 316 application/json 31.3951ms
+2026-05-22 16:21:52.565 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/hubs/notifications?id=k0yD7wkK0xLI3yegINHJug&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - null null
+2026-05-22 16:21:52.573 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [923DDC5C] GET /hubs/notifications started
+2026-05-22 16:21:52.578 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.585 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/notifications'
+2026-05-22 16:21:52.600 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/hubs/projects/negotiate?negotiateVersion=1 - null null
+2026-05-22 16:21:52.608 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [F4C85B7A] OPTIONS /hubs/projects/negotiate started
+2026-05-22 16:21:52.614 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.616 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /hubs/projects/negotiate responded 204 in 2.9520 ms
+2026-05-22 16:21:52.623 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [F4C85B7A] OPTIONS /hubs/projects/negotiate responded 204 in 14ms
+2026-05-22 16:21:52.629 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/hubs/projects/negotiate?negotiateVersion=1 - 204 null null 28.0469ms
+2026-05-22 16:21:52.641 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/hubs/projects/negotiate?negotiateVersion=1 - null 0
+2026-05-22 16:21:52.650 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [6BCD915B] POST /hubs/projects/negotiate started
+2026-05-22 16:21:52.654 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.656 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/projects/negotiate'
+2026-05-22 16:21:52.658 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/projects/negotiate'
+2026-05-22 16:21:52.660 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /hubs/projects/negotiate responded 200 in 6.1731 ms
+2026-05-22 16:21:52.670 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [6BCD915B] POST /hubs/projects/negotiate responded 200 in 20ms
+2026-05-22 16:21:52.676 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/hubs/projects?id=fwdMu7Ey2LuL0uUFTJAy7w&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - null null
+2026-05-22 16:21:52.687 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/hubs/projects/negotiate?negotiateVersion=1 - 200 316 application/json 45.3399ms
+2026-05-22 16:21:52.703 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [59651A8E] GET /hubs/projects started
+2026-05-22 16:21:52.724 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.730 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/projects'
+2026-05-22 16:21:52.746 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/hubs/activity/negotiate?negotiateVersion=1 - null null
+2026-05-22 16:21:52.751 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [0A035EE6] OPTIONS /hubs/activity/negotiate started
+2026-05-22 16:21:52.755 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.757 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /hubs/activity/negotiate responded 204 in 2.7343 ms
+2026-05-22 16:21:52.763 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [0A035EE6] OPTIONS /hubs/activity/negotiate responded 204 in 12ms
+2026-05-22 16:21:52.766 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/hubs/activity/negotiate?negotiateVersion=1 - 204 null null 20.3108ms
+2026-05-22 16:21:52.771 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/hubs/activity/negotiate?negotiateVersion=1 - null 0
+2026-05-22 16:21:52.783 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [61686333] POST /hubs/activity/negotiate started
+2026-05-22 16:21:52.788 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.790 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/activity/negotiate'
+2026-05-22 16:21:52.793 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/hubs/activity/negotiate'
+2026-05-22 16:21:52.799 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /hubs/activity/negotiate responded 200 in 11.7682 ms
+2026-05-22 16:21:52.804 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [61686333] POST /hubs/activity/negotiate responded 200 in 21ms
+2026-05-22 16:21:52.812 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/hubs/activity/negotiate?negotiateVersion=1 - 200 316 application/json 40.8516ms
+2026-05-22 16:21:52.820 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/hubs/activity?id=0VUacJOse33aNMwiNTEjrg&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJlbWFpbCI6InJhZmFlbC5ydWdlQGl0aGVhbHRoLmNvIiwibmFtZSI6IlJhZmFlbCBSdWdlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJqdGkiOiIwNzdlZWZjZC05NTZjLTQ5NDYtYWQ3Mi03MmMzY2UxZTBiMzgiLCJ1aWQiOiJkODAzOGFmZS01NzdiLTQ4YTAtOWU4MC1lNTdjZjA4ZmZjMzIiLCJleHAiOjE3Nzk0ODg0NjUsImlzcyI6IlFBQ29waWxvdC5BUEkiLCJhdWQiOiJRQUNvcGlsb3QuQ2xpZW50In0.7osixX58FWe2fkZFHXO5GO1i7A9WXPPqlHKM_yRDh5A - null null
+2026-05-22 16:21:52.829 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [F77F1012] GET /hubs/activity started
+2026-05-22 16:21:52.833 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:52.836 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/hubs/activity'
+2026-05-22 16:21:53.127 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:21:53.144 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API) in 601.7053ms
+2026-05-22 16:21:53.146 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API)'
+2026-05-22 16:21:53.147 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/test responded 200 in 641.3507 ms
+2026-05-22 16:21:53.150 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [753E317F] GET /api/jira/test responded 200 in 652ms
+2026-05-22 16:21:53.153 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/test - 200 null application/json; charset=utf-8 661.8049ms
+2026-05-22 16:21:53.163 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:21:53.167 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [0AEB6CCC] OPTIONS /api/jira/issues started
+2026-05-22 16:21:53.170 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:53.172 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/jira/issues responded 204 in 1.6217 ms
+2026-05-22 16:21:53.178 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [0AEB6CCC] OPTIONS /api/jira/issues responded 204 in 10ms
+2026-05-22 16:21:53.187 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/jira/issues?maxResults=20 - 204 null null 23.3922ms
+2026-05-22 16:21:53.202 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:21:53.210 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [5F7DB8E3] GET /api/jira/issues started
+2026-05-22 16:21:53.213 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:53.215 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:21:53.237 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetIssues", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetIssues(Int32) on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:21:53.391 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:21:53.398 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API) in 157.8989ms
+2026-05-22 16:21:53.401 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:21:53.402 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/issues responded 200 in 189.7482 ms
+2026-05-22 16:21:53.405 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [5F7DB8E3] GET /api/jira/issues responded 200 in 194ms
+2026-05-22 16:21:53.408 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - 200 null application/json; charset=utf-8 206.1799ms
+2026-05-22 16:21:55.484 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/test - null null
+2026-05-22 16:21:55.491 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [444D75FC] GET /api/jira/test started
+2026-05-22 16:21:55.498 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:55.502 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API)'
+2026-05-22 16:21:55.505 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "TestConnection", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestConnection() on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:21:55.645 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:21:55.648 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API) in 139.3754ms
+2026-05-22 16:21:55.650 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API)'
+2026-05-22 16:21:55.651 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/test responded 200 in 153.4422 ms
+2026-05-22 16:21:55.654 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [444D75FC] GET /api/jira/test responded 200 in 162ms
+2026-05-22 16:21:55.656 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/test - 200 null application/json; charset=utf-8 171.7019ms
+2026-05-22 16:21:55.670 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:21:55.674 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [D59012E8] GET /api/jira/issues started
+2026-05-22 16:21:55.676 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:55.677 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:21:55.679 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetIssues", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetIssues(Int32) on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:21:55.815 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:21:55.822 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API) in 141.7197ms
+2026-05-22 16:21:55.832 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:21:55.838 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/issues responded 200 in 162.1444 ms
+2026-05-22 16:21:55.847 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [D59012E8] GET /api/jira/issues responded 200 in 173ms
+2026-05-22 16:21:55.857 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - 200 null application/json; charset=utf-8 186.297ms
+2026-05-22 16:21:56.271 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/test - null null
+2026-05-22 16:21:56.274 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [56545A9F] GET /api/jira/test started
+2026-05-22 16:21:56.276 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:56.279 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API)'
+2026-05-22 16:21:56.282 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "TestConnection", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] TestConnection() on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:21:56.424 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:21:56.429 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API) in 142.1038ms
+2026-05-22 16:21:56.434 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.TestConnection (QACopilot.API)'
+2026-05-22 16:21:56.438 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/test responded 200 in 162.0144 ms
+2026-05-22 16:21:56.444 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [56545A9F] GET /api/jira/test responded 200 in 170ms
+2026-05-22 16:21:56.449 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/test - 200 null application/json; charset=utf-8 177.7436ms
+2026-05-22 16:21:56.469 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:21:56.478 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [D2F80E30] GET /api/jira/issues started
+2026-05-22 16:21:56.488 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:21:56.493 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:21:56.495 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetIssues", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetIssues(Int32) on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:21:56.642 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:21:56.644 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API) in 144.898ms
+2026-05-22 16:21:56.646 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:21:56.647 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/issues responded 200 in 159.3897 ms
+2026-05-22 16:21:56.724 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [D2F80E30] GET /api/jira/issues responded 200 in 245ms
+2026-05-22 16:21:56.728 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - 200 null application/json; charset=utf-8 258.8378ms
+2026-05-22 16:25:07.552 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:25:07.555 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [797625B0] OPTIONS /api/jira/issues started
+2026-05-22 16:25:07.559 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:25:07.560 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/jira/issues responded 204 in 2.1932 ms
+2026-05-22 16:25:07.565 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [797625B0] OPTIONS /api/jira/issues responded 204 in 9ms
+2026-05-22 16:25:07.570 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/jira/issues?maxResults=20 - 204 null null 17.8816ms
+2026-05-22 16:25:07.574 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:25:07.577 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [B73D150D] GET /api/jira/issues started
+2026-05-22 16:25:07.580 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:25:07.585 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:25:07.588 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetIssues", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetIssues(Int32) on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:25:07.773 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:25:07.776 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API) in 185.841ms
+2026-05-22 16:25:07.777 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:25:07.780 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/issues responded 200 in 200.1848 ms
+2026-05-22 16:25:07.783 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [B73D150D] GET /api/jira/issues responded 200 in 205ms
+2026-05-22 16:25:07.789 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - 200 null application/json; charset=utf-8 214.8822ms
+2026-05-22 16:25:45.984 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/jira/testcase - null null
+2026-05-22 16:25:45.988 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [09274A56] OPTIONS /api/jira/testcase started
+2026-05-22 16:25:45.990 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:25:45.991 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/jira/testcase responded 204 in 1.4517 ms
+2026-05-22 16:25:45.993 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [09274A56] OPTIONS /api/jira/testcase responded 204 in 5ms
+2026-05-22 16:25:45.996 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/jira/testcase - 204 null null 11.8022ms
+2026-05-22 16:25:46.005 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/api/jira/testcase - application/json 102
+2026-05-22 16:25:46.008 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [881EFC00] POST /api/jira/testcase started
+2026-05-22 16:25:46.012 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:25:46.014 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.CreateTestCase (QACopilot.API)'
+2026-05-22 16:25:46.047 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "CreateTestCase", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateTestCase(QACopilot.API.Controllers.CreateJiraTestCaseRequest) on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:25:46.884 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:25:46.888 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.CreateTestCase (QACopilot.API) in 838.2392ms
+2026-05-22 16:25:46.892 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.CreateTestCase (QACopilot.API)'
+2026-05-22 16:25:46.898 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /api/jira/testcase responded 200 in 887.0477 ms
+2026-05-22 16:25:46.907 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [881EFC00] POST /api/jira/testcase responded 200 in 898ms
+2026-05-22 16:25:46.911 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/api/jira/testcase - 200 null application/json; charset=utf-8 906.3633ms
+2026-05-22 16:25:46.949 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:25:46.955 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [F71AE407] OPTIONS /api/jira/issues started
+2026-05-22 16:25:46.959 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:25:46.963 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/jira/issues responded 204 in 4.1968 ms
+2026-05-22 16:25:46.965 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [F71AE407] OPTIONS /api/jira/issues responded 204 in 10ms
+2026-05-22 16:25:46.972 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/jira/issues?maxResults=20 - 204 null null 22.5713ms
+2026-05-22 16:25:46.978 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:25:46.983 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [6B1BD8C5] GET /api/jira/issues started
+2026-05-22 16:25:46.987 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:25:46.989 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:25:46.991 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetIssues", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetIssues(Int32) on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:25:47.140 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:25:47.143 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API) in 147.4443ms
+2026-05-22 16:25:47.145 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:25:47.148 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/issues responded 200 in 160.8094 ms
+2026-05-22 16:25:47.152 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [6B1BD8C5] GET /api/jira/issues responded 200 in 169ms
+2026-05-22 16:25:47.156 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - 200 null application/json; charset=utf-8 178.6343ms
+2026-05-22 16:26:38.623 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/jira/bug - null null
+2026-05-22 16:26:38.626 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [A299E92C] OPTIONS /api/jira/bug started
+2026-05-22 16:26:38.630 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:26:38.633 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/jira/bug responded 204 in 3.7265 ms
+2026-05-22 16:26:38.637 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [A299E92C] OPTIONS /api/jira/bug responded 204 in 11ms
+2026-05-22 16:26:38.640 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/jira/bug - 204 null null 17.6062ms
+2026-05-22 16:26:38.649 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 POST http://localhost:5199/api/jira/bug - application/json 133
+2026-05-22 16:26:38.653 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [FF0E3E56] POST /api/jira/bug started
+2026-05-22 16:26:38.657 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:26:38.660 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.CreateBug (QACopilot.API)'
+2026-05-22 16:26:38.678 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "CreateBug", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateBug(QACopilot.API.Controllers.CreateJiraBugRequest) on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:26:39.495 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:26:39.499 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.CreateBug (QACopilot.API) in 815.8475ms
+2026-05-22 16:26:39.503 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.CreateBug (QACopilot.API)'
+2026-05-22 16:26:39.504 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP POST /api/jira/bug responded 200 in 847.4574 ms
+2026-05-22 16:26:39.507 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [FF0E3E56] POST /api/jira/bug responded 200 in 853ms
+2026-05-22 16:26:39.513 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 POST http://localhost:5199/api/jira/bug - 200 null application/json; charset=utf-8 863.9517ms
+2026-05-22 16:26:39.524 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 OPTIONS http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:26:39.527 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [E3D70CE9] OPTIONS /api/jira/issues started
+2026-05-22 16:26:39.531 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:26:39.533 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP OPTIONS /api/jira/issues responded 204 in 2.5369 ms
+2026-05-22 16:26:39.537 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [E3D70CE9] OPTIONS /api/jira/issues responded 204 in 9ms
+2026-05-22 16:26:39.540 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 OPTIONS http://localhost:5199/api/jira/issues?maxResults=20 - 204 null null 15.8126ms
+2026-05-22 16:26:39.553 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - null null
+2026-05-22 16:26:39.557 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - REQ [3FD5B79E] GET /api/jira/issues started
+2026-05-22 16:26:39.560 -05:00 [INF] Microsoft.AspNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+2026-05-22 16:26:39.562 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:26:39.564 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetIssues", controller = "JiraIntegration"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetIssues(Int32) on controller QACopilot.API.Controllers.JiraIntegrationController (QACopilot.API).
+2026-05-22 16:26:39.695 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ObjectResultExecutor - Executing OkObjectResult, writing value of type 'QACopilot.API.Helpers.ApiResponse`1[[System.Object, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-05-22 16:26:39.698 -05:00 [INF] Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker - Executed action QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API) in 130.2807ms
+2026-05-22 16:26:39.700 -05:00 [INF] Microsoft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'QACopilot.API.Controllers.JiraIntegrationController.GetIssues (QACopilot.API)'
+2026-05-22 16:26:39.701 -05:00 [INF] Serilog.AspNetCore.RequestLoggingMiddleware - HTTP GET /api/jira/issues responded 200 in 141.8404 ms
+2026-05-22 16:26:39.706 -05:00 [INF] QACopilot.API.Middleware.RequestLoggingMiddleware - RES [3FD5B79E] GET /api/jira/issues responded 200 in 149ms
+2026-05-22 16:26:39.709 -05:00 [INF] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/1.1 GET http://localhost:5199/api/jira/issues?maxResults=20 - 200 null application/json; charset=utf-8 156.0237ms

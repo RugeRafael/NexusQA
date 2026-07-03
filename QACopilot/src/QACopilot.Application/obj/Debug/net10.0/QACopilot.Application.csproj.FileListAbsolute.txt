@@ -1,0 +1,15 @@
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Application.deps.json
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Application.dll
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Application.pdb
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Domain.dll
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Domain.pdb
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.csproj.AssemblyReference.cache
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.AssemblyInfoInputs.cache
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.AssemblyInfo.cs
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.csproj.CoreCompileInputs.cache
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilo.DABE4B5C.Up2Date
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.dll
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\refint\QACopilot.Application.dll
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.pdb
+C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\ref\QACopilot.Application.dll
