@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "A1NfIEGhVlg=",
+  "dgSpecHash": "zlitseDiDys=",
   "success": true,
-  "projectFilePath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj",
+  "projectFilePath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rafael Ruge\\.nuget\\packages\\automapper\\16.1.1\\automapper.16.1.1.nupkg.sha512",
     "C:\\Users\\Rafael Ruge\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",

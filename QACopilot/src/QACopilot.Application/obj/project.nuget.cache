@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yd2yzaBxfrY=",
+  "dgSpecHash": "evycpPH5Xv0=",
   "success": true,
-  "projectFilePath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj",
+  "projectFilePath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rafael Ruge\\.nuget\\packages\\automapper\\16.1.1\\automapper.16.1.1.nupkg.sha512",
     "C:\\Users\\Rafael Ruge\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
