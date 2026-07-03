@@ -1,0 +1,114 @@
+<div class="documents-page">
+
+  <div class="page-header">
+    <div>
+      <h1>Documentos</h1>
+      <p>Sube requerimientos para generar casos de prueba con IA</p>
+    </div>
+  </div>
+
+  <!-- UPLOAD ZONE -->
+  <div class="upload-zone"
+    [class.dragging]="isDragging"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave()"
+    (drop)="onDrop($event)">
+
+    <div class="upload-content" *ngIf="!uploading">
+      <div class="upload-icon">
+        <mat-icon>cloud_upload</mat-icon>
+      </div>
+      <h3>Arrastra tu documento aquí</h3>
+      <p>o haz clic para seleccionar un archivo</p>
+      <p class="upload-hint">PDF, DOCX, XLSX — Máximo 10MB</p>
+      <label class="upload-btn">
+        <input type="file" hidden
+          accept=".pdf,.docx,.xlsx"
+          (change)="onFileSelected($event)">
+        <mat-icon>attach_file</mat-icon>
+        Seleccionar archivo
+      </label>
+    </div>
+
+    <div class="upload-progress" *ngIf="uploading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Subiendo documento...</p>
+    </div>
+  </div>
+
+  <!-- DOCUMENTS TABLE -->
+  <div class="documents-table-card">
+    <div class="table-header">
+      <h3>Mis Documentos</h3>
+      <span class="doc-count">{{ documents.length }} documentos</span>
+    </div>
+
+    <div class="loading-row" *ngIf="loading">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span>Cargando documentos...</span>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && documents.length === 0">
+      <mat-icon>description</mat-icon>
+      <h3>Sin documentos</h3>
+      <p>Sube tu primer documento de requerimientos</p>
+    </div>
+
+    <table mat-table [dataSource]="documents" *ngIf="!loading && documents.length > 0">
+
+      <ng-container matColumnDef="fileName">
+        <th mat-header-cell *matHeaderCellDef>Archivo</th>
+        <td mat-cell *matCellDef="let doc">
+          <div class="file-name-cell">
+            <mat-icon class="file-icon">description</mat-icon>
+            <span>{{ doc.fileName }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="contentType">
+        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+        <td mat-cell *matCellDef="let doc">
+          <span class="type-badge">
+            {{ doc.contentType.includes('pdf') ? 'PDF' :
+               doc.contentType.includes('word') ? 'DOCX' : 'XLSX' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fileSizeBytes">
+        <th mat-header-cell *matHeaderCellDef>Tamaño</th>
+        <td mat-cell *matCellDef="let doc">{{ formatSize(doc.fileSizeBytes) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let doc">
+          <span class="status-badge" [style.background]="getStatusColor(doc.status) + '20'"
+            [style.color]="getStatusColor(doc.status)">
+            {{ doc.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="uploadedAt">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let doc">{{ formatDate(doc.uploadedAt) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let doc">
+          <button mat-icon-button routerLink="/testcases"
+            [queryParams]="{documentId: doc.id}"
+            matTooltip="Generar casos de prueba">
+            <mat-icon style="color:#10B981">auto_awesome</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,293 @@
+<div class="jira-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="jira-logo">
+        <mat-icon>hub</mat-icon>
+      </div>
+      <div>
+        <h1>Integración Jira</h1>
+        <p>Proyecto SEQ — soporteithealth.atlassian.net</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="connection-badge" *ngIf="connected !== null"
+        [class.connected]="connected"
+        [class.disconnected]="!connected">
+        <div class="badge-dot"></div>
+        {{ connected ? 'Conectado' : 'Desconectado' }}
+      </div>
+      <button mat-stroked-button (click)="testConnection()" [disabled]="testingConnection">
+        <mat-spinner diameter="16" *ngIf="testingConnection"></mat-spinner>
+        <mat-icon *ngIf="!testingConnection">refresh</mat-icon>
+        {{ testingConnection ? 'Verificando...' : 'Verificar conexión' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- CONNECTION ERROR -->
+  <div class="error-banner" *ngIf="connected === false">
+    <mat-icon>error_outline</mat-icon>
+    <div>
+      <strong>No se pudo conectar a Jira</strong>
+      <p>Verifica el API token y las credenciales en appsettings.json</p>
+    </div>
+    <button mat-stroked-button (click)="testConnection()">Reintentar</button>
+  </div>
+
+  <!-- TESTING -->
+  <div class="loading-state" *ngIf="testingConnection && connected === null">
+    <mat-spinner diameter="32"></mat-spinner>
+    <p>Verificando conexión con Jira...</p>
+  </div>
+
+  <ng-container *ngIf="connected">
+
+    <!-- SUCCESS BANNER -->
+    <div class="success-banner" *ngIf="lastCreated">
+      <mat-icon>check_circle</mat-icon>
+      <div>
+        <strong>Issue creado exitosamente</strong>
+        <p>{{ lastCreated.key }} — <a [href]="lastCreated.url" target="_blank">Ver en Jira</a></p>
+      </div>
+      <button mat-icon-button (click)="lastCreated = null">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- TABS -->
+    <mat-tab-group [(selectedIndex)]="selectedTab" class="jira-tabs">
+
+      <!-- TAB 1 — ISSUES -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>list</mat-icon>
+          Issues QA Copilot
+          <span class="tab-badge" *ngIf="issues.length > 0">{{ issues.length }}</span>
+        </ng-template>
+
+        <div class="tab-content">
+          <div class="tab-toolbar">
+            <span class="toolbar-title">Issues creados desde QA Copilot</span>
+            <button mat-stroked-button (click)="loadIssues()" [disabled]="loadingIssues">
+              <mat-spinner diameter="14" *ngIf="loadingIssues"></mat-spinner>
+              <mat-icon *ngIf="!loadingIssues">refresh</mat-icon>
+              Actualizar
+            </button>
+          </div>
+
+          <div class="loading-row" *ngIf="loadingIssues">
+            <mat-spinner diameter="28"></mat-spinner>
+          </div>
+
+          <table mat-table [dataSource]="issues"
+            *ngIf="!loadingIssues && issues.length > 0"
+            class="issues-table">
+
+            <ng-container matColumnDef="key">
+              <th mat-header-cell *matHeaderCellDef>Key</th>
+              <td mat-cell *matCellDef="let issue">
+                <span class="issue-key" (click)="openIssue(issue.url)">
+                  {{ issue.key }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="summary">
+              <th mat-header-cell *matHeaderCellDef>Resumen</th>
+              <td mat-cell *matCellDef="let issue">
+                <span class="issue-summary">{{ issue.summary }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef>Tipo</th>
+              <td mat-cell *matCellDef="let issue">
+                <div class="type-cell">
+                  <mat-icon [style.color]="getTypeColor(issue.issueType)">
+                    {{ getTypeIcon(issue.issueType) }}
+                  </mat-icon>
+                  <span>{{ issue.issueType }}</span>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="priority">
+              <th mat-header-cell *matHeaderCellDef>Prioridad</th>
+              <td mat-cell *matCellDef="let issue">
+                <span class="priority-badge"
+                  [style.color]="getPriorityColor(issue.priority)"
+                  [style.background]="getPriorityColor(issue.priority) + '20'">
+                  {{ issue.priority }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let issue">
+                <span class="status-badge"
+                  [style.color]="getStatusColor(issue.status)"
+                  [style.background]="getStatusColor(issue.status) + '20'">
+                  {{ issue.status }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let issue">
+                <button mat-icon-button matTooltip="Abrir en Jira"
+                  (click)="openIssue(issue.url)">
+                  <mat-icon style="color:#3B82F6">open_in_new</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <div class="empty-state" *ngIf="!loadingIssues && issues.length === 0">
+            <mat-icon>inbox</mat-icon>
+            <h3>Sin issues creados aún</h3>
+            <p>Los issues creados desde QA Copilot aparecerán aquí</p>
+            <button mat-raised-button color="primary" (click)="selectedTab = 1">
+              Crear caso de prueba
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- TAB 2 — CREAR CASO DE PRUEBA -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>task_alt</mat-icon>
+          Exportar Caso de Prueba
+        </ng-template>
+
+        <div class="tab-content">
+          <div class="form-card">
+            <div class="form-header">
+              <div class="form-icon task">
+                <mat-icon>task_alt</mat-icon>
+              </div>
+              <div>
+                <h3>Crear Caso de Prueba en Jira</h3>
+                <p>Se creará como issue tipo <strong>Task</strong> en el proyecto SEQ</p>
+              </div>
+            </div>
+
+            <form [formGroup]="testCaseForm">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Resumen del caso</mat-label>
+                <input matInput formControlName="summary"
+                  placeholder="Ej: Verificar login con credenciales válidas">
+                <mat-icon matPrefix>title</mat-icon>
+                <mat-error>Mínimo 5 caracteres</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Descripción detallada</mat-label>
+                <textarea matInput formControlName="description" rows="5"
+                  placeholder="Descripción del caso de prueba, precondiciones, pasos, resultado esperado...">
+                </textarea>
+                <mat-icon matPrefix>description</mat-icon>
+                <mat-error>La descripción es requerida</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Prioridad</mat-label>
+                <mat-select formControlName="priority">
+                  <mat-option *ngFor="let p of priorities" [value]="p">{{ p }}</mat-option>
+                </mat-select>
+                <mat-icon matPrefix>flag</mat-icon>
+              </mat-form-field>
+
+              <div class="form-actions">
+                <button mat-raised-button color="primary"
+                  (click)="createTestCase()"
+                  [disabled]="testCaseForm.invalid || creatingTestCase">
+                  <mat-spinner diameter="18" *ngIf="creatingTestCase"></mat-spinner>
+                  <mat-icon *ngIf="!creatingTestCase">send</mat-icon>
+                  {{ creatingTestCase ? 'Creando...' : 'Exportar a Jira' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- TAB 3 — REPORTAR BUG -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>bug_report</mat-icon>
+          Reportar Bug
+        </ng-template>
+
+        <div class="tab-content">
+          <div class="form-card">
+            <div class="form-header">
+              <div class="form-icon bug">
+                <mat-icon>bug_report</mat-icon>
+              </div>
+              <div>
+                <h3>Reportar Bug en Jira</h3>
+                <p>Se creará como issue tipo <strong>Bug</strong> en el proyecto SEQ</p>
+              </div>
+            </div>
+
+            <form [formGroup]="bugForm">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Resumen del bug</mat-label>
+                <input matInput formControlName="summary"
+                  placeholder="Ej: Error al guardar formulario con campos vacíos">
+                <mat-icon matPrefix>title</mat-icon>
+                <mat-error>Mínimo 5 caracteres</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Descripción del problema</mat-label>
+                <textarea matInput formControlName="description" rows="4"
+                  placeholder="Describe el comportamiento actual vs el esperado...">
+                </textarea>
+                <mat-icon matPrefix>description</mat-icon>
+                <mat-error>La descripción es requerida</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Pasos para reproducir</mat-label>
+                <textarea matInput formControlName="stepsToReproduce" rows="4"
+                  placeholder="1. Ir a la pantalla de login&#10;2. Ingresar usuario vacío&#10;3. Hacer clic en Ingresar">
+                </textarea>
+                <mat-icon matPrefix>format_list_numbered</mat-icon>
+                <mat-error>Los pasos son requeridos</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Prioridad</mat-label>
+                <mat-select formControlName="priority">
+                  <mat-option *ngFor="let p of priorities" [value]="p">{{ p }}</mat-option>
+                </mat-select>
+                <mat-icon matPrefix>flag</mat-icon>
+              </mat-form-field>
+
+              <div class="form-actions">
+                <button mat-raised-button color="warn"
+                  (click)="createBug()"
+                  [disabled]="bugForm.invalid || creatingBug">
+                  <mat-spinner diameter="18" *ngIf="creatingBug"></mat-spinner>
+                  <mat-icon *ngIf="!creatingBug">bug_report</mat-icon>
+                  {{ creatingBug ? 'Reportando...' : 'Reportar Bug en Jira' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </ng-container>
+</div>

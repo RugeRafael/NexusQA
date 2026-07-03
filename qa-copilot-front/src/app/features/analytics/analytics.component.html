@@ -1,0 +1,133 @@
+<div class="analytics-page">
+  <div class="page-header">
+    <div>
+      <h1>Actividad QA</h1>
+      <p>Métricas del equipo y actividad en tiempo real</p>
+    </div>
+    <button mat-stroked-button (click)="loadMetrics()">
+      <mat-icon>refresh</mat-icon>
+      Actualizar
+    </button>
+  </div>
+
+  <!-- KPI SUMMARY -->
+  <div class="kpi-row" *ngIf="metrics">
+    <div class="kpi-mini">
+      <mat-icon style="color:#3B82F6">description</mat-icon>
+      <div>
+        <div class="kpi-val">{{ metrics.totalDocuments }}</div>
+        <div class="kpi-lbl">Documentos</div>
+      </div>
+    </div>
+    <div class="kpi-mini">
+      <mat-icon style="color:#10B981">auto_awesome</mat-icon>
+      <div>
+        <div class="kpi-val">{{ metrics.totalTestCasesGenerated }}</div>
+        <div class="kpi-lbl">Casos generados</div>
+      </div>
+    </div>
+    <div class="kpi-mini">
+      <mat-icon style="color:#8B5CF6">group</mat-icon>
+      <div>
+        <div class="kpi-val">{{ metrics.totalUsers }}</div>
+        <div class="kpi-lbl">Usuarios activos</div>
+      </div>
+    </div>
+    <div class="kpi-mini">
+      <mat-icon style="color:#F59E0B">verified</mat-icon>
+      <div>
+        <div class="kpi-val">{{ (metrics.averageConfidenceScore * 100).toFixed(0) }}%</div>
+        <div class="kpi-lbl">Confianza promedio</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="analytics-grid">
+    <!-- MODULE ACTIVITY TABLE -->
+    <div class="table-card">
+      <div class="card-header">
+        <h3>Actividad por Módulo</h3>
+      </div>
+
+      <div class="loading-row" *ngIf="loading">
+        <mat-spinner diameter="24"></mat-spinner>
+      </div>
+
+      <table mat-table [dataSource]="metrics?.activityByModule || []"
+        *ngIf="!loading && metrics?.activityByModule?.length > 0">
+
+        <ng-container matColumnDef="module">
+          <th mat-header-cell *matHeaderCellDef>Módulo</th>
+          <td mat-cell *matCellDef="let item">
+            <div class="module-cell">
+              <span class="module-dot" [style.background]="getModuleColor(item.module)"></span>
+              {{ item.module }}
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalActions">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let item">
+            <strong>{{ item.totalActions }}</strong>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="successCount">
+          <th mat-header-cell *matHeaderCellDef>Exitosos</th>
+          <td mat-cell *matCellDef="let item">
+            <span class="badge-success">{{ item.successCount }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="failureCount">
+          <th mat-header-cell *matHeaderCellDef>Fallidos</th>
+          <td mat-cell *matCellDef="let item">
+            <span class="badge-error">{{ item.failureCount }}</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <div class="empty-state" *ngIf="!loading && !metrics?.activityByModule?.length">
+        <mat-icon>bar_chart</mat-icon>
+        <p>Sin actividad registrada aún</p>
+      </div>
+    </div>
+
+    <!-- LIVE ACTIVITY -->
+    <div class="live-card">
+      <div class="card-header">
+        <h3>Actividad en Vivo</h3>
+        <span class="live-indicator">
+          <span class="live-dot"></span> En vivo
+        </span>
+      </div>
+
+      <div class="empty-state" *ngIf="liveActivities.length === 0">
+        <mat-icon>sensors</mat-icon>
+        <p>Esperando actividad del equipo...</p>
+      </div>
+
+      <div class="live-list">
+        <div class="live-item" *ngFor="let activity of liveActivities">
+          <div class="live-icon" [style.background]="getModuleColor(activity.module) + '20'"
+            [style.color]="getModuleColor(activity.module)">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="live-content">
+            <div class="live-text">
+              <strong>{{ activity.userName }}</strong> — {{ activity.action }}
+            </div>
+            <div class="live-meta">
+              <span>{{ activity.module }}</span>
+              <span>{{ formatTime(activity.time) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

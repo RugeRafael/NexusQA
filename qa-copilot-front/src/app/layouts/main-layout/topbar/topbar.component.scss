@@ -1,0 +1,121 @@
+.topbar {
+  height: 64px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 260px;
+  z-index: 99;
+  transition: left 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+
+  &.sidebar-collapsed { left: 72px; }
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-btn { color: #64748b !important; }
+
+.page-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0a0f1e;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-btn { color: #64748b !important; }
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px !important;
+  border-radius: 8px !important;
+  height: auto !important;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0a0f1e;
+}
+
+.user-role {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.notification-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  color: #94a3b8;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.notification-item {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  &:hover { background: #f8fafc; }
+}
+
+.notification-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0a0f1e;
+}
+
+.notification-msg {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.logout-item { color: #ef4444 !important; }

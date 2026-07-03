@@ -1,0 +1,428 @@
+<div class="reports-page">
+  <div class="page-header">
+    <div>
+      <h1>Informes QA</h1>
+      <p>Genera informes profesionales con IA — ithealth.co</p>
+    </div>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="selectedTab" class="reports-tabs">
+
+    <!-- ─── TAB 1: COMPARACIÓN ─── -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>compare_arrows</mat-icon>&nbsp;Comparación Req. vs Plan
+      </ng-template>
+      <div class="tab-content">
+        <div class="form-section">
+          <div class="form-card">
+            <div class="form-header">
+              <div class="form-icon blue"><mat-icon>compare_arrows</mat-icon></div>
+              <div><h3>Informe de Comparación</h3><p>Requerimiento vs Plan de Pruebas</p></div>
+            </div>
+            <form [formGroup]="comparisonForm">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>Nombre del Proyecto</mat-label>
+                  <input matInput formControlName="projectName">
+                  <mat-icon matPrefix>work</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="flex-1">
+                  <mat-label>Versión</mat-label>
+                  <input matInput formControlName="version">
+                  <mat-icon matPrefix>tag</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>QA Engineer</mat-label>
+                  <input matInput formControlName="qaEngineer">
+                  <mat-icon matPrefix>person</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>Período</mat-label>
+                  <input matInput formControlName="period" placeholder="Ej: Mayo 2026 — Sprint 12">
+                  <mat-icon matPrefix>date_range</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="jira-url-field">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>URL del proyecto en Jira (opcional)</mat-label>
+                  <input matInput formControlName="jiraUrl"
+                    placeholder="https://soporteithealth.atlassian.net/jira/software/c/projects/SEQ/...">
+                  <mat-icon matPrefix>link</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="upload-zone" (click)="comparisonInput.click()">
+                <input #comparisonInput type="file" [accept]="acceptedFormats" hidden (change)="onFileSelected($event, 'comparison')">
+                <div class="upload-content" *ngIf="!comparisonFile">
+                  <mat-icon>upload_file</mat-icon>
+                  <p>Sube el documento de requerimientos o plan de pruebas</p>
+                  <span>Formatos: .html .md .xlsx .docx</span>
+                </div>
+                <div class="upload-content file-loaded" *ngIf="comparisonFile">
+                  <mat-icon style="color:#10B981">check_circle</mat-icon>
+                  <p>{{ comparisonFile.name }}</p>
+                  <button mat-icon-button (click)="clearFile('comparison'); $event.stopPropagation()"><mat-icon>close</mat-icon></button>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Requerimientos (uno por línea)</mat-label>
+                <textarea matInput formControlName="requirements" rows="4"
+                  placeholder="REQ-001: El sistema debe permitir login&#10;REQ-002: Validar email"></textarea>
+                <mat-icon matPrefix>list_alt</mat-icon>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Casos de Prueba (uno por línea)</mat-label>
+                <textarea matInput formControlName="testCases" rows="4"
+                  placeholder="TC-001: Verificar login con credenciales válidas"></textarea>
+                <mat-icon matPrefix>checklist</mat-icon>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Contexto adicional (opcional)</mat-label>
+                <textarea matInput formControlName="additionalContext" rows="2"></textarea>
+                <mat-icon matPrefix>notes</mat-icon>
+              </mat-form-field>
+              <div class="form-actions">
+                <button mat-raised-button color="primary" (click)="generateComparison()" [disabled]="comparisonForm.invalid || generating">
+                  <mat-spinner diameter="18" *ngIf="generating && selectedTab === 0"></mat-spinner>
+                  <mat-icon *ngIf="!(generating && selectedTab === 0)">auto_awesome</mat-icon>
+                  {{ generating && selectedTab === 0 ? 'Generando...' : 'Generar con IA' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="preview-section" *ngIf="comparisonReport" id="comparison-preview">
+          <div class="preview-toolbar">
+            <h3>{{ comparisonReport.title }}</h3>
+            <div class="toolbar-actions">
+              <button mat-icon-button matTooltip="Abrir en nueva pestaña" (click)="openInNewTab()">
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Descargar HTML" (click)="exportToHtml()">
+                <mat-icon>download</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Imprimir / PDF" (click)="exportToPdf()">
+                <mat-icon>picture_as_pdf</mat-icon>
+              </button>
+              <button mat-stroked-button (click)="uploadToJira()" [disabled]="uploadingToJira">
+                <mat-icon>hub</mat-icon>
+                {{ uploadingToJira ? 'Subiendo...' : 'Subir a Jira' }}
+              </button>
+              <button mat-raised-button color="primary" (click)="uploadToDocuments()" [disabled]="uploadingToDocs">
+                <mat-icon>{{ activeJiraUrlLabel !== 'Guardar' ? 'hub' : 'folder' }}</mat-icon>
+                {{ uploadingToDocs ? 'Guardando...' : activeJiraUrlLabel }}
+              </button>
+            </div>
+          </div>
+          <iframe *ngIf="comparisonBlobUrl" [src]="comparisonBlobUrl" class="report-iframe"></iframe>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- ─── TAB 2: FINALIZACIÓN ─── -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>task_alt</mat-icon>&nbsp;Finalización de Plan
+      </ng-template>
+      <div class="tab-content">
+        <div class="form-section">
+          <div class="form-card">
+            <div class="form-header">
+              <div class="form-icon green"><mat-icon>task_alt</mat-icon></div>
+              <div><h3>Informe de Finalización</h3><p>Datos automáticos desde Jira y plan de pruebas</p></div>
+            </div>
+            <form [formGroup]="completionForm">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>Nombre del Proyecto</mat-label>
+                  <input matInput formControlName="projectName">
+                  <mat-icon matPrefix>work</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="flex-1">
+                  <mat-label>Versión</mat-label>
+                  <input matInput formControlName="version">
+                  <mat-icon matPrefix>tag</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>QA Engineer</mat-label>
+                  <input matInput formControlName="qaEngineer">
+                  <mat-icon matPrefix>person</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>Período</mat-label>
+                  <input matInput formControlName="period" placeholder="Ej: Mayo 2026 — Hitos 5 y 6">
+                  <mat-icon matPrefix>date_range</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="jira-url-field">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>URL del proyecto Jira (para subir el informe)</mat-label>
+                  <input matInput formControlName="jiraUrl"
+                    placeholder="https://soporteithealth.atlassian.net/jira/software/c/projects/SEQ/...">
+                  <mat-icon matPrefix>link</mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="upload-zone" (click)="completionInput.click()">
+                <input #completionInput type="file" [accept]="acceptedFormats" hidden (change)="onFileSelected($event, 'completion')">
+                <div class="upload-content" *ngIf="!completionFile">
+                  <mat-icon>upload_file</mat-icon>
+                  <p>Sube el plan de pruebas — extrae CPs, RFs y módulos automáticamente</p>
+                  <span>Formatos: .html .md .xlsx .docx</span>
+                </div>
+                <div class="upload-content file-loaded" *ngIf="completionFile">
+                  <mat-icon style="color:#10B981">check_circle</mat-icon>
+                  <p>{{ completionFile.name }}</p>
+                  <button mat-icon-button (click)="clearFile('completion'); $event.stopPropagation()"><mat-icon>close</mat-icon></button>
+                </div>
+              </div>
+
+              <div class="jira-bugs-section">
+                <div class="jira-bugs-header">
+                  <span>Subtareas / Bugs de Jira</span>
+                </div>
+
+                <div class="issue-url-search">
+                  <mat-form-field appearance="outline" style="flex:1">
+                    <mat-label>URL de actividad Jira</mat-label>
+                    <input matInput [(ngModel)]="issueUrl" [ngModelOptions]="{standalone: true}"
+                      placeholder="https://soporteithealth.atlassian.net/browse/V20-888">
+                    <mat-icon matPrefix>manage_search</mat-icon>
+                    <mat-hint *ngIf="issueUrl">Trae todas las subtareas automáticamente</mat-hint>
+                  </mat-form-field>
+                  <button mat-raised-button color="accent"
+                    (click)="loadBugsByUrl()"
+                    [disabled]="!issueUrl || loadingByUrl"
+                    style="margin-top:4px">
+                    <mat-spinner diameter="14" *ngIf="loadingByUrl"></mat-spinner>
+                    <mat-icon *ngIf="!loadingByUrl">search</mat-icon>
+                    {{ loadingByUrl ? 'Buscando...' : 'Cargar actividad' }}
+                  </button>
+                </div>
+
+                <div class="or-divider"><span>ó filtra por proyecto</span></div>
+
+                <div class="jira-bugs-header" style="margin-bottom:0.5rem">
+                  <span style="font-size:0.8rem;color:#64748B">Filtrar por proyecto</span>
+                  <button mat-stroked-button (click)="loadJiraProjects()" [disabled]="loadingProjects">
+                    <mat-spinner diameter="14" *ngIf="loadingProjects"></mat-spinner>
+                    <mat-icon *ngIf="!loadingProjects">hub</mat-icon>
+                    {{ loadingProjects ? 'Cargando...' : 'Cargar proyectos' }}
+                  </button>
+                </div>
+
+                <div class="jira-project-selector" *ngIf="jiraProjects.length > 0">
+                  <mat-form-field appearance="outline" style="flex:1">
+                    <mat-label>Seleccionar proyecto Jira</mat-label>
+                    <mat-select [(ngModel)]="selectedJiraProject" [ngModelOptions]="{standalone: true}">
+                      <mat-option *ngFor="let p of jiraProjects" [value]="p.key">
+                        <strong>{{ p.key }}</strong> — {{ p.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix>folder</mat-icon>
+                  </mat-form-field>
+                  <button mat-raised-button color="primary"
+                    (click)="loadJiraBugsByProject()"
+                    [disabled]="!selectedJiraProject || loadingJiraBugs"
+                    style="margin-top:4px">
+                    <mat-spinner diameter="14" *ngIf="loadingJiraBugs"></mat-spinner>
+                    <mat-icon *ngIf="!loadingJiraBugs">bug_report</mat-icon>
+                    {{ loadingJiraBugs ? 'Cargando...' : 'Cargar bugs' }}
+                  </button>
+                </div>
+
+                <div class="jira-summary" *ngIf="jiraBugs.length > 0">
+                  <div class="summary-kpi">
+                    <span class="sk-val">{{ jiraBugs.length }}</span>
+                    <span class="sk-lbl">Total</span>
+                  </div>
+                  <div class="summary-kpi green">
+                    <span class="sk-val">{{ (jiraBugs | jiraFilter:'exitosos') }}</span>
+                    <span class="sk-lbl">Exitosos</span>
+                  </div>
+                  <div class="summary-kpi red">
+                    <span class="sk-val">{{ (jiraBugs | jiraFilter:'bugs') }}</span>
+                    <span class="sk-lbl">Bugs</span>
+                  </div>
+                  <div class="summary-kpi amber">
+                    <span class="sk-val">{{ (jiraBugs | jiraFilter:'pendientes') }}</span>
+                    <span class="sk-lbl">Pendientes</span>
+                  </div>
+                </div>
+
+                <div class="jira-bugs-list" *ngIf="jiraBugs.length > 0">
+                  <div class="jira-bug-item" *ngFor="let bug of jiraBugs.slice(0, 6)">
+                    <a [href]="bug.url" target="_blank" class="bug-key">{{ bug.key }}</a>
+                    <span class="bug-summary">{{ bug.summary }}</span>
+                    <span class="bug-status"
+                      [class.status-done]="bug.status === 'Finalizada' || bug.status === 'Exitoso'"
+                      [class.status-todo]="bug.status === 'Por hacer'"
+                      [class.status-cancel]="bug.status === 'Cancelado'">
+                      {{ bug.status }}
+                    </span>
+                  </div>
+                  <p class="bugs-more" *ngIf="jiraBugs.length > 6">
+                    + {{ jiraBugs.length - 6 }} items más — todos incluidos en el informe
+                  </p>
+                </div>
+
+                <div class="no-jira-msg" *ngIf="jiraBugs.length === 0">
+                  <mat-icon>info_outline</mat-icon>
+                  <span>Carga una actividad de Jira para obtener los datos automáticamente</span>
+                </div>
+              </div>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Contexto adicional (opcional)</mat-label>
+                <textarea matInput formControlName="additionalContext" rows="3"
+                  placeholder="Sprint objetivo, módulos probados, observaciones..."></textarea>
+                <mat-icon matPrefix>notes</mat-icon>
+              </mat-form-field>
+
+              <div class="form-actions">
+                <button mat-raised-button color="primary"
+                  (click)="generateCompletion()"
+                  [disabled]="completionForm.invalid || generating || jiraBugs.length === 0">
+                  <mat-spinner diameter="18" *ngIf="generating && selectedTab === 1"></mat-spinner>
+                  <mat-icon *ngIf="!(generating && selectedTab === 1)">auto_awesome</mat-icon>
+                  {{ generating && selectedTab === 1 ? 'Generando...' : 'Generar Informe' }}
+                </button>
+                <span class="form-hint" *ngIf="jiraBugs.length === 0">Carga los datos de Jira primero</span>
+                <span class="form-hint green" *ngIf="jiraBugs.length > 0">
+                  ✓ {{ jiraBugs.length }} items listos
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="preview-section" *ngIf="completionReport" id="completion-preview">
+          <div class="preview-toolbar">
+            <h3>{{ completionReport.title }}</h3>
+            <div class="toolbar-actions">
+              <button mat-icon-button matTooltip="Abrir en nueva pestaña" (click)="openInNewTab()">
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Descargar HTML" (click)="exportToHtml()">
+                <mat-icon>download</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Imprimir / PDF" (click)="exportToPdf()">
+                <mat-icon>picture_as_pdf</mat-icon>
+              </button>
+              <button mat-stroked-button (click)="uploadToJira()" [disabled]="uploadingToJira">
+                <mat-icon>hub</mat-icon>
+                {{ uploadingToJira ? 'Subiendo...' : 'Subir a Jira' }}
+              </button>
+              <button mat-raised-button color="primary" (click)="uploadToDocuments()" [disabled]="uploadingToDocs">
+                <mat-icon>{{ activeJiraUrlLabel !== 'Guardar' ? 'hub' : 'folder' }}</mat-icon>
+                {{ uploadingToDocs ? 'Guardando...' : activeJiraUrlLabel }}
+              </button>
+            </div>
+          </div>
+          <iframe *ngIf="completionBlobUrl" [src]="completionBlobUrl" class="report-iframe"></iframe>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- ─── TAB 3: INNOVACIÓN ─── -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>lightbulb</mat-icon>&nbsp;Innovación
+      </ng-template>
+      <div class="tab-content">
+        <div class="form-section">
+          <div class="form-card">
+            <div class="form-header">
+              <div class="form-icon purple"><mat-icon>lightbulb</mat-icon></div>
+              <div><h3>Informe de Innovación</h3><p>Mejoras y aportes al proceso QA</p></div>
+            </div>
+            <form [formGroup]="innovationForm">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>Nombre del Proyecto</mat-label>
+                  <input matInput formControlName="projectName">
+                  <mat-icon matPrefix>work</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="flex-1">
+                  <mat-label>Versión</mat-label>
+                  <input matInput formControlName="version">
+                  <mat-icon matPrefix>tag</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>QA Engineer</mat-label>
+                  <input matInput formControlName="qaEngineer">
+                  <mat-icon matPrefix>person</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="flex-2">
+                  <mat-label>Período</mat-label>
+                  <input matInput formControlName="period">
+                  <mat-icon matPrefix>date_range</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="upload-zone" (click)="innovationInput.click()">
+                <input #innovationInput type="file" [accept]="acceptedFormats" hidden (change)="onFileSelected($event, 'innovation')">
+                <div class="upload-content" *ngIf="!innovationFile">
+                  <mat-icon>upload_file</mat-icon>
+                  <p>Sube documentación de la innovación (opcional)</p>
+                  <span>Formatos: .html .md .xlsx .docx</span>
+                </div>
+                <div class="upload-content file-loaded" *ngIf="innovationFile">
+                  <mat-icon style="color:#10B981">check_circle</mat-icon>
+                  <p>{{ innovationFile.name }}</p>
+                  <button mat-icon-button (click)="clearFile('innovation'); $event.stopPropagation()"><mat-icon>close</mat-icon></button>
+                </div>
+              </div>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Descripción de la innovación</mat-label>
+                <textarea matInput formControlName="additionalContext" rows="8"
+                  placeholder="Describe la mejora implementada:&#10;&#10;- Problema identificado&#10;- Solución implementada&#10;- Herramientas utilizadas&#10;- Impacto esperado"></textarea>
+                <mat-icon matPrefix>lightbulb</mat-icon>
+              </mat-form-field>
+              <div class="form-actions">
+                <button mat-raised-button color="primary" (click)="generateInnovation()" [disabled]="innovationForm.invalid || generating">
+                  <mat-spinner diameter="18" *ngIf="generating && selectedTab === 2"></mat-spinner>
+                  <mat-icon *ngIf="!(generating && selectedTab === 2)">auto_awesome</mat-icon>
+                  {{ generating && selectedTab === 2 ? 'Generando...' : 'Generar con IA' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="preview-section" *ngIf="innovationReport" id="innovation-preview">
+          <div class="preview-toolbar">
+            <h3>{{ innovationReport.title }}</h3>
+            <div class="toolbar-actions">
+              <button mat-icon-button matTooltip="Abrir en nueva pestaña" (click)="openInNewTab()">
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Descargar HTML" (click)="exportToHtml()">
+                <mat-icon>download</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Imprimir / PDF" (click)="exportToPdf()">
+                <mat-icon>picture_as_pdf</mat-icon>
+              </button>
+              <button mat-stroked-button (click)="uploadToJira()" [disabled]="uploadingToJira">
+                <mat-icon>hub</mat-icon>
+                {{ uploadingToJira ? 'Subiendo...' : 'Subir a Jira' }}
+              </button>
+              <button mat-raised-button color="primary" (click)="uploadToDocuments()" [disabled]="uploadingToDocs">
+                <mat-icon>{{ activeJiraUrlLabel !== 'Guardar' ? 'hub' : 'folder' }}</mat-icon>
+                {{ uploadingToDocs ? 'Guardando...' : activeJiraUrlLabel }}
+              </button>
+            </div>
+          </div>
+          <iframe *ngIf="innovationBlobUrl" [src]="innovationBlobUrl" class="report-iframe"></iframe>
+        </div>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

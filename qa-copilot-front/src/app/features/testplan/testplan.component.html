@@ -1,0 +1,112 @@
+<div class="testplan-page">
+  <div class="page-header">
+    <div>
+      <h1>Análisis de Plan de Pruebas</h1>
+      <p>La IA evalúa tu plan contra ISTQB e ISO/IEC/IEEE 29119 y estima tiempos</p>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <!-- FORM -->
+    <div class="form-card">
+      <h3>Ingresar Plan de Pruebas</h3>
+
+      <!-- DRAG ZONE -->
+      <div class="upload-zone"
+        [class.dragging]="isDragging"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)">
+        <mat-icon>upload_file</mat-icon>
+        <p>{{ selectedFile ? selectedFile.name : 'Arrastra un archivo .txt o .md' }}</p>
+        <label class="upload-link">
+          <input type="file" hidden accept=".txt,.md,.pdf" (change)="onFileSelected($event)">
+          Seleccionar archivo
+        </label>
+      </div>
+
+      <div class="divider">
+        <span>o escribe el plan directamente</span>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="analyze()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre del proyecto (opcional)</mat-label>
+          <input matInput formControlName="projectName" placeholder="Ej: QA Sprint 2026-Q2">
+          <mat-icon matPrefix>work</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contenido del plan de pruebas</mat-label>
+          <textarea matInput formControlName="planContent" rows="10"
+            placeholder="Pega aquí tu plan de pruebas...">
+          </textarea>
+          <mat-error>Mínimo 50 caracteres</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit"
+          class="analyze-btn" [disabled]="form.invalid || analyzing">
+          <mat-spinner diameter="20" *ngIf="analyzing"></mat-spinner>
+          <mat-icon *ngIf="!analyzing">analytics</mat-icon>
+          {{ analyzing ? 'Analizando con IA...' : 'Analizar Plan' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-panel" *ngIf="result">
+
+      <!-- VIABILITY BADGE -->
+      <div class="viability-banner"
+        [style.background]="getViabilityColor() + '20'"
+        [style.border-color]="getViabilityColor()">
+        <mat-icon [style.color]="getViabilityColor()">
+          {{ result.is_viable ? 'check_circle' : 'cancel' }}
+        </mat-icon>
+        <div>
+          <div class="viability-label" [style.color]="getViabilityColor()">
+            {{ getViabilityLabel() }}
+          </div>
+          <div class="viability-sub">
+            Confianza: {{ getConfidencePercent() }}%
+          </div>
+        </div>
+      </div>
+
+      <!-- TIME ESTIMATION -->
+      <div class="time-card">
+        <h3>Estimación de Tiempos</h3>
+        <div class="time-grid">
+          <div class="time-item" *ngFor="let item of parseTimeEstimation() | keyvalue">
+            <span class="time-label">{{ item.key }}</span>
+            <span class="time-value">{{ item.value }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPLIANCE -->
+      <div class="compliance-card">
+        <h3>Cumplimiento ISTQB</h3>
+        <p>{{ result.istqb_compliance_notes }}</p>
+      </div>
+
+      <div class="compliance-card">
+        <h3>Cumplimiento ISO 29119</h3>
+        <p>{{ result.iso29119_compliance_notes }}</p>
+      </div>
+
+      <!-- FULL ANALYSIS -->
+      <div class="analysis-card">
+        <h3>Análisis Completo</h3>
+        <pre>{{ result.ai_analysis_result }}</pre>
+      </div>
+    </div>
+
+    <!-- EMPTY -->
+    <div class="empty-result" *ngIf="!result && !analyzing">
+      <mat-icon>analytics</mat-icon>
+      <h3>Listo para analizar</h3>
+      <p>Ingresa tu plan de pruebas y la IA lo evaluará</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="kpi-card" [style.border-top-color]="color">
+  <div class="kpi-loading" *ngIf="loading">
+    <mat-spinner diameter="32"></mat-spinner>
+  </div>
+
+  <ng-container *ngIf="!loading">
+    <div class="kpi-header">
+      <div class="kpi-icon" [style.background]="color + '20'">
+        <mat-icon [style.color]="color">{{ icon }}</mat-icon>
+      </div>
+      <div class="kpi-trend" *ngIf="trend !== 0"
+        [class.positive]="trend > 0"
+        [class.negative]="trend < 0">
+        <mat-icon>{{ trend > 0 ? 'trending_up' : 'trending_down' }}</mat-icon>
+        {{ trend > 0 ? '+' : '' }}{{ trend }}%
+      </div>
+    </div>
+
+    <div class="kpi-value">{{ value }}</div>
+    <div class="kpi-title">{{ title }}</div>
+    <div class="kpi-subtitle" *ngIf="subtitle">{{ subtitle }}</div>
+  </ng-container>
+</div>

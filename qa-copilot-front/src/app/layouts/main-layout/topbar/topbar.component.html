@@ -1,0 +1,67 @@
+<div class="topbar" [class.sidebar-collapsed]="sidebarCollapsed">
+  <div class="topbar-left">
+    <button mat-icon-button (click)="toggleSidebar.emit()" class="menu-btn">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="page-title">QA Copilot</div>
+  </div>
+
+  <div class="topbar-right">
+    <!-- Toggle tema -->
+    <button mat-icon-button (click)="toggleTheme()" class="icon-btn"
+      [matTooltip]="isDarkTheme ? 'Modo claro' : 'Modo oscuro'">
+      <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
+    <!-- Notificaciones -->
+    <button mat-icon-button [matMenuTriggerFor]="notificationMenu" class="icon-btn">
+      <mat-icon [matBadge]="unreadCount > 0 ? unreadCount : null"
+        matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
+    </button>
+
+    <mat-menu #notificationMenu="matMenu" class="notification-menu">
+      <div class="notification-header">
+        <span>Notificaciones</span>
+        <button mat-button (click)="clearNotifications()" *ngIf="notifications.length > 0">
+          Limpiar
+        </button>
+      </div>
+      <div class="notification-empty" *ngIf="notifications.length === 0">
+        <mat-icon>notifications_none</mat-icon>
+        <span>Sin notificaciones</span>
+      </div>
+      <div class="notification-item" *ngFor="let n of notifications">
+        <div class="notification-title">{{ n.title }}</div>
+        <div class="notification-msg">{{ n.message }}</div>
+      </div>
+    </mat-menu>
+
+    <!-- Usuario -->
+    <button mat-button [matMenuTriggerFor]="userMenu" class="user-btn">
+      <div class="user-avatar" [style.background]="getRoleColor()">
+        {{ userName.charAt(0).toUpperCase() }}
+      </div>
+      <div class="user-info">
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-role">{{ getRoleLabel() }}</span>
+      </div>
+      <mat-icon>expand_more</mat-icon>
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="navigateToProfile()">
+        <mat-icon>person</mat-icon>
+        <span>Mi Perfil</span>
+      </button>
+      <button mat-menu-item (click)="toggleTheme()">
+        <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        <span>{{ isDarkTheme ? 'Modo claro' : 'Modo oscuro' }}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()" class="logout-item">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar Sesión</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>

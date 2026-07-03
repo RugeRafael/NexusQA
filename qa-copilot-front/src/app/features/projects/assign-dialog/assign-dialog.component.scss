@@ -1,0 +1,107 @@
+.dialog-container {
+  width: 480px;
+  max-width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  h2 { font-size: 1.1rem; font-weight: 700; color: #0A0F1E; margin: 0 0 2px; }
+  p { font-size: 0.82rem; color: #64748B; margin: 0; }
+}
+
+.dialog-icon {
+  width: 44px; height: 44px;
+  background: rgba(59,130,246,0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon { color: #3B82F6; font-size: 22px; width: 22px; height: 22px; }
+}
+
+.dialog-body {
+  padding: 1.25rem 1.5rem;
+}
+
+.loading-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 1.5rem;
+  color: #64748B;
+  font-size: 0.85rem;
+}
+
+.full-width { width: 100%; margin-bottom: 0.5rem; }
+
+.user-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.user-avatar-mini {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.user-name-opt { font-size: 0.85rem; font-weight: 500; color: #0A0F1E; }
+.user-email-opt { font-size: 0.72rem; color: #94A3B8; }
+
+.role-chip {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.empty-users {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  color: #94A3B8;
+  gap: 6px;
+  text-align: center;
+
+  mat-icon { font-size: 2rem; width: 2rem; height: 2rem; }
+  p { font-size: 0.82rem; margin: 0; }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid #E2E8F0;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}

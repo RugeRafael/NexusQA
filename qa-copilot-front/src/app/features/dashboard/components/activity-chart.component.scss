@@ -1,0 +1,85 @@
+.chart-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  height: 100%;
+}
+
+.chart-header {
+  margin-bottom: 1.5rem;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0A0F1E;
+    margin: 0 0 2px;
+  }
+}
+
+.chart-subtitle {
+  font-size: 0.75rem;
+  color: #94A3B8;
+}
+
+.chart-loading, .chart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 8px;
+  color: #94A3B8;
+  font-size: 0.85rem;
+
+  mat-icon { font-size: 2rem; width: 2rem; height: 2rem; }
+}
+
+.chart-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bar-item { display: flex; flex-direction: column; gap: 4px; }
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bar-module {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.bar-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0A0F1E;
+}
+
+.bar-track {
+  height: 8px;
+  background: #F1F5F9;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s ease;
+}
+
+.bar-detail {
+  display: flex;
+  gap: 12px;
+  font-size: 0.7rem;
+
+  .success { color: #10B981; }
+  .failure { color: #EF4444; }
+}

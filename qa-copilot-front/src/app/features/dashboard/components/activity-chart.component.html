@@ -1,0 +1,34 @@
+<div class="chart-card">
+  <div class="chart-header">
+    <h3>Actividad por Módulo</h3>
+    <span class="chart-subtitle">Total de acciones registradas</span>
+  </div>
+
+  <div class="chart-loading" *ngIf="loading">
+    <mat-spinner diameter="32"></mat-spinner>
+  </div>
+
+  <div class="chart-empty" *ngIf="!loading && chartData.length === 0">
+    <mat-icon>bar_chart</mat-icon>
+    <span>Sin datos de actividad aún</span>
+  </div>
+
+  <div class="chart-body" *ngIf="!loading && chartData.length > 0">
+    <div class="bar-item" *ngFor="let item of chartData">
+      <div class="bar-label">
+        <span class="bar-module">{{ item.module }}</span>
+        <span class="bar-count">{{ item.totalActions }}</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill"
+          [style.width.%]="item.percentage"
+          [style.background]="item.color">
+        </div>
+      </div>
+      <div class="bar-detail">
+        <span class="success">✓ {{ item.successCount }}</span>
+        <span class="failure">✗ {{ item.failureCount }}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="testcases-page">
+  <div class="page-header">
+    <div>
+      <h1>Generar Casos de Prueba</h1>
+      <p>La IA genera casos en formato ISO 29119 basados en ISTQB</p>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <!-- FORM -->
+    <div class="form-card">
+      <h3>Configurar Generación</h3>
+
+      <form [formGroup]="form" (ngSubmit)="generate()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Seleccionar Documento</mat-label>
+          <mat-select formControlName="documentId">
+            <mat-option *ngFor="let doc of documents" [value]="doc.id">
+              {{ doc.fileName }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>description</mat-icon>
+          <mat-error>Selecciona un documento</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contexto adicional (opcional)</mat-label>
+          <textarea matInput formControlName="additionalContext"
+            rows="4"
+            placeholder="Ej: Módulo de login, pruebas de regresión, flujo de pago...">
+          </textarea>
+          <mat-icon matPrefix>notes</mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit"
+          class="generate-btn" [disabled]="form.invalid || generating">
+          <mat-spinner diameter="20" *ngIf="generating"></mat-spinner>
+          <mat-icon *ngIf="!generating">auto_awesome</mat-icon>
+          <span>{{ generating ? 'Generando con IA...' : 'Generar Casos de Prueba' }}</span>
+        </button>
+      </form>
+
+      <div class="info-box">
+        <mat-icon>info</mat-icon>
+        <p>La IA analiza el requerimiento y genera casos siguiendo ISTQB e ISO/IEC/IEEE 29119.</p>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-card" *ngIf="result">
+      <div class="result-header">
+        <h3>Casos Generados</h3>
+        <div class="result-meta">
+          <div class="meta-badge">
+            <mat-icon>assignment</mat-icon>
+            {{ result.totalTestCases }} casos
+          </div>
+          <div class="meta-badge confidence"
+            [style.color]="getConfidenceColor()"
+            [style.background]="getConfidenceColor() + '20'">
+            <mat-icon>verified</mat-icon>
+            {{ (result.confidenceScore * 100).toFixed(0) }}% confianza
+          </div>
+          <button mat-icon-button (click)="copyToClipboard()" matTooltip="Copiar">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="result-content">
+        <pre>{{ result.generatedContent }}</pre>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-result" *ngIf="!result && !generating">
+      <mat-icon>auto_awesome</mat-icon>
+      <h3>Listo para generar</h3>
+      <p>Selecciona un documento y haz clic en generar</p>
+    </div>
+  </div>
+</div>

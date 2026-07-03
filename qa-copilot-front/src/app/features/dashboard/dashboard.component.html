@@ -1,0 +1,375 @@
+<div class="dashboard">
+
+  <!-- GREETING -->
+  <div class="dashboard-greeting">
+    <div>
+      <h1>{{ greeting }}, <span>{{ userName }}</span> 👋</h1>
+      <p>Bienvenido a QA Copilot — Plataforma enterprise de automatización QA</p>
+    </div>
+    <div class="role-badge" [ngSwitch]="userRole">
+      <span *ngSwitchCase="'Admin'" class="badge-admin">Administrador</span>
+      <span *ngSwitchCase="'Senior'" class="badge-senior">Senior QA</span>
+      <span *ngSwitchCase="'QAEngineer'" class="badge-qa">QA Engineer</span>
+      <span *ngSwitchDefault class="badge-viewer">Auditor</span>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-row" *ngIf="loading">
+    <mat-spinner diameter="32"></mat-spinner>
+    <span>Cargando datos...</span>
+  </div>
+
+  <ng-container *ngIf="!loading">
+
+    <!-- ─── ADMIN DASHBOARD ─── -->
+    <ng-container *ngIf="userRole === 'Admin'">
+      <div class="kpi-grid">
+        <div class="kpi-card" *ngFor="let kpi of adminKpis"
+          (click)="navigate(kpi.route)" [style.border-top-color]="kpi.color">
+          <div class="kpi-icon" [style.background]="kpi.color + '20'">
+            <mat-icon [style.color]="kpi.color">{{ kpi.icon }}</mat-icon>
+          </div>
+          <div class="kpi-value">{{ kpi.value }}</div>
+          <div class="kpi-title">{{ kpi.title }}</div>
+        </div>
+      </div>
+
+      <!-- RESUMEN EQUIPO PARA ADMIN -->
+      <div class="section-card team-summary-card" *ngIf="teamSummary.length > 0">
+        <div class="section-header">
+          <h3><mat-icon>dashboard_customize</mat-icon> Indicadores del Equipo QA</h3>
+          <button mat-button (click)="navigate('/senior-panel')">Ver Panel Completo</button>
+        </div>
+        <div class="team-indicators-grid">
+          <div class="ti-row" *ngFor="let m of teamSummary">
+            <div class="ti-avatar" [style.background]="getScoreColor(m.scoreFinal)">
+              {{ m.userName?.charAt(0)?.toUpperCase() }}
+            </div>
+            <div class="ti-name">
+              <span class="ti-username">{{ m.userName }}</span>
+              <span class="ti-role">{{ m.role }}</span>
+            </div>
+            <div class="ti-bar-wrap">
+              <div class="ti-bar">
+                <div class="ti-bar-fill" [style.width.%]="m.scoreFinal" [style.background]="getScoreColor(m.scoreFinal)"></div>
+              </div>
+            </div>
+            <div class="ti-score" [class]="getScoreClass(m.scoreFinal)">{{ m.scoreFinal }}%</div>
+            <div class="ti-label" [class]="getScoreClass(m.scoreFinal)">{{ getScoreLabel(m.scoreFinal) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <app-activity-chart [data]="metrics?.activityByModule || []" [loading]="false"></app-activity-chart>
+        <app-recent-activity [activities]="recentActivities" [loading]="false"></app-recent-activity>
+      </div>
+
+      <div class="quick-actions">
+        <h3>Acciones Rápidas — Admin</h3>
+        <div class="actions-grid">
+          <button mat-stroked-button class="action-btn" (click)="navigate('/metrics')">
+            <mat-icon>bar_chart</mat-icon><span>Ver Métricas</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/projects')">
+            <mat-icon>work</mat-icon><span>Gestionar Proyectos</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/training')">
+            <mat-icon>model_training</mat-icon><span>Entrenar IA</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/senior-panel')">
+            <mat-icon>dashboard_customize</mat-icon><span>Panel Senior</span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ─── SENIOR DASHBOARD ─── -->
+    <ng-container *ngIf="userRole === 'Senior'">
+      <div class="kpi-grid">
+        <div class="kpi-card" *ngFor="let kpi of seniorKpis"
+          (click)="navigate(kpi.route)" [style.border-top-color]="kpi.color">
+          <div class="kpi-icon" [style.background]="kpi.color + '20'">
+            <mat-icon [style.color]="kpi.color">{{ kpi.icon }}</mat-icon>
+          </div>
+          <div class="kpi-value">{{ kpi.value }}</div>
+          <div class="kpi-title">{{ kpi.title }}</div>
+        </div>
+      </div>
+
+      <!-- RESUMEN EQUIPO PARA SENIOR -->
+      <div class="section-card team-summary-card" *ngIf="teamSummary.length > 0">
+        <div class="section-header">
+          <h3><mat-icon>dashboard_customize</mat-icon> Indicadores del Equipo QA</h3>
+          <button mat-button (click)="navigate('/senior-panel')">Ver Panel Completo</button>
+        </div>
+        <div class="team-indicators-grid">
+          <div class="ti-row" *ngFor="let m of teamSummary">
+            <div class="ti-avatar" [style.background]="getScoreColor(m.scoreFinal)">
+              {{ m.userName?.charAt(0)?.toUpperCase() }}
+            </div>
+            <div class="ti-name">
+              <span class="ti-username">{{ m.userName }}</span>
+              <span class="ti-role">{{ m.role }}</span>
+            </div>
+            <div class="ti-bar-wrap">
+              <div class="ti-bar">
+                <div class="ti-bar-fill" [style.width.%]="m.scoreFinal" [style.background]="getScoreColor(m.scoreFinal)"></div>
+              </div>
+            </div>
+            <div class="ti-score" [class]="getScoreClass(m.scoreFinal)">{{ m.scoreFinal }}%</div>
+            <div class="ti-label" [class]="getScoreClass(m.scoreFinal)">{{ getScoreLabel(m.scoreFinal) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card" *ngIf="myProjects.length > 0">
+        <div class="section-header">
+          <h3>Proyectos del Equipo</h3>
+          <button mat-button (click)="navigate('/projects')">Ver todos</button>
+        </div>
+        <div class="projects-list">
+          <div class="project-row" *ngFor="let p of myProjects.slice(0, 5)">
+            <div class="project-dot" [style.background]="getStatusColor(p.status)"></div>
+            <div class="project-info">
+              <span class="project-name">{{ p.name }}</span>
+              <span class="project-desc">{{ p.description }}</span>
+            </div>
+            <span class="project-status-badge"
+              [style.color]="getStatusColor(p.status)"
+              [style.background]="getStatusColor(p.status) + '20'">
+              {{ getStatusLabel(p.status) }}
+            </span>
+            <span class="project-qa">{{ p.totalAssignedQAs }} QA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <app-activity-chart [data]="metrics?.activityByModule || []" [loading]="false"></app-activity-chart>
+        <app-recent-activity [activities]="recentActivities" [loading]="false"></app-recent-activity>
+      </div>
+
+      <div class="quick-actions">
+        <h3>Acciones Rápidas — Senior QA</h3>
+        <div class="actions-grid">
+          <button mat-stroked-button class="action-btn" (click)="navigate('/senior-panel')">
+            <mat-icon>dashboard_customize</mat-icon><span>Panel Senior</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/reports')">
+            <mat-icon>summarize</mat-icon><span>Generar Informes</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/analytics')">
+            <mat-icon>insights</mat-icon><span>Actividad del Equipo</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/testplan')">
+            <mat-icon>assignment</mat-icon><span>Analizar Plan</span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ─── QA ENGINEER DASHBOARD ─── -->
+    <ng-container *ngIf="userRole === 'QAEngineer'">
+      <div class="kpi-grid">
+        <div class="kpi-card" *ngFor="let kpi of qaKpis"
+          (click)="navigate(kpi.route)" [style.border-top-color]="kpi.color">
+          <div class="kpi-icon" [style.background]="kpi.color + '20'">
+            <mat-icon [style.color]="kpi.color">{{ kpi.icon }}</mat-icon>
+          </div>
+          <div class="kpi-value">{{ kpi.value }}</div>
+          <div class="kpi-title">{{ kpi.title }}</div>
+        </div>
+      </div>
+
+      <!-- WIDGET INDICADORES QA — solo si el Senior los activó -->
+      <div class="indicators-widget" *ngIf="indicatorsEnabled && myIndicators">
+        <div class="iw-header">
+          <div class="iw-title">
+            <mat-icon>insights</mat-icon>
+            <span>Mis Indicadores de Rendimiento</span>
+          </div>
+          <div class="iw-controls">
+            <div class="filter-toggle">
+              <button class="ftoggle-btn" [class.active]="indicatorFilterAll"
+                (click)="indicatorFilterAll=true; onIndicatorFilterChange()">Todo</button>
+              <button class="ftoggle-btn" [class.active]="!indicatorFilterAll"
+                (click)="indicatorFilterAll=false; onIndicatorFilterChange()">Por mes</button>
+            </div>
+            <ng-container *ngIf="!indicatorFilterAll">
+              <select class="iw-period-select" [(ngModel)]="indicatorMonth" (change)="onIndicatorFilterChange()">
+                <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
+              </select>
+              <select class="iw-period-select" [(ngModel)]="indicatorYear" (change)="onIndicatorFilterChange()">
+                <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+              </select>
+            </ng-container>
+            <span class="iw-period">{{ indicatorPeriodLabel }}</span>
+          </div>
+        </div>
+        <div class="iw-body">
+          <!-- Score Final grande -->
+          <div class="iw-final">
+            <div class="iw-score" [class]="getScoreClass(myIndicators.scoreFinal)">
+              {{ myIndicators.scoreFinal }}<span class="iw-pct">%</span>
+            </div>
+            <div class="iw-label" [class]="getScoreClass(myIndicators.scoreFinal)">
+              {{ getScoreLabel(myIndicators.scoreFinal) }}
+            </div>
+            <div class="iw-sublabel">Score Final</div>
+          </div>
+
+          <!-- 3 indicadores -->
+          <div class="iw-metrics">
+            <!-- Plan -->
+            <div class="iw-metric">
+              <div class="iwm-header">
+                <mat-icon style="color:#3b82f6">assignment</mat-icon>
+                <span>Plan de Pruebas</span>
+                <span class="iwm-weight">50%</span>
+              </div>
+              <div class="iwm-score" [class]="getScoreClass(myIndicators.scorePlan)">
+                {{ myIndicators.scorePlan }}%
+              </div>
+              <div class="iwm-bar">
+                <div class="iwm-fill" [style.width.%]="myIndicators.scorePlan"
+                  [style.background]="getScoreColor(myIndicators.scorePlan)"></div>
+              </div>
+              <div class="iwm-detail">{{ myIndicators.totalCPs }} CPs · {{ myIndicators.horasEfectivas }}h efectivas</div>
+            </div>
+
+            <!-- Documental -->
+            <div class="iw-metric">
+              <div class="iwm-header">
+                <mat-icon style="color:#10b981">folder_open</mat-icon>
+                <span>Documental</span>
+                <span class="iwm-weight">25%</span>
+              </div>
+              <div class="iwm-score" [class]="getScoreClass(myIndicators.scoreDocumental)">
+                {{ myIndicators.scoreDocumental }}%
+              </div>
+              <div class="iwm-bar">
+                <div class="iwm-fill" [style.width.%]="myIndicators.scoreDocumental"
+                  [style.background]="getScoreColor(myIndicators.scoreDocumental)"></div>
+              </div>
+              <div class="iwm-detail">{{ myIndicators.totalDocumentos }} / {{ myIndicators.metaDocumentos }} docs</div>
+            </div>
+
+            <!-- Aportes -->
+            <div class="iw-metric">
+              <div class="iwm-header">
+                <mat-icon style="color:#f59e0b">lightbulb</mat-icon>
+                <span>Aportes</span>
+                <span class="iwm-weight">25%</span>
+              </div>
+              <div class="iwm-score" [class]="getScoreClass(myIndicators.scoreAportes)">
+                {{ myIndicators.scoreAportes }}%
+              </div>
+              <div class="iwm-bar">
+                <div class="iwm-fill" [style.width.%]="myIndicators.scoreAportes"
+                  [style.background]="getScoreColor(myIndicators.scoreAportes)"></div>
+              </div>
+              <div class="iwm-detail">{{ myIndicators.totalAportes }} aportes registrados</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading indicadores -->
+      <div class="indicators-loading" *ngIf="loadingIndicators">
+        <mat-spinner diameter="24"></mat-spinner>
+        <span>Cargando indicadores...</span>
+      </div>
+
+      <!-- Sin indicadores activados -->
+      <div class="no-indicators" *ngIf="!loadingIndicators && !indicatorsEnabled">
+        <mat-icon>insights</mat-icon>
+        <p>Tus indicadores de rendimiento aún no han sido activados por tu Senior.</p>
+      </div>
+
+      <!-- MIS PROYECTOS -->
+      <div class="section-card" *ngIf="myProjects.length > 0">
+        <div class="section-header">
+          <h3>Mis Proyectos Asignados</h3>
+          <button mat-button (click)="navigate('/projects/my')">Ver todos</button>
+        </div>
+        <div class="projects-list">
+          <div class="project-row" *ngFor="let p of myProjects.slice(0, 3)">
+            <div class="project-dot" [style.background]="getStatusColor(p.status)"></div>
+            <div class="project-info">
+              <span class="project-name">{{ p.name }}</span>
+              <span class="project-desc">{{ p.description }}</span>
+            </div>
+            <span class="project-status-badge"
+              [style.color]="getStatusColor(p.status)"
+              [style.background]="getStatusColor(p.status) + '20'">
+              {{ getStatusLabel(p.status) }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MIS DOCUMENTOS RECIENTES -->
+      <div class="section-card" *ngIf="myDocuments.length > 0">
+        <div class="section-header">
+          <h3>Mis Documentos Recientes</h3>
+          <button mat-button (click)="navigate('/documents')">Ver todos</button>
+        </div>
+        <div class="docs-list">
+          <div class="doc-row" *ngFor="let doc of myDocuments.slice(0, 4)">
+            <mat-icon style="color:#3B82F6">description</mat-icon>
+            <div class="doc-info">
+              <span class="doc-name">{{ doc.fileName }}</span>
+              <span class="doc-date">{{ formatDate(doc.uploadedAt) }}</span>
+            </div>
+            <button mat-icon-button (click)="navigate('/testcases')" matTooltip="Generar casos">
+              <mat-icon style="color:#10B981">auto_awesome</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <h3>Acciones Rápidas — QA Engineer</h3>
+        <div class="actions-grid">
+          <button mat-stroked-button class="action-btn" (click)="navigate('/documents')">
+            <mat-icon>upload_file</mat-icon><span>Subir Documento</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/testcases')">
+            <mat-icon>auto_awesome</mat-icon><span>Generar Casos</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/chat')">
+            <mat-icon>smart_toy</mat-icon><span>Chat QA</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/history')">
+            <mat-icon>history</mat-icon><span>Ver Historial</span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ─── VIEWER DASHBOARD ─── -->
+    <ng-container *ngIf="userRole === 'Viewer'">
+      <div class="viewer-banner">
+        <mat-icon>visibility</mat-icon>
+        <div>
+          <h3>Modo Auditor</h3>
+          <p>Tienes acceso de solo lectura al sistema QA Copilot de ithealth.co</p>
+        </div>
+      </div>
+      <div class="quick-actions">
+        <h3>Acceso disponible</h3>
+        <div class="actions-grid">
+          <button mat-stroked-button class="action-btn" (click)="navigate('/history')">
+            <mat-icon>history</mat-icon><span>Ver Historial</span>
+          </button>
+          <button mat-stroked-button class="action-btn" (click)="navigate('/chat')">
+            <mat-icon>smart_toy</mat-icon><span>Chat QA</span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+  </ng-container>
+</div>

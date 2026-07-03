@@ -1,0 +1,262 @@
+<div class="senior-panel">
+
+  <!-- HEADER -->
+  <div class="panel-header">
+    <div class="header-left">
+      <button mat-icon-button *ngIf="viewMode === 'detail'" (click)="backToTeam()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-icon">
+        <mat-icon>dashboard_customize</mat-icon>
+      </div>
+      <div>
+        <h1>{{ viewMode === 'team' ? 'Panel Senior — Indicadores QA' : 'Detalle: ' + selectedUser?.userName }}</h1>
+        <p>{{ viewMode === 'team' ? 'Gestiona y monitorea el rendimiento del equipo' : 'Plan 50% · Documental 25% · Aportes 25%' }}</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <!-- FILTRO DE FECHA -->
+      <div class="date-filter">
+        <div class="filter-toggle">
+          <button class="ftoggle-btn" [class.active]="filterAll" (click)="filterAll=true; onFilterChange()">
+            Todo
+          </button>
+          <button class="ftoggle-btn" [class.active]="!filterAll" (click)="filterAll=false; onFilterChange()">
+            Por mes
+          </button>
+        </div>
+        <div class="month-selectors" *ngIf="!filterAll">
+          <select class="date-select" [(ngModel)]="selectedMonth" (change)="onFilterChange()">
+            <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
+          </select>
+          <select class="date-select" [(ngModel)]="selectedYear" (change)="onFilterChange()">
+            <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+          </select>
+        </div>
+        <div class="period-label">
+          <mat-icon>calendar_month</mat-icon>
+          {{ currentPeriodLabel }}
+        </div>
+      </div>
+      <button mat-stroked-button (click)="loadTeam()" [disabled]="loading">
+        <mat-icon>refresh</mat-icon> Actualizar
+      </button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-state" *ngIf="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Calculando indicadores — {{ currentPeriodLabel }}...</p>
+  </div>
+
+  <!-- VISTA EQUIPO -->
+  <div class="team-view" *ngIf="!loading && viewMode === 'team'">
+
+    <!-- KPIs RESUMEN -->
+    <div class="summary-kpis">
+      <div class="skpi">
+        <span class="skpi-val">{{ teamData.length }}</span>
+        <span class="skpi-lbl">Miembros activos</span>
+      </div>
+      <div class="skpi green">
+        <span class="skpi-val">{{ teamData | teamFilter:'enabled' }}</span>
+        <span class="skpi-lbl">Con indicadores activos</span>
+      </div>
+      <div class="skpi blue">
+        <span class="skpi-val">{{ (teamData | teamFilter:'avgScore') }}%</span>
+        <span class="skpi-lbl">Score promedio equipo</span>
+      </div>
+      <div class="skpi purple">
+        <span class="skpi-val">{{ teamData | teamFilter:'projects' }}</span>
+        <span class="skpi-lbl">Proyectos asignados</span>
+      </div>
+    </div>
+
+    <!-- TABLA DEL EQUIPO -->
+    <div class="team-table-card">
+      <div class="table-header">
+        <span>Equipo QA</span>
+        <span class="table-hint">{{ currentPeriodLabel }} · Activa los indicadores para que el QA los vea en su dashboard</span>
+      </div>
+      <table class="team-table">
+        <thead>
+          <tr>
+            <th>QA Engineer</th>
+            <th>Rol</th>
+            <th class="center">Plan (50%)</th>
+            <th class="center">Documental (25%)</th>
+            <th class="center">Aportes (25%)</th>
+            <th class="center">Score Final</th>
+            <th class="center">Meta Docs</th>
+            <th class="center">Indicadores</th>
+            <th class="center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of teamData">
+            <td>
+              <div class="user-cell">
+                <div class="user-avatar" [style.background]="getScoreColor(user.scoreFinal)">
+                  {{ user.userName?.charAt(0)?.toUpperCase() }}
+                </div>
+                <div>
+                  <div class="user-name">{{ user.userName }}</div>
+                  <div class="user-email">{{ user.email }}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="role-badge" [class.senior]="user.role === 'Admin' || user.role === 'Senior'">
+                <mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>
+                {{ user.role }}
+              </span>
+            </td>
+            <td class="center">
+              <div class="score-cell">
+                <div class="score-circle" [class]="getScoreClass(user.scorePlan)">{{ user.scorePlan }}%</div>
+                <div class="score-sub">{{ user.totalCPs }} CPs · {{ user.horasEfectivas }}h</div>
+              </div>
+            </td>
+            <td class="center">
+              <div class="score-cell">
+                <div class="score-circle" [class]="getScoreClass(user.scoreDocumental)">{{ user.scoreDocumental }}%</div>
+                <div class="score-sub">{{ user.totalDocumentos }}/{{ user.metaDocumentos }} docs</div>
+              </div>
+            </td>
+            <td class="center">
+              <div class="score-cell">
+                <div class="score-circle" [class]="getScoreClass(user.scoreAportes)">{{ user.scoreAportes }}%</div>
+                <div class="score-sub">{{ user.totalAportes }} aportes</div>
+              </div>
+            </td>
+            <td class="center">
+              <div class="final-score" [class]="getScoreClass(user.scoreFinal)">
+                <span class="final-num">{{ user.scoreFinal }}</span>
+                <span class="final-pct">%</span>
+                <div class="final-label">{{ getScoreLabel(user.scoreFinal) }}</div>
+              </div>
+            </td>
+            <td class="center">
+              <div class="meta-selector">
+                <select [value]="getConfig(user.userId)?.metaDocumentos || 3"
+                  (change)="updateMetaDocs(user, +($any($event.target).value))" class="meta-select">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                </select>
+                <span class="meta-label">docs/sprint</span>
+              </div>
+            </td>
+            <td class="center">
+              <mat-slide-toggle
+                [checked]="getConfig(user.userId)?.indicatorsEnabled"
+                (change)="toggleIndicators(user)" color="primary">
+              </mat-slide-toggle>
+            </td>
+            <td class="center">
+              <button mat-icon-button (click)="viewDetail(user)" matTooltip="Ver detalle">
+                <mat-icon>bar_chart</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- VISTA DETALLE -->
+  <div class="detail-view" *ngIf="!loading && viewMode === 'detail' && selectedUser">
+    <div class="detail-period-tag">
+      <mat-icon>calendar_month</mat-icon> Período: {{ currentPeriodLabel }}
+    </div>
+    <div class="detail-grid">
+
+      <!-- CARD PLAN -->
+      <div class="detail-card plan-card">
+        <div class="dc-header">
+          <div class="dc-icon plan"><mat-icon>assignment</mat-icon></div>
+          <div>
+            <div class="dc-title">Plan de Pruebas</div>
+            <div class="dc-weight">Peso: 50%</div>
+          </div>
+          <div class="dc-score" [class]="getScoreClass(selectedUser.scorePlan)">{{ selectedUser.scorePlan }}%</div>
+        </div>
+        <div class="dc-body">
+          <div class="dc-metric"><span class="dm-label">CPs ejecutados</span><span class="dm-val">{{ selectedUser.totalCPs }}</span></div>
+          <div class="dc-metric"><span class="dm-label">Horas efectivas</span><span class="dm-val">{{ selectedUser.horasEfectivas }}h</span></div>
+          <div class="dc-metric"><span class="dm-label">Eficiencia temporal</span><span class="dm-val">{{ selectedUser.eficienciaTemporal }} CPs/h</span></div>
+          <div class="dc-metric"><span class="dm-label">Proyectos asignados</span><span class="dm-val">{{ selectedUser.proyectosAsignados }}</span></div>
+          <div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scorePlan" [style.background]="getScoreColor(selectedUser.scorePlan)"></div></div>
+          <div class="dc-formula">Horas efectivas/día = 7h (8.5h - 1h daily - 0.5h pausas)</div>
+        </div>
+      </div>
+
+      <!-- CARD DOCUMENTAL -->
+      <div class="detail-card doc-card">
+        <div class="dc-header">
+          <div class="dc-icon doc"><mat-icon>folder_open</mat-icon></div>
+          <div>
+            <div class="dc-title">Documental</div>
+            <div class="dc-weight">Peso: 25%</div>
+          </div>
+          <div class="dc-score" [class]="getScoreClass(selectedUser.scoreDocumental)">{{ selectedUser.scoreDocumental }}%</div>
+        </div>
+        <div class="dc-body">
+          <div class="dc-metric"><span class="dm-label">Documentos generados</span><span class="dm-val">{{ selectedUser.totalDocumentos }}</span></div>
+          <div class="dc-metric"><span class="dm-label">Meta del sprint</span><span class="dm-val">{{ selectedUser.metaDocumentos }}</span></div>
+          <div class="dc-metric"><span class="dm-label">Docs en proyectos</span><span class="dm-val">{{ selectedUser.documentosEnProyectos }}</span></div>
+          <div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scoreDocumental" [style.background]="getScoreColor(selectedUser.scoreDocumental)"></div></div>
+          <div class="dc-formula">Score = (docs generados / meta sprint) × 100</div>
+        </div>
+      </div>
+
+      <!-- CARD APORTES -->
+      <div class="detail-card aportes-card">
+        <div class="dc-header">
+          <div class="dc-icon aportes"><mat-icon>lightbulb</mat-icon></div>
+          <div>
+            <div class="dc-title">Aportes de Mejora</div>
+            <div class="dc-weight">Peso: 25%</div>
+          </div>
+          <div class="dc-score" [class]="getScoreClass(selectedUser.scoreAportes)">{{ selectedUser.scoreAportes }}%</div>
+        </div>
+        <div class="dc-body">
+          <div class="dc-metric"><span class="dm-label">Total aportes</span><span class="dm-val">{{ selectedUser.totalAportes }}</span></div>
+          <div class="dc-metric"><span class="dm-label">Fuente</span><span class="dm-val">Jira + Sistema</span></div>
+          <div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scoreAportes" [style.background]="getScoreColor(selectedUser.scoreAportes)"></div></div>
+          <div class="dc-formula">Incluye: reportes, chats IA, documentos, casos de prueba</div>
+        </div>
+      </div>
+
+      <!-- CARD SCORE FINAL -->
+      <div class="detail-card final-card">
+        <div class="dc-header">
+          <div class="dc-icon final"><mat-icon>emoji_events</mat-icon></div>
+          <div>
+            <div class="dc-title">Score Final</div>
+            <div class="dc-weight">{{ currentPeriodLabel }}</div>
+          </div>
+        </div>
+        <div class="dc-body center-body">
+          <div class="big-score" [class]="getScoreClass(selectedUser.scoreFinal)">
+            {{ selectedUser.scoreFinal }}<span class="big-pct">%</span>
+          </div>
+          <div class="big-label" [class]="getScoreClass(selectedUser.scoreFinal)">
+            {{ getScoreLabel(selectedUser.scoreFinal) }}
+          </div>
+          <div class="score-formula">
+            <div class="sf-row"><span>Plan (50%)</span><span>{{ selectedUser.scorePlan }}% × 0.50 = <strong>{{ (selectedUser.scorePlan * 0.50).toFixed(1) }}</strong></span></div>
+            <div class="sf-row"><span>Documental (25%)</span><span>{{ selectedUser.scoreDocumental }}% × 0.25 = <strong>{{ (selectedUser.scoreDocumental * 0.25).toFixed(1) }}</strong></span></div>
+            <div class="sf-row"><span>Aportes (25%)</span><span>{{ selectedUser.scoreAportes }}% × 0.25 = <strong>{{ (selectedUser.scoreAportes * 0.25).toFixed(1) }}</strong></span></div>
+            <div class="sf-total"><span>Total</span><span><strong>{{ selectedUser.scoreFinal }}%</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

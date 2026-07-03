@@ -1,0 +1,22 @@
+.layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.layout-content {
+  margin-left: 260px;
+  flex: 1;
+  transition: margin-left 0.3s ease;
+  min-height: 100vh;
+
+  &.sidebar-collapsed {
+    margin-left: 72px;
+  }
+}
+
+.main-content {
+  margin-top: 64px;
+  padding: 1.5rem;
+  min-height: calc(100vh - 64px);
+}

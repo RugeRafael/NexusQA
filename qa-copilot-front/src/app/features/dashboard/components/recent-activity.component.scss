@@ -1,0 +1,120 @@
+.activity-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  height: 100%;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+
+  h3 { font-size: 1rem; font-weight: 600; color: #0A0F1E; margin: 0; }
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #10B981;
+  font-weight: 600;
+  background: #DCFCE7;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  background: #10B981;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.activity-loading, .activity-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 8px;
+  color: #94A3B8;
+  font-size: 0.85rem;
+
+  mat-icon { font-size: 2rem; width: 2rem; height: 2rem; }
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #F1F5F9;
+
+  &:last-child { border-bottom: none; }
+}
+
+.activity-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.activity-content { flex: 1; min-width: 0; }
+
+.activity-text {
+  font-size: 0.82rem;
+  color: #334155;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  strong { color: #0A0F1E; }
+}
+
+.activity-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 0.7rem;
+}
+
+.activity-module {
+  color: #64748B;
+  background: #F1F5F9;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.activity-time { color: #94A3B8; }
+
+.activity-status {
+  flex-shrink: 0;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+  &.success mat-icon { color: #10B981; }
+  &.failure mat-icon { color: #EF4444; }
+}

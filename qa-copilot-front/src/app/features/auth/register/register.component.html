@@ -1,0 +1,79 @@
+<div class="register-container">
+  <div class="register-card-wrapper">
+    <mat-card class="register-card">
+      <mat-card-content>
+        <div class="register-header">
+          <div class="brand-logo">QA</div>
+          <h2>Crear Cuenta</h2>
+          <p>Solo para el equipo <strong>@ithealth.co</strong></p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre completo</mat-label>
+            <input matInput formControlName="fullName" placeholder="Juan Pérez">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="fullName?.hasError('required')">El nombre es requerido</mat-error>
+            <mat-error *ngIf="fullName?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Correo corporativo</mat-label>
+            <input matInput formControlName="email" placeholder="nombre@ithealth.co">
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="email?.hasError('required')">El correo es requerido</mat-error>
+            <mat-error *ngIf="email?.hasError('pattern')">Solo se permite correo @ithealth.co</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Rol</mat-label>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let role of roles" [value]="role.value">
+                {{ role.label }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>badge</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="password"
+              [type]="hidePassword ? 'password' : 'text'">
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix type="button"
+              (click)="hidePassword = !hidePassword">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="password?.hasError('required')">La contraseña es requerida</mat-error>
+            <mat-error *ngIf="password?.hasError('minlength')">Mínimo 8 caracteres</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input matInput formControlName="confirmPassword" type="password">
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
+              Las contraseñas no coinciden
+            </mat-error>
+          </mat-form-field>
+
+          <div class="error-message" *ngIf="errorMessage">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ errorMessage }}</span>
+          </div>
+
+          <button mat-raised-button color="primary" type="submit"
+            class="full-width submit-btn" [disabled]="registerForm.invalid || isLoading">
+            <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+            <span *ngIf="!isLoading">Crear Cuenta</span>
+          </button>
+        </form>
+
+        <div class="login-link">
+          ¿Ya tienes cuenta?
+          <a routerLink="/auth/login">Iniciar sesión</a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

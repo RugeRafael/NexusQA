@@ -1,0 +1,148 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: #0a0f1e;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  overflow: hidden;
+
+  &.collapsed {
+    width: 72px;
+  }
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 72px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  background: #3b82f6;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+}
+
+.brand-logo-mini {
+  width: 36px;
+  height: 36px;
+  background: #3b82f6;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: white;
+  margin: 0 auto;
+}
+
+.brand-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+}
+
+.toggle-btn {
+  color: rgba(255, 255, 255, 0.5) !important;
+  flex-shrink: 0;
+
+  &:hover { color: white !important; }
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 0.75rem 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 0;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 400;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+  }
+
+  &.active {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border-right: 3px solid #3b82f6;
+
+    .nav-icon { color: #3b82f6; }
+  }
+}
+
+.nav-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-badge {
+  background: #3b82f6;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 99px;
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.version-tag {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+}

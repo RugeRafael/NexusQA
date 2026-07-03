@@ -1,0 +1,43 @@
+<div class="activity-card">
+  <div class="activity-header">
+    <h3>Actividad Reciente del Equipo</h3>
+    <span class="live-badge">
+      <span class="live-dot"></span>
+      En vivo
+    </span>
+  </div>
+
+  <div class="activity-loading" *ngIf="loading">
+    <mat-spinner diameter="28"></mat-spinner>
+  </div>
+
+  <div class="activity-empty" *ngIf="!loading && activities.length === 0">
+    <mat-icon>notifications_none</mat-icon>
+    <span>Sin actividad reciente</span>
+  </div>
+
+  <div class="activity-list" *ngIf="!loading && activities.length > 0">
+    <div class="activity-item" *ngFor="let activity of activities">
+      <div class="activity-icon"
+        [style.background]="getModuleColor(activity.module) + '20'"
+        [style.color]="getModuleColor(activity.module)">
+        <mat-icon>{{ getModuleIcon(activity.module) }}</mat-icon>
+      </div>
+      <div class="activity-content">
+        <div class="activity-text">
+          <strong>{{ activity.userName || 'Usuario' }}</strong>
+          {{ activity.action }}
+        </div>
+        <div class="activity-meta">
+          <span class="activity-module">{{ activity.module }}</span>
+<span class="activity-time">{{ formatTime(activity.occurredAt || activity.occuredAt) }}</span>
+        </div>
+      </div>
+      <div class="activity-status"
+        [class.success]="activity.success"
+        [class.failure]="!activity.success">
+        <mat-icon>{{ activity.success ? 'check_circle' : 'cancel' }}</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

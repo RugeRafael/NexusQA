@@ -1,0 +1,73 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="dialog-title">
+      <div class="dialog-icon">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <div>
+        <h2>Asignar QA Engineer</h2>
+        <p>Proyecto: <strong>{{ data.project.name }}</strong></p>
+      </div>
+    </div>
+    <button mat-icon-button (click)="cancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="dialog-body">
+    <div class="loading-row" *ngIf="loading">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span>Cargando usuarios...</span>
+    </div>
+
+    <form [formGroup]="form" *ngIf="!loading">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Seleccionar QA Engineer</mat-label>
+        <mat-select formControlName="userId">
+          <mat-option *ngFor="let user of users" [value]="user.id">
+            <div class="user-option">
+              <div class="user-avatar-mini" [style.background]="getRoleColor(user.role)">
+                {{ user.fullName?.charAt(0) || 'U' }}
+              </div>
+              <div>
+                <div class="user-name-opt">{{ user.fullName }}</div>
+                <div class="user-email-opt">{{ user.email }}</div>
+              </div>
+              <span class="role-chip" [style.color]="getRoleColor(user.role)"
+                [style.background]="getRoleColor(user.role) + '20'">
+                {{ user.role }}
+              </span>
+            </div>
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix>person</mat-icon>
+        <mat-error>Selecciona un usuario</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notas (opcional)</mat-label>
+        <input matInput formControlName="notes"
+          placeholder="Ej: Responsable del módulo de login">
+        <mat-icon matPrefix>notes</mat-icon>
+      </mat-form-field>
+
+      <div class="empty-users" *ngIf="users.length === 0">
+        <mat-icon>group_off</mat-icon>
+        <p>No hay QA Engineers disponibles en el sistema</p>
+      </div>
+    </form>
+  </div>
+
+  <div class="dialog-footer">
+    <button mat-button (click)="cancel()" [disabled]="assigning">
+      Cancelar
+    </button>
+    <button mat-raised-button color="primary"
+      (click)="assign()"
+      [disabled]="form.invalid || assigning || loading">
+      <mat-spinner diameter="18" *ngIf="assigning"></mat-spinner>
+      <mat-icon *ngIf="!assigning">person_add</mat-icon>
+      {{ assigning ? 'Asignando...' : 'Asignar' }}
+    </button>
+  </div>
+</div>

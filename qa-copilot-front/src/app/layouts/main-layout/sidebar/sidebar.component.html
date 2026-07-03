@@ -1,0 +1,32 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-header">
+    <div class="brand" *ngIf="!isCollapsed">
+      <div class="brand-logo">QA</div>
+      <span class="brand-name">Copilot</span>
+    </div>
+    <div class="brand-mini" *ngIf="isCollapsed">
+      <div class="brand-logo-mini">QA</div>
+    </div>
+    <button mat-icon-button class="toggle-btn" (click)="toggleSidebar.emit()">
+      <mat-icon>{{ isCollapsed ? 'menu_open' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <button
+      *ngFor="let item of filteredNavItems"
+      class="nav-item"
+      [class.active]="isActive(item.route)"
+      (click)="navigate(item.route)"
+      [matTooltip]="isCollapsed ? item.label : ''"
+      matTooltipPosition="right">
+      <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+      <span class="nav-label" *ngIf="!isCollapsed">{{ item.label }}</span>
+      <span class="nav-badge" *ngIf="item.badge && !isCollapsed">{{ item.badge }}</span>
+    </button>
+  </nav>
+
+  <div class="sidebar-footer" *ngIf="!isCollapsed">
+    <div class="version-tag">v1.0.0 — ithealth.co</div>
+  </div>
+</div>

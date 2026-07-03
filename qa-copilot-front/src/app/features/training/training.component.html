@@ -1,0 +1,135 @@
+<div class="training-page">
+  <div class="page-header">
+    <div>
+      <h1>Entrenamiento IA</h1>
+      <p>Sube documentos para que la IA aprenda el contexto de ithealth.co</p>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="upload-panel">
+      <h3>Subir Documento de Contexto</h3>
+
+      <div class="upload-zone"
+        [class.dragging]="isDragging"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)">
+        <div class="upload-content" *ngIf="!uploading">
+          <div class="upload-icon">
+            <mat-icon>model_training</mat-icon>
+          </div>
+          <h4>Arrastra el documento aquí</h4>
+          <p>PDF, DOCX, XLSX — Máximo 10MB</p>
+          <label class="upload-btn">
+            <input type="file" hidden
+              accept=".pdf,.docx,.xlsx,.txt"
+              (change)="onFileSelected($event)">
+            <mat-icon>attach_file</mat-icon>
+            Seleccionar archivo
+          </label>
+        </div>
+        <div class="upload-progress" *ngIf="uploading">
+          <mat-spinner diameter="36"></mat-spinner>
+          <p>Subiendo documento de entrenamiento...</p>
+        </div>
+      </div>
+
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Categoría</mat-label>
+          <mat-select formControlName="category">
+            <mat-option *ngFor="let cat of categories" [value]="cat.value">
+              {{ cat.label }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>category</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descripción (opcional)</mat-label>
+          <input matInput formControlName="description"
+            placeholder="Describe el contenido del documento">
+          <mat-icon matPrefix>notes</mat-icon>
+        </mat-form-field>
+      </form>
+
+      <div class="info-box">
+        <mat-icon>info</mat-icon>
+        <p>Los documentos subidos aquí son usados como contexto por la IA al generar casos de prueba e informes.</p>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS LIST -->
+    <div class="docs-card">
+      <div class="card-header">
+        <h3>Documentos de Entrenamiento</h3>
+        <span class="doc-count">{{ documents.length }} documentos</span>
+      </div>
+
+      <div class="loading-row" *ngIf="loading">
+        <mat-spinner diameter="24"></mat-spinner>
+      </div>
+
+      <div class="empty-state" *ngIf="!loading && documents.length === 0">
+        <mat-icon>model_training</mat-icon>
+        <h4>Sin documentos de entrenamiento</h4>
+        <p>Sube el primer documento para enriquecer el contexto de la IA</p>
+      </div>
+
+      <table mat-table [dataSource]="documents"
+        *ngIf="!loading && documents.length > 0">
+
+        <ng-container matColumnDef="fileName">
+          <th mat-header-cell *matHeaderCellDef>Archivo</th>
+          <td mat-cell *matCellDef="let doc">
+            <div class="file-cell">
+              <mat-icon>description</mat-icon>
+              <div>
+                <div class="file-name">{{ doc.fileName }}</div>
+                <div class="file-size">{{ formatSize(doc.fileSizeBytes) }}</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Categoría</th>
+          <td mat-cell *matCellDef="let doc">
+            <span class="category-badge">{{ getCategoryLabel(doc.category) }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let doc">
+            <span class="status-badge"
+              [class.active]="doc.isActive"
+              [class.inactive]="!doc.isActive">
+              {{ doc.isActive ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="uploadedAt">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let doc">{{ formatDate(doc.uploadedAt) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let doc">
+            <button mat-icon-button [matTooltip]="doc.isActive ? 'Desactivar' : 'Activar'">
+              <mat-icon [style.color]="doc.isActive ? '#10B981' : '#94A3B8'">
+                {{ doc.isActive ? 'toggle_on' : 'toggle_off' }}
+              </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>

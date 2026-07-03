@@ -1,0 +1,153 @@
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  background: #0a0f1e;
+}
+
+.login-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  background: linear-gradient(135deg, #0a0f1e 0%, #1e3a5f 100%);
+
+  @media (max-width: 768px) { display: none; }
+}
+
+.brand {
+  margin-bottom: 3rem;
+
+  .brand-logo {
+    width: 64px;
+    height: 64px;
+    background: #3b82f6;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .brand-name {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 0.5rem;
+  }
+
+  .brand-tagline {
+    color: #94a3b8;
+    font-size: 1rem;
+    max-width: 400px;
+    line-height: 1.6;
+  }
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+
+  mat-icon {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.15);
+    padding: 8px;
+    border-radius: 8px;
+  }
+}
+
+.login-right {
+  width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #f8fafc;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1) !important;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0a0f1e;
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.submit-btn {
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px !important;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background: #fef2f2;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #64748b;
+  font-size: 0.9rem;
+
+  a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 600;
+    &:hover { text-decoration: underline; }
+  }
+}

@@ -1,0 +1,78 @@
+<div class="login-container">
+  <div class="login-left">
+    <div class="brand">
+      <div class="brand-logo">QA</div>
+      <h1 class="brand-name">Copilot</h1>
+      <p class="brand-tagline">Plataforma enterprise de automatización inteligente para equipos QA</p>
+    </div>
+    <div class="features-list">
+      <div class="feature-item">
+        <mat-icon>auto_awesome</mat-icon>
+        <span>Generación de casos de prueba con IA</span>
+      </div>
+      <div class="feature-item">
+        <mat-icon>verified</mat-icon>
+        <span>Análisis basado en ISTQB e ISO 29119</span>
+      </div>
+      <div class="feature-item">
+        <mat-icon>insights</mat-icon>
+        <span>Dashboard en tiempo real</span>
+      </div>
+      <div class="feature-item">
+        <mat-icon>smart_toy</mat-icon>
+        <span>Chatbot QA especializado</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <mat-card class="login-card">
+      <mat-card-content>
+        <div class="login-header">
+          <h2>Iniciar Sesión</h2>
+          <p>Acceso exclusivo para el equipo <strong>@ithealth.co</strong></p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Correo corporativo</mat-label>
+            <input matInput formControlName="email"
+              placeholder="nombre@ithealth.co" type="email" autocomplete="email">
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="email?.hasError('required')">El correo es requerido</mat-error>
+            <mat-error *ngIf="email?.hasError('pattern')">Solo se permite correo @ithealth.co</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="password"
+              [type]="hidePassword ? 'password' : 'text'" autocomplete="current-password">
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix type="button"
+              (click)="hidePassword = !hidePassword">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="password?.hasError('required')">La contraseña es requerida</mat-error>
+            <mat-error *ngIf="password?.hasError('minlength')">Mínimo 6 caracteres</mat-error>
+          </mat-form-field>
+
+          <div class="error-message" *ngIf="errorMessage">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ errorMessage }}</span>
+          </div>
+
+          <button mat-raised-button color="primary" type="submit"
+            class="full-width submit-btn" [disabled]="loginForm.invalid || isLoading">
+            <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+            <span *ngIf="!isLoading">Ingresar</span>
+          </button>
+        </form>
+
+        <div class="register-link">
+          ¿No tienes cuenta?
+          <a routerLink="/auth/register">Solicitar acceso</a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

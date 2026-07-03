@@ -1,0 +1,170 @@
+.reports-page { padding: 0; }
+
+.page-header {
+  margin-bottom: 1.5rem;
+  h1 { font-size: 1.5rem; font-weight: 700; color: #0A0F1E; margin: 0 0 4px; }
+  p { color: #64748B; font-size: 0.85rem; margin: 0; }
+}
+
+.reports-tabs { background: white; border-radius: 12px; border: 1px solid #E2E8F0; overflow: hidden; }
+.tab-content { padding: 1.5rem; }
+.form-section { max-width: 800px; margin: 0 auto; }
+
+.form-card {
+  background: #FAFAFA; border: 1px solid #E2E8F0; border-radius: 12px;
+  padding: 1.5rem; margin-bottom: 1.5rem;
+}
+
+.form-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 1.5rem;
+  h3 { font-size: 1rem; font-weight: 700; color: #0A0F1E; margin: 0 0 4px; }
+  p { font-size: 0.82rem; color: #64748B; margin: 0; }
+}
+
+.form-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  &.blue { background: rgba(59,130,246,0.1); mat-icon { color: #3B82F6; } }
+  &.green { background: rgba(16,185,129,0.1); mat-icon { color: #10B981; } }
+  &.purple { background: rgba(139,92,246,0.1); mat-icon { color: #8B5CF6; } }
+  mat-icon { font-size: 24px; width: 24px; height: 24px; }
+}
+
+.form-row { display: flex; gap: 1rem; margin-bottom: 0.5rem; }
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+.full-width { width: 100%; margin-bottom: 0.5rem; }
+
+.jira-url-field {
+  background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 10px;
+  padding: 0.75rem 0.75rem 0; margin-bottom: 1rem;
+  mat-icon { color: #10B981 !important; }
+}
+
+.upload-zone {
+  border: 2px dashed #E2E8F0; border-radius: 10px; padding: 1.25rem;
+  text-align: center; cursor: pointer; margin-bottom: 1rem; transition: all 0.2s;
+  &:hover { border-color: #3B82F6; background: rgba(59,130,246,0.02); }
+}
+
+.upload-content {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  mat-icon { font-size: 2rem; width: 2rem; height: 2rem; color: #94A3B8; }
+  p { font-size: 0.85rem; color: #64748B; margin: 0; font-weight: 500; }
+  span { font-size: 0.75rem; color: #94A3B8; }
+  &.file-loaded {
+    flex-direction: row; justify-content: center;
+    mat-icon { font-size: 1.5rem; width: 1.5rem; height: 1.5rem; }
+    p { color: #10B981; font-weight: 600; }
+  }
+}
+
+.jira-bugs-section {
+  background: #F8FAFC; border: 1px solid #E2E8F0;
+  border-radius: 10px; padding: 1rem; margin-bottom: 1rem;
+}
+
+.jira-bugs-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;
+  span { font-size: 0.85rem; font-weight: 600; color: #334155; }
+  button { display: flex; align-items: center; gap: 6px; font-size: 0.8rem !important; }
+}
+
+.issue-url-search {
+  display: flex; gap: 10px; align-items: flex-start; margin-bottom: 0.75rem;
+  button { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+}
+
+.or-divider {
+  display: flex; align-items: center; gap: 10px; margin: 0.5rem 0 0.75rem;
+  &::before, &::after { content: ''; flex: 1; height: 1px; background: #E2E8F0; }
+  span { font-size: 11px; color: #94A3B8; font-weight: 500; white-space: nowrap; }
+}
+
+.jira-project-selector {
+  display: flex; gap: 10px; align-items: flex-start; margin-bottom: 0.75rem;
+  button { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+}
+
+.jira-summary {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  margin-bottom: 0.75rem; padding: 0.75rem;
+  background: white; border-radius: 8px; border: 1px solid #E2E8F0;
+}
+
+.summary-kpi {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 8px; border-radius: 6px; background: #F8FAFC;
+  &.green { background: #DCFCE7; .sk-val { color: #16A34A; } }
+  &.red { background: #FEE2E2; .sk-val { color: #DC2626; } }
+  &.amber { background: #FEF3C7; .sk-val { color: #D97706; } }
+  .sk-val { font-size: 1.4rem; font-weight: 700; color: #0A0F1E; line-height: 1; }
+  .sk-lbl { font-size: 0.7rem; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; }
+}
+
+.jira-bugs-list { display: flex; flex-direction: column; gap: 6px; }
+
+.jira-bug-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; background: white; border-radius: 6px;
+  border: 1px solid #E2E8F0; font-size: 0.8rem;
+}
+
+.bug-key {
+  font-family: monospace; font-weight: 700; color: #3B82F6;
+  flex-shrink: 0; text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+.bug-summary { flex: 1; color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.bug-status {
+  font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 8px;
+  background: #F1F5F9; color: #64748B; flex-shrink: 0;
+  &.status-done { background: #DCFCE7; color: #16A34A; }
+  &.status-todo { background: #FEF9C3; color: #CA8A04; }
+  &.status-cancel { background: #FEE2E2; color: #DC2626; }
+}
+
+.bugs-more { font-size: 0.75rem; color: #94A3B8; text-align: center; margin: 4px 0 0; }
+
+.no-jira-msg {
+  display: flex; align-items: center; gap: 8px; padding: 0.75rem;
+  background: #F8FAFC; border-radius: 8px; color: #64748B; font-size: 0.82rem;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; color: #94A3B8; }
+}
+
+.form-actions {
+  display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 1rem;
+  button { display: flex; align-items: center; gap: 8px; min-width: 180px; justify-content: center; }
+}
+
+.form-hint {
+  font-size: 0.78rem; color: #94A3B8;
+  &.green { color: #16A34A; font-weight: 500; }
+}
+
+// PREVIEW CON IFRAME
+.preview-section {
+  margin-top: 1.5rem; border: 1px solid #E2E8F0;
+  border-radius: 12px; overflow: hidden;
+}
+
+.preview-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1.25rem; background: #F8FAFC; border-bottom: 1px solid #E2E8F0;
+  h3 { font-size: 0.9rem; font-weight: 600; color: #334155; margin: 0; }
+}
+
+.toolbar-actions {
+  display: flex; gap: 8px; align-items: center;
+  button {
+    display: flex; align-items: center; gap: 6px; font-size: 0.8rem !important;
+    mat-icon { font-size: 16px !important; width: 16px !important; height: 16px !important; }
+  }
+}
+
+.report-iframe {
+  width: 100%; height: 750px; border: none; display: block;
+  background: white;
+}

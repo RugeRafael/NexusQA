@@ -1,0 +1,247 @@
+<div class="metrics-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div>
+      <h1>Métricas del Sistema</h1>
+      <p>Panel de control administrativo — ithealth.co QA Copilot</p>
+    </div>
+    <button mat-stroked-button (click)="loadDashboard(); loadUsers()">
+      <mat-icon>refresh</mat-icon>
+      Actualizar
+    </button>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-full" *ngIf="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Cargando métricas...</p>
+  </div>
+
+  <ng-container *ngIf="!loading && dashboard">
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card blue">
+        <div class="kpi-icon"><mat-icon>description</mat-icon></div>
+        <div class="kpi-data">
+          <div class="kpi-value">{{ dashboard.totalDocuments }}</div>
+          <div class="kpi-label">Documentos Totales</div>
+        </div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-icon"><mat-icon>auto_awesome</mat-icon></div>
+        <div class="kpi-data">
+          <div class="kpi-value">{{ dashboard.totalTestCasesGenerated }}</div>
+          <div class="kpi-label">Casos de Prueba Generados</div>
+        </div>
+      </div>
+      <div class="kpi-card amber">
+        <div class="kpi-icon"><mat-icon>verified</mat-icon></div>
+        <div class="kpi-data">
+          <div class="kpi-value">{{ confidencePercent }}</div>
+          <div class="kpi-label">Confianza Promedio IA</div>
+        </div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-icon"><mat-icon>group</mat-icon></div>
+        <div class="kpi-data">
+          <div class="kpi-value">{{ dashboard.totalUsers }}</div>
+          <div class="kpi-label">Usuarios Activos</div>
+        </div>
+      </div>
+      <div class="kpi-card emerald">
+        <div class="kpi-icon"><mat-icon>check_circle</mat-icon></div>
+        <div class="kpi-data">
+          <div class="kpi-value">{{ totalSuccess }}</div>
+          <div class="kpi-label">Acciones Exitosas</div>
+        </div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-icon"><mat-icon>cancel</mat-icon></div>
+        <div class="kpi-data">
+          <div class="kpi-value">{{ totalFailures }}</div>
+          <div class="kpi-label">Acciones Fallidas</div>
+        </div>
+      </div>
+      <div class="kpi-card cyan">
+        <div class="kpi-icon"><mat-icon>insights</mat-icon></div>
+        <div class="kpi-data">
+          <div class="kpi-value">{{ globalSuccessRate }}</div>
+          <div class="kpi-label">Tasa de Éxito Global</div>
+        </div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-icon"><mat-icon>category</mat-icon></div>
+        <div class="kpi-data">
+          <div class="kpi-value">{{ dashboard.activityByModule?.length || 0 }}</div>
+          <div class="kpi-label">Módulos con Actividad</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVITY BY MODULE -->
+    <div class="section-card" *ngIf="dashboard.activityByModule?.length > 0">
+      <div class="section-header">
+        <h3>Actividad por Módulo</h3>
+        <span class="section-badge">{{ dashboard.activityByModule.length }} módulos</span>
+      </div>
+
+      <!-- BAR CHART VISUAL -->
+      <div class="bar-chart">
+        <div class="bar-item" *ngFor="let item of dashboard.activityByModule">
+          <div class="bar-info">
+            <div class="bar-module-label">
+              <div class="bar-dot" [style.background]="getModuleColor(item.module)"></div>
+              <mat-icon [style.color]="getModuleColor(item.module)">{{ getModuleIcon(item.module) }}</mat-icon>
+              <span>{{ item.module }}</span>
+            </div>
+            <span class="bar-total">{{ item.totalActions }}</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill"
+              [style.width.%]="(item.totalActions / maxModuleActions) * 100"
+              [style.background]="getModuleColor(item.module)">
+            </div>
+          </div>
+          <div class="bar-stats">
+            <span class="stat-success">✓ {{ item.successCount }} exitosos</span>
+            <span class="stat-fail">✗ {{ item.failureCount }} fallidos</span>
+            <span class="stat-rate"
+              [style.color]="getSuccessRateColor(item)"
+              [style.background]="getSuccessRateColor(item) + '20'"
+              class="rate-badge">
+              {{ getSuccessRate(item) }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <table mat-table [dataSource]="dashboard.activityByModule" class="metrics-table">
+        <ng-container matColumnDef="module">
+          <th mat-header-cell *matHeaderCellDef>Módulo</th>
+          <td mat-cell *matCellDef="let item">
+            <div class="module-cell">
+              <div class="module-dot" [style.background]="getModuleColor(item.module)"></div>
+              {{ item.module }}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="totalActions">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let item"><strong>{{ item.totalActions }}</strong></td>
+        </ng-container>
+        <ng-container matColumnDef="successCount">
+          <th mat-header-cell *matHeaderCellDef>Exitosos</th>
+          <td mat-cell *matCellDef="let item">
+            <span class="badge-success">{{ item.successCount }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="failureCount">
+          <th mat-header-cell *matHeaderCellDef>Fallidos</th>
+          <td mat-cell *matCellDef="let item">
+            <span class="badge-fail">{{ item.failureCount }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="successRate">
+          <th mat-header-cell *matHeaderCellDef>Tasa de Éxito</th>
+          <td mat-cell *matCellDef="let item">
+            <span class="rate-badge"
+              [style.color]="getSuccessRateColor(item)"
+              [style.background]="getSuccessRateColor(item) + '20'">
+              {{ getSuccessRate(item) }}
+            </span>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsActivity"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsActivity;"></tr>
+      </table>
+    </div>
+
+    <!-- EMPTY ACTIVITY -->
+    <div class="empty-card" *ngIf="!dashboard.activityByModule?.length">
+      <mat-icon>bar_chart</mat-icon>
+      <h3>Sin actividad registrada</h3>
+      <p>Los módulos registrarán actividad cuando los usuarios comiencen a usar el sistema</p>
+    </div>
+
+    <!-- USERS TABLE -->
+    <div class="section-card">
+      <div class="section-header">
+        <h3>Usuarios del Sistema</h3>
+        <span class="section-badge">{{ users.length }} usuarios</span>
+      </div>
+
+      <div class="loading-row" *ngIf="loadingUsers">
+        <mat-spinner diameter="24"></mat-spinner>
+      </div>
+
+      <table mat-table [dataSource]="users"
+        *ngIf="!loadingUsers && users.length > 0"
+        class="metrics-table">
+
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef>Usuario</th>
+          <td mat-cell *matCellDef="let user">
+            <div class="user-cell">
+              <div class="user-avatar" [style.background]="getRoleColor(user.role)">
+                {{ user.fullName?.charAt(0) || 'U' }}
+              </div>
+              <div>
+                <div class="user-name">{{ user.fullName }}</div>
+                <div class="user-email">{{ user.email }}</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Rol</th>
+          <td mat-cell *matCellDef="let user">
+            <span class="role-badge"
+              [style.color]="getRoleColor(user.role)"
+              [style.background]="getRoleColor(user.role) + '20'">
+              {{ getRoleLabel(user.role) }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalDocuments">
+          <th mat-header-cell *matHeaderCellDef>Documentos</th>
+          <td mat-cell *matCellDef="let user">
+            <span class="count-badge blue">{{ user.totalDocuments || 0 }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalTestCases">
+          <th mat-header-cell *matHeaderCellDef>Casos IA</th>
+          <td mat-cell *matCellDef="let user">
+            <span class="count-badge green">{{ user.totalTestCasesGenerated || 0 }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastActivity">
+          <th mat-header-cell *matHeaderCellDef>Último acceso</th>
+          <td mat-cell *matCellDef="let user">
+            <span class="date-text">{{ formatDate(user.lastLoginAt) }}</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsUsers"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsUsers;"></tr>
+      </table>
+
+      <div class="empty-state" *ngIf="!loadingUsers && users.length === 0">
+        <mat-icon>group_off</mat-icon>
+        <p>Sin usuarios registrados</p>
+      </div>
+    </div>
+
+  </ng-container>
+</div>
