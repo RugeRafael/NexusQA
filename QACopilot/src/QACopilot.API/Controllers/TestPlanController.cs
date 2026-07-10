@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QACopilot.API.Helpers;
-using QACopilot.Application.Interfaces.Services;
 using QACopilot.Domain.Entities;
 using QACopilot.Infrastructure.Data.Context;
 using QACopilot.Infrastructure.Services.ExternalServices;
+using QACopilot.Application.Interfaces.Services;
 
 namespace QACopilot.API.Controllers;
 
@@ -18,10 +18,7 @@ public class TestPlanController : ControllerBase
     private readonly QACopilotDbContext _context;
     private readonly ILogger<TestPlanController> _logger;
 
-    public TestPlanController(
-        IAIService aiService,
-        QACopilotDbContext context,
-        ILogger<TestPlanController> logger)
+    public TestPlanController(IAIService aiService, QACopilotDbContext context, ILogger<TestPlanController> logger)
     {
         _aiService = aiService;
         _context = context;
@@ -40,21 +37,18 @@ public class TestPlanController : ControllerBase
 
         try
         {
-            _logger.LogInformation("Analyzing test plan for project: {Project}", request.ProjectName);
-
             var aiServiceConcrete = _aiService as AIService;
             if (aiServiceConcrete == null)
                 return StatusCode(503, ApiResponse<object>.Fail("Servicio IA no disponible"));
 
-            var result = await aiServiceConcrete.AnalyzeTestPlanAsync(
-                request.PlanContent, request.ProjectName ?? "");
+            var result = await aiServiceConcrete.AnalyzeTestPlanAsync(request.PlanContent, request.ProjectName ?? "");
 
-            // Guardar en historial usando campos correctos de la entidad
             var analysis = new TestPlanAnalysis
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,
                 FileName = request.ProjectName ?? "Plan de Pruebas",
+                ProjectName = request.ProjectName ?? "",
                 FilePath = "",
                 IsViable = result.IsViable,
                 ViabilityReason = result.ViabilityReason,
@@ -69,8 +63,6 @@ public class TestPlanController : ControllerBase
             };
 
             await _context.TestPlanAnalyses.AddAsync(analysis);
-
-            // AuditMetrics
             await _context.AuditMetrics.AddAsync(new AuditMetric
             {
                 Id = Guid.NewGuid(),
@@ -82,7 +74,6 @@ public class TestPlanController : ControllerBase
                 IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "",
                 OccurredAt = DateTime.UtcNow
             });
-
             await _context.SaveChangesAsync();
 
             return Ok(ApiResponse<object>.Ok(new
@@ -101,38 +92,44 @@ public class TestPlanController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error analyzing test plan");
-            await _context.AuditMetrics.AddAsync(new AuditMetric
-            {
-                Id = Guid.NewGuid(),
-                UserId = userId,
-                Module = "TestPlan",
-                Action = "AnalyzeTestPlan",
-                Success = false,
-                ErrorMessage = ex.Message[..Math.Min(ex.Message.Length, 500)],
-                DurationMs = (long)(DateTime.UtcNow - startTime).TotalMilliseconds,
-                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "",
-                OccurredAt = DateTime.UtcNow
-            });
-            await _context.SaveChangesAsync();
             return StatusCode(500, ApiResponse<object>.Fail("Error al analizar el plan"));
         }
     }
 
-    // POST /api/testplan/analyze-file
-    [HttpPost("analyze-file")]
-    public async Task<IActionResult> AnalyzeFile(IFormFile file, [FromForm] string? projectName = null)
+    // POST /api/testplan/{id}/save-report
+    [HttpPost("{id}/save-report")]
+    public async Task<IActionResult> SaveReport(Guid id, [FromBody] SaveReportRequest request)
     {
-        if (file == null || file.Length == 0)
-            return BadRequest(ApiResponse<object>.Fail("Archivo requerido"));
+        var userId = Guid.Parse(User.FindFirst("uid")!.Value);
+        var analysis = await _context.TestPlanAnalyses
+            .FirstOrDefaultAsync(a => a.Id == id && a.UserId == userId);
 
-        using var reader = new StreamReader(file.OpenReadStream());
-        var content = await reader.ReadToEndAsync();
+        if (analysis == null)
+            return NotFound(ApiResponse<object>.Fail("Análisis no encontrado"));
 
-        return await Analyze(new AnalyzeTestPlanRequest
-        {
-            PlanContent = content,
-            ProjectName = projectName ?? file.FileName
-        });
+        analysis.ReportHtml = request.HtmlContent;
+        await _context.SaveChangesAsync();
+
+        return Ok(ApiResponse<object>.Ok(new { saved = true }));
+    }
+
+    // GET /api/testplan/{id}/download-report
+    [HttpGet("{id}/download-report")]
+    public async Task<IActionResult> DownloadReport(Guid id)
+    {
+        var userId = Guid.Parse(User.FindFirst("uid")!.Value);
+        var analysis = await _context.TestPlanAnalyses
+            .FirstOrDefaultAsync(a => a.Id == id && a.UserId == userId);
+
+        if (analysis == null)
+            return NotFound(ApiResponse<object>.Fail("Análisis no encontrado"));
+
+        if (string.IsNullOrEmpty(analysis.ReportHtml))
+            return NotFound(ApiResponse<object>.Fail("Reporte no generado aún"));
+
+        var bytes = System.Text.Encoding.UTF8.GetBytes(analysis.ReportHtml);
+        var fileName = $"Analisis_{analysis.FileName}_{analysis.AnalyzedAt:yyyyMMdd}.html";
+        return File(bytes, "text/html", fileName);
     }
 
     // GET /api/testplan/history
@@ -140,7 +137,6 @@ public class TestPlanController : ControllerBase
     public async Task<IActionResult> GetHistory()
     {
         var userId = Guid.Parse(User.FindFirst("uid")!.Value);
-
         var analyses = await _context.TestPlanAnalyses
             .Where(a => a.UserId == userId)
             .OrderByDescending(a => a.AnalyzedAt)
@@ -149,10 +145,12 @@ public class TestPlanController : ControllerBase
             {
                 id = a.Id,
                 fileName = a.FileName,
+                projectName = a.ProjectName,
                 isViable = a.IsViable,
                 confidenceScore = a.ConfidenceScore,
                 status = a.Status,
-                analyzedAt = a.AnalyzedAt
+                analyzedAt = a.AnalyzedAt,
+                hasReport = !string.IsNullOrEmpty(a.ReportHtml)
             })
             .ToListAsync();
 
@@ -164,8 +162,11 @@ public class AnalyzeTestPlanRequest
 {
     [System.Text.Json.Serialization.JsonPropertyName("plan_content")]
     public string PlanContent { get; set; } = string.Empty;
-
     [System.Text.Json.Serialization.JsonPropertyName("project_name")]
     public string? ProjectName { get; set; }
 }
 
+public class SaveReportRequest
+{
+    public string HtmlContent { get; set; } = string.Empty;
+}

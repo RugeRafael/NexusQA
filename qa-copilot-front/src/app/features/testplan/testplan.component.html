@@ -4,14 +4,44 @@
       <h1>Análisis de Plan de Pruebas</h1>
       <p>La IA evalúa tu plan contra ISTQB e ISO/IEC/IEEE 29119 y estima tiempos</p>
     </div>
+    <button mat-stroked-button (click)="showHistory = !showHistory">
+      <mat-icon>history</mat-icon>
+      Mi Historial ({{ history.length }})
+    </button>
+  </div>
+
+  <!-- HISTORIAL PERSONAL -->
+  <div class="history-panel" *ngIf="showHistory && history.length > 0">
+    <div class="history-header">
+      <h3>Mis Análisis Guardados</h3>
+    </div>
+    <div class="history-list">
+      <div class="history-item" *ngFor="let item of history">
+        <div class="history-icon" [style.background]="item.isViable ? '#DCFCE7' : '#FEE2E2'">
+          <mat-icon [style.color]="item.isViable ? '#16a34a' : '#dc2626'">
+            {{ item.isViable ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+        </div>
+        <div class="history-info">
+          <div class="history-name">{{ item.fileName }}</div>
+          <div class="history-meta">
+            {{ formatDate(item.analyzedAt) }} · Confianza: {{ ((item.confidenceScore || 0) * 100).toFixed(0) }}%
+          </div>
+        </div>
+        <button mat-icon-button matTooltip="Descargar informe HTML"
+          *ngIf="item.hasReport"
+          (click)="downloadFromHistory(item.id, item.fileName)">
+          <mat-icon style="color:#6366f1">download</mat-icon>
+        </button>
+        <span class="no-report" *ngIf="!item.hasReport">Sin informe</span>
+      </div>
+    </div>
   </div>
 
   <div class="content-grid">
     <!-- FORM -->
     <div class="form-card">
       <h3>Ingresar Plan de Pruebas</h3>
-
-      <!-- DRAG ZONE -->
       <div class="upload-zone"
         [class.dragging]="isDragging"
         (dragover)="onDragOver($event)"
@@ -25,9 +55,7 @@
         </label>
       </div>
 
-      <div class="divider">
-        <span>o escribe el plan directamente</span>
-      </div>
+      <div class="divider"><span>o escribe el plan directamente</span></div>
 
       <form [formGroup]="form" (ngSubmit)="analyze()">
         <mat-form-field appearance="outline" class="full-width">
@@ -37,10 +65,9 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Contenido del plan de pruebas</mat-label>
+          <mat-label>Contenido del plan de pruebas*</mat-label>
           <textarea matInput formControlName="planContent" rows="10"
-            placeholder="Pega aquí tu plan de pruebas...">
-          </textarea>
+            placeholder="Pega aquí tu plan de pruebas..."></textarea>
           <mat-error>Mínimo 50 caracteres</mat-error>
         </mat-form-field>
 
@@ -64,13 +91,18 @@
           {{ result.is_viable ? 'check_circle' : 'cancel' }}
         </mat-icon>
         <div>
-          <div class="viability-label" [style.color]="getViabilityColor()">
-            {{ getViabilityLabel() }}
-          </div>
-          <div class="viability-sub">
-            Confianza: {{ getConfidencePercent() }}%
-          </div>
+          <div class="viability-label" [style.color]="getViabilityColor()">{{ getViabilityLabel() }}</div>
+          <div class="viability-sub">Confianza: {{ getConfidencePercent() }}%</div>
         </div>
+
+        <!-- BOTON DESCARGAR ANALISIS -->
+        <button mat-raised-button class="download-btn"
+          (click)="generateAndSaveReport()"
+          [disabled]="saving">
+          <mat-spinner diameter="16" *ngIf="saving"></mat-spinner>
+          <mat-icon *ngIf="!saving">{{ reportSaved ? 'check' : 'download' }}</mat-icon>
+          {{ saving ? 'Guardando...' : reportSaved ? 'Guardado ✓' : 'Descargar Análisis' }}
+        </button>
       </div>
 
       <!-- TIME ESTIMATION -->
@@ -92,13 +124,13 @@
 
       <div class="compliance-card">
         <h3>Cumplimiento ISO 29119</h3>
-        <p>{{ result.iso29119_compliance_notes }}</p>
+        <div [innerHTML]="renderMarkdown(result.iso29119_compliance_notes)"></div>
       </div>
 
       <!-- FULL ANALYSIS -->
       <div class="analysis-card">
         <h3>Análisis Completo</h3>
-        <pre>{{ result.ai_analysis_result }}</pre>
+        <div class="markdown-body" [innerHTML]="renderMarkdown(result.ai_analysis_result)"></div>
       </div>
     </div>
 
@@ -110,3 +142,30 @@
     </div>
   </div>
 </div>
+
+<!-- SCSS additions needed in testplan.component.scss -->
+<!--
+.history-panel {
+  background: white; border: 1px solid #E2E8F0; border-radius: 12px;
+  margin-bottom: 24px; overflow: hidden;
+  .history-header { padding: 14px 20px; background: #FAFAFA; border-bottom: 1px solid #E2E8F0;
+    h3 { margin: 0; font-size: 0.9rem; font-weight: 700; } }
+  .history-list { padding: 8px; }
+  .history-item { display: flex; align-items: center; gap: 12px; padding: 10px 8px;
+    border-radius: 8px; &:hover { background: #F8FAFC; }
+    .history-icon { width: 36px; height: 36px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+      mat-icon { font-size: 18px; width: 18px; height: 18px; } }
+    .history-name { font-size: 0.85rem; font-weight: 600; color: #0A0F1E; }
+    .history-meta { font-size: 0.72rem; color: #94A3B8; margin-top: 2px; }
+    .history-info { flex: 1; }
+    .no-report { font-size: 0.72rem; color: #94A3B8; padding: 4px 8px; } }
+}
+.download-btn { margin-left: auto !important; background: #6366f1 !important;
+  color: white !important; font-size: 0.8rem !important; }
+.markdown-body { font-size: 0.875rem; line-height: 1.7; color: #334155;
+  h1,h2,h3 { color: #0A0F1E; font-weight: 700; margin: 1rem 0 0.5rem; }
+  h3 { font-size: 1rem; } strong { font-weight: 700; color: #0A0F1E; }
+  code { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
+  li { margin-bottom: 4px; } p { margin-bottom: 0.75rem; } }
+-->

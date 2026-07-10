@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fHGzxuEhTHk=",
+  "dgSpecHash": "0VSOAeQrxFU=",
   "success": true,
-  "projectFilePath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
+  "projectFilePath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rafael Ruge\\.nuget\\packages\\aspnetcoreratelimit\\5.0.0\\aspnetcoreratelimit.5.0.0.nupkg.sha512",
     "C:\\Users\\Rafael Ruge\\.nuget\\packages\\automapper\\16.1.1\\automapper.16.1.1.nupkg.sha512",
@@ -87,5 +87,18 @@
     "C:\\Users\\Rafael Ruge\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.4\\system.security.cryptography.pkcs.9.0.4.nupkg.sha512",
     "C:\\Users\\Rafael Ruge\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.4\\system.security.cryptography.protecteddata.9.0.4.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'Microsoft.OpenApi' 2.4.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
+      "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

@@ -13,3 +13,19 @@ C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilo
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\refint\QACopilot.Application.dll
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.pdb
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\ref\QACopilot.Application.dll
+C:\NexusQA\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Application.deps.json
+C:\NexusQA\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Application.dll
+C:\NexusQA\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Application.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Domain.dll
+C:\NexusQA\QACopilot\src\QACopilot.Application\bin\Debug\net10.0\QACopilot.Domain.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.csproj.AssemblyReference.cache
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.AssemblyInfoInputs.cache
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.AssemblyInfo.cs
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.csproj.CoreCompileInputs.cache
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.sourcelink.json
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilo.DABE4B5C.Up2Date
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.dll
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\refint\QACopilot.Application.dll
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\QACopilot.Application.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Application\obj\Debug\net10.0\ref\QACopilot.Application.dll

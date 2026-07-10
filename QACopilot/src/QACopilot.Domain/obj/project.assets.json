@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj",
+      "projectUniqueName": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj",
       "projectName": "QACopilot.Domain",
-      "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj",
+      "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj",
       "packagesPath": "C:\\Users\\Rafael Ruge\\.nuget\\packages\\",
-      "outputPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\obj\\",
+      "outputPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

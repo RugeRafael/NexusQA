@@ -4702,11 +4702,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
+      "projectUniqueName": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
       "projectName": "QACopilot.API",
-      "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
+      "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
       "packagesPath": "C:\\Users\\Rafael Ruge\\.nuget\\packages\\",
-      "outputPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\obj\\",
+      "outputPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4728,11 +4728,11 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj": {
-              "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj"
+            "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj": {
+              "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj"
             },
-            "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj": {
-              "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj"
+            "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj": {
+              "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj"
             }
           }
         }
@@ -5236,5 +5236,17 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.OpenApi' 2.4.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

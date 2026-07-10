@@ -17,3 +17,23 @@ C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\refin
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.pdb
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.genruntimeconfig.cache
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\ref\QACopilot.Infrastructure.dll
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\bin\Debug\net10.0\QACopilot.Infrastructure.deps.json
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\bin\Debug\net10.0\QACopilot.Infrastructure.runtimeconfig.json
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\bin\Debug\net10.0\QACopilot.Infrastructure.dll
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\bin\Debug\net10.0\QACopilot.Infrastructure.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\bin\Debug\net10.0\QACopilot.Application.dll
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\bin\Debug\net10.0\QACopilot.Domain.dll
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\bin\Debug\net10.0\QACopilot.Application.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\bin\Debug\net10.0\QACopilot.Domain.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.csproj.AssemblyReference.cache
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.AssemblyInfoInputs.cache
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.AssemblyInfo.cs
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.csproj.CoreCompileInputs.cache
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.sourcelink.json
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilo.0265C028.Up2Date
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.dll
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\refint\QACopilot.Infrastructure.dll
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\QACopilot.Infrastructure.genruntimeconfig.cache
+C:\NexusQA\QACopilot\src\QACopilot.Infrastructure\obj\Debug\net10.0\ref\QACopilot.Infrastructure.dll

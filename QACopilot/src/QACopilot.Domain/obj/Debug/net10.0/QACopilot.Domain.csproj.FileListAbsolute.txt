@@ -9,3 +9,15 @@ C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Dom
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\refint\QACopilot.Domain.dll
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.pdb
 C:\QA COPILOT 2.0\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\ref\QACopilot.Domain.dll
+C:\NexusQA\QACopilot\src\QACopilot.Domain\bin\Debug\net10.0\QACopilot.Domain.deps.json
+C:\NexusQA\QACopilot\src\QACopilot.Domain\bin\Debug\net10.0\QACopilot.Domain.dll
+C:\NexusQA\QACopilot\src\QACopilot.Domain\bin\Debug\net10.0\QACopilot.Domain.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.AssemblyInfoInputs.cache
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.AssemblyInfo.cs
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.csproj.CoreCompileInputs.cache
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.sourcelink.json
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.dll
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\refint\QACopilot.Domain.dll
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\QACopilot.Domain.pdb
+C:\NexusQA\QACopilot\src\QACopilot.Domain\obj\Debug\net10.0\ref\QACopilot.Domain.dll

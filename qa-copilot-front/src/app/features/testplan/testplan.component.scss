@@ -131,3 +131,51 @@
   h3 { font-size: 1rem; font-weight: 600; color: #64748B; margin: 0 0 4px; }
   p { font-size: 0.85rem; color: #94A3B8; margin: 0; }
 }
+.markdown-body {
+  font-size: 0.875rem; line-height: 1.7; color: #334155; padding: 8px 0;
+  h1, h2, h3 { color: #0A0F1E; font-weight: 700; margin: 1rem 0 0.5rem; }
+  h3 { font-size: 1rem; }
+  strong { font-weight: 700; color: #0A0F1E; }
+  code { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
+  li { margin-bottom: 4px; }
+  p { margin-bottom: 0.75rem; }
+}
+.history-panel {
+  background: white; border: 1px solid #E2E8F0; border-radius: 12px;
+  margin-bottom: 24px; overflow: hidden;
+}
+.history-header {
+  padding: 14px 20px; background: #FAFAFA; border-bottom: 1px solid #E2E8F0;
+  h3 { margin: 0; font-size: 0.9rem; font-weight: 700; }
+}
+.history-list { padding: 8px; }
+.history-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px 8px;
+  border-radius: 8px;
+  &:hover { background: #F8FAFC; }
+  .history-icon {
+    width: 36px; height: 36px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  }
+  .history-name { font-size: 0.85rem; font-weight: 600; color: #0A0F1E; }
+  .history-meta { font-size: 0.72rem; color: #94A3B8; margin-top: 2px; }
+  .history-info { flex: 1; }
+  .no-report { font-size: 0.72rem; color: #94A3B8; padding: 4px 8px; }
+}
+.download-btn {
+  margin-left: auto !important;
+  background: #6366f1 !important;
+  color: white !important;
+  font-size: 0.8rem !important;
+}
+.markdown-body {
+  font-size: 0.875rem; line-height: 1.7; color: #334155; padding: 8px 0;
+  h1, h2, h3 { color: #0A0F1E; font-weight: 700; margin: 1rem 0 0.5rem; }
+  h3 { font-size: 1rem; }
+  strong { font-weight: 700; color: #0A0F1E; }
+  code { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
+  li { margin-bottom: 4px; }
+  p { margin-bottom: 0.75rem; }
+}
+

@@ -1,4 +1,4 @@
-namespace QACopilot.Domain.Entities;
+﻿namespace QACopilot.Domain.Entities;
 
 public class TestPlanAnalysis
 {
@@ -19,6 +19,8 @@ public class TestPlanAnalysis
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
 
+    public string? ReportHtml { get; set; }
+    public string? ProjectName { get; set; }
     public Guid? ProjectId { get; set; }
     public Project? Project { get; set; }
 }

@@ -4,6 +4,27 @@
       <h1>Historial de Generaciones</h1>
       <p>Casos de prueba generados con IA</p>
     </div>
+
+    <!-- TOGGLE VER TODOS - solo Admin/Senior -->
+    <div class="view-toggle" *ngIf="isAdminOrSenior">
+      <mat-button-toggle-group [(ngModel)]="viewMode" (change)="onViewModeChange()">
+        <mat-button-toggle value="mine">Mi historial</mat-button-toggle>
+        <mat-button-toggle value="all">Ver todos</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+
+  <!-- FILTRO POR USUARIO -->
+  <div class="filter-bar" *ngIf="viewMode === 'all' && isAdminOrSenior">
+    <mat-form-field appearance="outline" class="user-filter">
+      <mat-label>Filtrar por usuario</mat-label>
+      <mat-select [(ngModel)]="selectedUserEmail" (selectionChange)="onUserFilterChange()">
+        <mat-option value="">Todos los usuarios</mat-option>
+        <mat-option *ngFor="let u of userList" [value]="u.email">{{ u.name }}</mat-option>
+      </mat-select>
+      <mat-icon matPrefix>person</mat-icon>
+    </mat-form-field>
+    <span class="total-badge">{{ totalItems }} generaciones en total</span>
   </div>
 
   <div class="history-card">
@@ -30,6 +51,16 @@
           <div class="doc-cell">
             <mat-icon>description</mat-icon>
             {{ item.documentName || 'Sin nombre' }}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef>Usuario</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="user-cell">
+            <mat-icon style="font-size:16px;color:#6366f1">person</mat-icon>
+            {{ item.userName || '—' }}
           </div>
         </td>
       </ng-container>

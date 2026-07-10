@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj": {}
+    "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj": {}
   },
   "projects": {
-    "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj": {
+    "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
+        "projectUniqueName": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
         "projectName": "QACopilot.API",
-        "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
+        "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\QACopilot.API.csproj",
         "packagesPath": "C:\\Users\\Rafael Ruge\\.nuget\\packages\\",
-        "outputPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.API\\obj\\",
+        "outputPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,11 +33,11 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj": {
-                "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj"
+              "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj": {
+                "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj"
               },
-              "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj": {
-                "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj"
+              "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj": {
+                "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj"
               }
             }
           }
@@ -542,14 +542,14 @@
         }
       }
     },
-    "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj": {
+    "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj",
+        "projectUniqueName": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj",
         "projectName": "QACopilot.Application",
-        "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj",
+        "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj",
         "packagesPath": "C:\\Users\\Rafael Ruge\\.nuget\\packages\\",
-        "outputPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\obj\\",
+        "outputPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -571,8 +571,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj": {
-                "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj"
+              "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj": {
+                "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj"
               }
             }
           }
@@ -904,14 +904,14 @@
         }
       }
     },
-    "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj": {
+    "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj",
+        "projectUniqueName": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj",
         "projectName": "QACopilot.Domain",
-        "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj",
+        "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\QACopilot.Domain.csproj",
         "packagesPath": "C:\\Users\\Rafael Ruge\\.nuget\\packages\\",
-        "outputPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Domain\\obj\\",
+        "outputPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1244,14 +1244,14 @@
         }
       }
     },
-    "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj": {
+    "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj",
+        "projectUniqueName": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj",
         "projectName": "QACopilot.Infrastructure",
-        "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj",
+        "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\QACopilot.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Rafael Ruge\\.nuget\\packages\\",
-        "outputPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Infrastructure\\obj\\",
+        "outputPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1273,8 +1273,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj": {
-                "projectPath": "C:\\QA COPILOT 2.0\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj"
+              "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj": {
+                "projectPath": "C:\\NexusQA\\QACopilot\\src\\QACopilot.Application\\QACopilot.Application.csproj"
               }
             }
           }
