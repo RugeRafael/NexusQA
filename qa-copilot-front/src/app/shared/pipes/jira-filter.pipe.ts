@@ -2,19 +2,21 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'jiraFilter', standalone: false })
 export class JiraFilterPipe implements PipeTransform {
-  transform(bugs: any[], type: string): number {
-    if (!bugs) return 0;
-    switch (type) {
-      case 'exitosos':
-        return bugs.filter(b => ['Finalizada','Exitoso','Done','Finalizado'].includes(b.status)).length;
-      case 'bugs':
-        return bugs.filter(b => b.issueType?.includes('Bug') &&
-          !['Finalizada','Exitoso','Done','Finalizado','Cancelado'].includes(b.status)).length;
-      case 'pendientes':
-        return bugs.filter(b => ['Por hacer','Bloqueado','En progreso'].includes(b.status)).length;
-      case 'cancelados':
-        return bugs.filter(b => b.status === 'Cancelado').length;
-      default: return bugs.length;
-    }
+
+  private readonly DONE = ['Finalizada', 'Exitoso', 'Done', 'Finalizado'];
+  private readonly PENDING = ['Por hacer', 'Bloqueado', 'En progreso'];
+
+  transform(bugs: any[], type: string): any {
+    if (!bugs) return type.startsWith('list:') ? [] : 0;
+
+    if (type === 'exitosos') return bugs.filter(b => this.DONE.includes(b.status)).length;
+    if (type === 'bugs') return bugs.filter(b => b.issueType?.toLowerCase().includes('bug') && !this.DONE.includes(b.status) && b.status !== 'Cancelado').length;
+    if (type === 'pendientes') return bugs.filter(b => this.PENDING.includes(b.status)).length;
+    if (type === 'cancelados') return bugs.filter(b => b.status === 'Cancelado').length;
+    if (type === 'list:bugs') return bugs.filter(b => b.issueType?.toLowerCase().includes('bug') && !this.DONE.includes(b.status) && b.status !== 'Cancelado');
+    if (type === 'list:pendientes') return bugs.filter(b => this.PENDING.includes(b.status));
+    if (type === 'list:exitosos') return bugs.filter(b => this.DONE.includes(b.status));
+    if (type === 'list:all') return [...bugs];
+    return bugs.length;
   }
 }

@@ -241,10 +241,6 @@
                     <span class="sk-val">{{ jiraBugs.length }}</span>
                     <span class="sk-lbl">Total</span>
                   </div>
-                  <div class="summary-kpi green">
-                    <span class="sk-val">{{ (jiraBugs | jiraFilter:'exitosos') }}</span>
-                    <span class="sk-lbl">Exitosos</span>
-                  </div>
                   <div class="summary-kpi red">
                     <span class="sk-val">{{ (jiraBugs | jiraFilter:'bugs') }}</span>
                     <span class="sk-lbl">Bugs</span>
@@ -255,8 +251,8 @@
                   </div>
                 </div>
 
-                <div class="jira-bugs-list" *ngIf="jiraBugs.length > 0">
-                  <div class="jira-bug-item" *ngFor="let bug of jiraBugs.slice(0, 6)">
+                <div class="jira-bugs-list" *ngIf="jiraBugsOnly.length > 0">
+                  <div class="jira-bug-item" *ngFor="let bug of jiraBugsOnly.slice(0, 6)">
                     <a [href]="bug.url" target="_blank" class="bug-key">{{ bug.key }}</a>
                     <span class="bug-summary">{{ bug.summary }}</span>
                     <span class="bug-status"
@@ -266,8 +262,8 @@
                       {{ bug.status }}
                     </span>
                   </div>
-                  <p class="bugs-more" *ngIf="jiraBugs.length > 6">
-                    + {{ jiraBugs.length - 6 }} items más — todos incluidos en el informe
+                  <p class="bugs-more" *ngIf="jiraBugsOnly.length > 6">
+                    + {{ jiraBugsOnly.length - 6 }} bugs más — todos incluidos en el informe
                   </p>
                 </div>
 

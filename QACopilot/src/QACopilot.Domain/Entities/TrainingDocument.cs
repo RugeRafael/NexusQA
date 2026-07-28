@@ -12,7 +12,11 @@ public class TrainingDocument
     public bool IsActive { get; set; } = true;
     public string? Description { get; set; }
     public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
-
     public Guid UploadedByUserId { get; set; }
     public User UploadedByUser { get; set; } = null!;
+
+    // null = documento global (aplica a todos los proyectos)
+    // con valor = solo aplica al proyecto específico
+    public Guid? ProjectId { get; set; }
+    public Project? Project { get; set; }
 }

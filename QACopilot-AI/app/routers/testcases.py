@@ -7,7 +7,6 @@ import logging
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-
 @router.post(
     "/api/generate-testcases",
     response_model=TestCaseGenerationResponse,
@@ -15,11 +14,13 @@ logger = logging.getLogger(__name__)
 )
 async def generate_test_cases_endpoint(request: GenerateTestCasesRequest):
     try:
-        logger.info("Generating test cases for content length: %d", len(request.document_content))
+        logger.info("Generating test cases for content length: %d, project: %s",
+                    len(request.document_content), request.project_id or "global")
         result = await generate_test_cases(
             document_content=request.document_content,
             project_name=request.project_name or "",
-            additional_context=request.additional_context or ""
+            additional_context=request.additional_context or "",
+            project_id=request.project_id or "global"
         )
         logger.info("Generated %d test cases", result.total_test_cases)
         return result

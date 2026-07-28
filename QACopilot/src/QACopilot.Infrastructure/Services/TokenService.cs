@@ -12,6 +12,20 @@ public class TokenService
 {
     private readonly IConfiguration _configuration;
 
+    // Mapa de rol -> dashboardType definido en appsettings.json
+    // Si no está en el mapa, usa "qa" por defecto
+    private static readonly Dictionary<string, string> DefaultDashboardTypes = new()
+    {
+        ["Administrador"] = "admin",
+        ["Admin"]         = "admin",
+        ["IngenieroSenior"] = "senior",
+        ["Senior"]          = "senior",
+        ["IngenieroQA"]   = "qa",
+        ["QAEngineer"]    = "qa",
+        ["Scrum"]         = "qa",
+        ["Viewer"]        = "qa"
+    };
+
     public TokenService(IConfiguration configuration)
     {
         _configuration = configuration;
@@ -28,6 +42,10 @@ public class TokenService
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+        // Obtener dashboardType: primero de appsettings, luego del mapa por defecto
+        var dashboardType = _configuration[$"DashboardTypes:{user.Role}"]
+            ?? (DefaultDashboardTypes.TryGetValue(user.Role, out var dt) ? dt : "qa");
+
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
@@ -35,7 +53,8 @@ public class TokenService
             new Claim(JwtRegisteredClaimNames.Name, user.FullName),
             new Claim(ClaimTypes.Role, user.Role),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("uid", user.Id.ToString())
+            new Claim("uid", user.Id.ToString()),
+            new Claim("dashboardType", dashboardType)
         };
 
         var token = new JwtSecurityToken(
@@ -61,10 +80,8 @@ public class TokenService
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
         var secretKey = jwtSettings["SecretKey"]!;
-
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(secretKey);
-
         try
         {
             var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
@@ -77,12 +94,8 @@ public class TokenService
                 ValidAudience = jwtSettings["Audience"],
                 ValidateLifetime = false
             }, out _);
-
             return principal;
         }
-        catch
-        {
-            return null;
-        }
+        catch { return null; }
     }
 }

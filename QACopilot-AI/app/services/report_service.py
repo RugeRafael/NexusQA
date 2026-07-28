@@ -43,23 +43,7 @@ section{margin-bottom:50px}
 .kpi.g .kpi-val{color:var(--grn)}.kpi.r .kpi-val{color:var(--red)}.kpi.y .kpi-val{color:var(--ylw)}.kpi.a .kpi-val{color:#a5b4fc}
 .kpi-sub{font-size:11px;color:var(--mut);margin-top:5px}.kpi-bar{position:absolute;bottom:0;left:0;right:0;height:3px}
 .kpi.g .kpi-bar{background:var(--grn)}.kpi.r .kpi-bar{background:var(--red)}.kpi.y .kpi-bar{background:var(--ylw)}.kpi.a .kpi-bar{background:var(--acc)}
-.charts-row{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:18px}
-.ch-card{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:22px}
-.ch-title{font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
-.ch-wrap{position:relative;height:200px}
-.pass-table-wrap{background:var(--sur);border:1px solid var(--grn-bdr);border-radius:12px;overflow:hidden}
-.pass-table-header{background:var(--grn-bg);padding:14px 20px}
-.pass-table-header span{font-size:13px;font-weight:600;color:var(--grn)}
-.pass-table{width:100%;border-collapse:collapse}
-.pass-table th{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut);padding:10px 16px;border-bottom:1px solid var(--bdr);text-align:left}
-.pass-table td{padding:9px 16px;font-size:12px;border-bottom:1px solid var(--bdr)}
-.cp-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--grn);background:var(--grn-bg);border:1px solid var(--grn-bdr);padding:2px 8px;border-radius:3px;white-space:nowrap}
-.rf-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--acc);background:rgba(99,102,241,.1);padding:2px 7px;border-radius:3px}
-.crit-alta{color:#f87171;font-size:11px;font-weight:600}.crit-media{color:#fbbf24;font-size:11px;font-weight:600}.crit-baja{color:var(--mut);font-size:11px;font-weight:600}
 .search-bar{width:100%;background:var(--sur);border:1px solid var(--bdr);border-radius:10px;padding:11px 16px;color:var(--txt);font-size:13px;outline:none;margin-bottom:14px}
-.filter-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
-.fbtn{padding:6px 14px;border-radius:7px;border:1px solid var(--bdr);background:var(--sur);color:var(--mut);font-size:12px;font-weight:600;cursor:pointer}
-.fbtn.active{background:var(--acc);border-color:var(--acc);color:#fff}.fbtn.r.active{background:var(--red);border-color:var(--red)}.fbtn.y.active{background:var(--ylw);border-color:var(--ylw);color:#000}
 .cases-grid{display:grid;gap:7px}
 .card{background:var(--sur);border:1px solid var(--bdr);border-radius:10px;overflow:hidden}
 .card.red-c{border-left:4px solid var(--red)}.card.ylw-c{border-left:4px solid var(--ylw)}.card.hidden{display:none}
@@ -71,14 +55,12 @@ section{margin-bottom:50px}
 .ccrit{font-size:10px;font-weight:600;color:var(--mut);background:var(--sur2);padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0}
 .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;white-space:nowrap;flex-shrink:0}
 .badge-fail{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr)}.badge-blk{background:var(--ylw-bg);color:var(--ylw);border:1px solid var(--ylw-bdr)}
-.badge-ok{background:var(--grn-bg);color:var(--grn);border:1px solid var(--grn-bdr)}
 .tog{color:var(--mut);font-size:12px;transition:transform .25s;flex-shrink:0}.card.open .tog{transform:rotate(180deg)}
 .card-body{display:none;padding:0 16px 14px;border-top:1px solid var(--bdr)}.card.open .card-body{display:block}
 .dg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .dlbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
 .dtxt{font-size:12px;color:var(--txt);line-height:1.6;background:var(--sur2);padding:9px 11px;border-radius:6px;border:1px solid var(--bdr)}
 .detail-full{grid-column:1/-1;font-size:12px;line-height:1.75;background:rgba(0,0,0,.2);padding:12px 14px;border-radius:6px;margin-top:4px;white-space:pre-wrap}
-.detail-full.ok{border:1px solid rgba(34,197,94,.2);color:#86efac}
 .detail-full.bug{border:1px solid rgba(239,68,68,.2);color:#fca5a5}
 .detail-full.pend{border:1px solid rgba(234,179,8,.2);color:#fde68a}
 .conc{background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(139,92,246,.05));border:1px solid rgba(99,102,241,.25);border-radius:14px;padding:30px 34px}
@@ -99,8 +81,7 @@ section{margin-bottom:50px}
 .st-ok{background:var(--grn-bg);color:var(--grn);border:1px solid var(--grn-bdr)}.st-bug{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr)}.st-mix{background:rgba(99,102,241,.08);color:#a5b4fc;border:1px solid rgba(99,102,241,.25)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>"""
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">"""
 
 COMPARISON_STYLE = """<style>
   :root{--navy:#0f2644;--navy-mid:#1a3c5e;--blue:#2e75b6;--blue-lt:#e8f2fb;--ok:#1a7a46;--ok-lt:#e6f5ed;--warn:#b83232;--warn-lt:#fdf0f0;--amber:#c07a00;--amber-lt:#fef8ec;--ink:#1a1a2e;--muted:#5a6a7a;--rule:#d4dde8;--page:#f5f8fc;--white:#ffffff;--mono:'DM Mono',monospace;--serif:'DM Serif Display',serif;--sans:'DM Sans',sans-serif;--radius:6px;--shadow:0 2px 12px rgba(15,38,68,.08)}
@@ -149,45 +130,8 @@ COMPARISON_STYLE = """<style>
 
 INNOVATION_STYLE = """<style>
   :root{--bg:#f7f6f2;--surface:#ffffff;--surface2:#f0efe9;--text:#1a1916;--text-muted:#6b6a65;--text-faint:#a8a79f;--border:#e2e0d8;--accent:#2d5a3d;--accent-light:#e8f0eb;--accent-mid:#4a8c62;--amber:#8a5c1a;--amber-light:#fdf0d8;--red:#8a2020;--red-light:#fde8e8;--blue:#1a3d8a;--blue-light:#e8ecfa;--green-dark:#1a4a2a;--green-light:#e8f5ed;--radius:10px}
-  [data-theme="dark"]{--bg:#111210;--surface:#1c1d1a;--surface2:#242520;--text:#e8e6df;--text-muted:#8a8980;--text-faint:#565650;--border:#2e2f2a;--accent:#5aad74;--accent-light:#1a2e1f;--accent-mid:#4a9060;--amber:#d4953a;--amber-light:#2a1f0a;--red:#d46060;--red-light:#2a1010;--blue:#6a8cd4;--blue-light:#0e1628;--green-dark:#5aad74;--green-light:#0e2015}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
-  .header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
-  .theme-toggle{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:12px;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif}
-  .filter-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 2rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .filter-btn{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:500;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif}
-  .filter-btn.active{background:var(--text);border-color:var(--text);color:var(--bg)}
-  .main{max-width:900px;margin:0 auto;padding:2rem 1.5rem}
-  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
-  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;position:relative;overflow:hidden}
-  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent)}
-  .kpi:nth-child(2)::before{background:var(--amber)}.kpi:nth-child(3)::before{background:var(--green-dark)}.kpi:nth-child(4)::before{background:var(--blue)}
-  .kpi-label{font-size:11px;font-weight:500;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-  .kpi-value{font-size:28px;font-weight:300;color:var(--text);font-family:'DM Mono',monospace;line-height:1}
-  .section{margin-bottom:2rem}
-  .section-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
-  .section-title{font-size:16px;font-weight:600;color:var(--text)}
-  .cards{display:flex;flex-direction:column;gap:8px}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-  .card.hidden{display:none}
-  .card-trigger{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
-  .card-trigger:hover{background:var(--surface2)}
-  .card-id{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--text-faint);padding:3px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px}
-  .card-title{font-size:13.5px;font-weight:500;color:var(--text);flex:1}
-  .badges{display:flex;gap:5px;align-items:center}
-  .badge{font-size:10.5px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap}
-  .p-alta{background:var(--red-light);color:var(--red)}.p-media{background:var(--amber-light);color:var(--amber)}
-  .s-finalizado{background:var(--green-light);color:var(--green-dark)}.s-qa{background:var(--blue-light);color:var(--blue)}
-  .chevron{width:16px;height:16px;color:var(--text-faint);transition:transform .2s}
-  .card.open .chevron{transform:rotate(180deg)}
-  .card-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
-  .card.open .card-body{display:block}
-  .body-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-  .body-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
-  .body-block-label{font-size:10px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-  .body-block-text{font-size:13px;color:var(--text-muted);line-height:1.65}
-  .body-block.entregable{border-color:var(--accent-mid);background:var(--accent-light)}
-  .body-block.entregable .body-block-label{color:var(--accent-mid)}
   .footer{text-align:center;padding:2rem;font-size:11px;color:var(--text-faint);border-top:1px solid var(--border);font-family:'DM Mono',monospace}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">"""
@@ -212,239 +156,85 @@ def _get_rf_for_cp(cp_num: int) -> str:
 
 
 def _cruzar_jira_con_plan(jira_bugs: list, plan_casos: list) -> list:
-    plan_map = {c['id']: c for c in plan_casos}
     enriquecidos = []
     for bug in jira_bugs:
-        summary = bug.get('summary', '')
-        cp_match = _re.search(r'CP-(\d{3})', summary)
-        cp_num = int(cp_match.group(1)) if cp_match else 0
-        cp_id = f"CP-{cp_num:03d}" if cp_num > 0 else ''
-        caso = plan_map.get(cp_id, {})
-        rf = caso.get('rf', _get_rf_for_cp(cp_num) if cp_num > 0 else 'RF-General')
+        summary = bug.get('summary', '').lower()
+        cp_match = _re.search(r'[\(\s]?(?:CP|TC)-(\d{1,4})[\)\s]?', bug.get('summary', ''))
+        cp_id = f"CP-{int(cp_match.group(1)):02d}" if cp_match else ''
+        caso = {}
+        if cp_id:
+            caso = next((c for c in plan_casos if c['id'] == cp_id), {})
+        if not caso and plan_casos:
+            best_match = None
+            best_score = 0
+            summary_words = set(summary.split())
+            for c in plan_casos:
+                nombre_words = set(c.get('nombre', '').lower().split())
+                score = len(summary_words & nombre_words)
+                if score > best_score and score >= 2:
+                    best_score = score
+                    best_match = c
+            if best_match:
+                caso = best_match
+                cp_id = caso.get('id', '')
+        rf = caso.get('rf', 'RF-General')
         enriquecidos.append({
             **bug,
             'cp_id': cp_id,
-            'cp_num': cp_num,
             'rf': rf,
             'rf_nombre': caso.get('rf_nombre', ''),
-            'nombre_plan': caso.get('nombre', summary[:60]),
-            'modulo': caso.get('modulo', 'ValiQC QCE'),
+            'nombre_plan': caso.get('nombre', bug.get('summary', '')[:60]),
+            'modulo': caso.get('modulo', ''),
+            'submodulo': caso.get('submodulo', ''),
             'criticidad': caso.get('criticidad', 'Media'),
         })
     return enriquecidos
 
 
-def _build_kpi_section(total_j, pass_j, bug_j, blk_j, pct_global, plan_cps):
-    return (
-        f"<section><div class='kpi-grid'>"
-        f"<div class='kpi a'><div class='kpi-lbl'>Total Items</div><div class='kpi-val'>{total_j}</div><div class='kpi-sub'>Jira subtareas</div><div class='kpi-bar'></div></div>"
-        f"<div class='kpi g'><div class='kpi-lbl'>Finalizados</div><div class='kpi-val'>{pass_j}</div><div class='kpi-sub'>{pct_global}% del total</div><div class='kpi-bar'></div></div>"
-        f"<div class='kpi r'><div class='kpi-lbl'>Bugs Activos</div><div class='kpi-val'>{bug_j}</div><div class='kpi-sub'>Sin resolver</div><div class='kpi-bar'></div></div>"
-        f"<div class='kpi y'><div class='kpi-lbl'>Pendientes</div><div class='kpi-val'>{blk_j}</div><div class='kpi-sub'>Por ejecutar</div><div class='kpi-bar'></div></div>"
-        f"<div class='kpi a'><div class='kpi-lbl'>Plan Total</div><div class='kpi-val'>{plan_cps}</div><div class='kpi-sub'>CPs definidos</div><div class='kpi-bar'></div></div>"
-        f"</div></section>"
-    )
-
-
-def _build_charts_section(pass_j, bug_j, blk_j, cancelados_j, rf_groups):
-    rf_items = list(rf_groups.items())[:8]
-    rf_labels = ','.join(["'" + rf + "'" for rf, _ in rf_items])
-    rf_data_fin = ','.join([
-        str(len([b for b in g['bugs'] if b.get('status') in ['Finalizada','Exitoso','Done','Finalizado']]))
-        for _, g in rf_items
-    ])
-    rf_data_total = ','.join([str(len(g['bugs'])) for _, g in rf_items])
-    return (
-        "<section><div class='charts-row'>"
-        "<div class='ch-card'>"
-        "<div class='ch-title'>Distribucion Estado</div>"
-        "<div class='ch-wrap' style='position:relative;height:180px;display:flex;align-items:center;justify-content:center;'>"
-        "<canvas id='c1'></canvas>"
-        "</div></div>"
-        "<div class='ch-card'>"
-        "<div class='ch-title'>Finalizados por RF</div>"
-        "<div class='ch-wrap' style='position:relative;height:180px;'>"
-        "<canvas id='c2'></canvas>"
-        "</div></div>"
-        "<div class='ch-card'>"
-        "<div class='ch-title'>Criticidad del Plan</div>"
-        "<div class='ch-wrap' style='position:relative;height:180px;'>"
-        "<canvas id='c3'></canvas>"
-        "</div></div>"
-        "</div></section>",
-        {
-            'pass_j': pass_j, 'bug_j': bug_j, 'blk_j': blk_j, 'cancelados_j': cancelados_j,
-            'rf_labels': rf_labels, 'rf_data_fin': rf_data_fin, 'rf_data_total': rf_data_total
-        }
-    )
-
-
-def _build_conclusion_section(project, pass_j, total_j, pct_global, bug_j, blk_j, cancelados_j, rfs_str, context):
-    aval = "SE DA AVAL" if pct_global >= 80 else "NO SE DA AVAL"
-    aval_color = "var(--grn)" if pct_global >= 80 else "var(--red)"
-    check_icon = "&#10003;" if pct_global >= 80 else "&#9888;"
-    no_bugs = "No se registraron bugs criticos que impidan el despliegue."
-    si_bugs = "Los bugs activos requieren atencion antes del despliegue."
-    bugs_txt = no_bugs if bug_j == 0 else si_bugs
-    cancel_txt = "Los items cancelados (" + str(cancelados_j) + ") fueron excluidos del alcance." if cancelados_j > 0 else ""
-    context_html = "<p>" + context + "</p>" if context else ""
-    no_bugs_pill = "<span class='pill p-l'>Sin bugs activos</span>"
-    si_bugs_pill = "<span class='pill p-h'>Resolver bugs activos</span>"
-    bugs_pill = si_bugs_pill if bug_j > 0 else no_bugs_pill
-    pend_pill = "<span class='pill p-m'>Ejecutar items pendientes (" + str(blk_j) + ")</span>" if blk_j > 0 else ""
-    rfs_short = rfs_str[:40]
-    pct_str = str(pct_global)
-    html = "<section><div class='conc'>"
-    html += "<h3>Conclusion del Ciclo &mdash; " + project + "</h3>"
-    html += "<p>El ciclo de pruebas ejecutado sobre el plan formal de <strong>" + str(total_j)
-    html += " items</strong> registrados en Jira arrojo un total de <strong>" + str(pass_j)
-    html += " items finalizados</strong>, representando el <strong>" + pct_str
-    html += "%</strong> de cobertura. Los requerimientos funcionales cubiertos incluyen: " + rfs_str + ".</p>"
-    html += "<p>Se identificaron <strong>" + str(bug_j) + " bugs activos</strong> sin resolver y "
-    html += "<strong>" + str(blk_j) + " items pendientes</strong> de ejecucion. "
-    html += bugs_txt + " " + cancel_txt + "</p>"
-    html += "<p style='font-size:15px;font-weight:700;color:" + aval_color + ";margin-top:8px'>"
-    html += check_icon + " " + aval + " A DESPLIEGUE EN AMBIENTE DEMO</p>"
-    html += context_html
-    html += "<div class='pills'>" + bugs_pill + pend_pill
-    html += "<span class='pill p-l'>Cobertura " + pct_str + "% alcanzada</span>"
-    html += "<span class='pill p-l'>RFs: " + rfs_short + "</span>"
-    html += "</div></div></section>"
-    return html
-
-
-def _build_script_section(chart_data=None):
-    charts_js = ""
-    if chart_data:
-        p = chart_data['pass_j']
-        b = chart_data['bug_j']
-        bl = chart_data['blk_j']
-        c = chart_data['cancelados_j']
-        rl = chart_data['rf_labels']
-        rf = chart_data['rf_data_fin']
-        rt = chart_data['rf_data_total']
-        total = p + b + bl + c
-        charts_js = (
-            "var isDark=!document.documentElement.hasAttribute('data-theme');"
-            "var gridColor=isDark?'rgba(255,255,255,0.08)':'rgba(0,0,0,0.06)';"
-            "var tickColor=isDark?'#7a88ab':'#64748b';"
-            "var c1el=document.getElementById('c1');"
-            "var c2el=document.getElementById('c2');"
-            "var c3el=document.getElementById('c3');"
-            "if(c1el){"
-            "new Chart(c1el,{"
-            "type:'doughnut',"
-            "data:{"
-            "labels:['Finalizados','Bugs activos','Pendientes','Cancelados'],"
-            "datasets:[{"
-            "data:[" + str(p) + "," + str(b) + "," + str(bl) + "," + str(c) + "],"
-            "backgroundColor:['#22c55e','#ef4444','#f59e0b','#6366f1'],"
-            "borderColor:isDark?'#111520':'#ffffff',"
-            "borderWidth:3,"
-            "hoverOffset:8"
-            "}]"
-            "},"
-            "options:{"
-            "responsive:true,"
-            "maintainAspectRatio:false,"
-            "layout:{padding:10},"
-            "plugins:{"
-            "legend:{"
-            "position:'bottom',"
-            "labels:{color:tickColor,font:{size:11,family:'Space Grotesk'},padding:12,usePointStyle:true,pointStyleWidth:8}"
-            "},"
-            "tooltip:{"
-            "callbacks:{"
-            "label:function(ctx){"
-            "var pct=total>0?Math.round(ctx.parsed/" + str(total) + "*100):0;"
-            "return ctx.label+': '+ctx.parsed+' ('+pct+'%)';"
-            "}"
-            "}"
-            "}"
-            "},"
-            "cutout:'62%'"
-            "}"
-            "});}"
-            "if(c2el){"
-            "new Chart(c2el,{"
-            "type:'bar',"
-            "data:{"
-            "labels:[" + rl + "],"
-            "datasets:["
-            "{label:'Finalizados',data:[" + rf + "],backgroundColor:'rgba(34,197,94,0.85)',borderRadius:4,borderSkipped:false},"
-            "{label:'Total',data:[" + rt + "],backgroundColor:isDark?'rgba(99,102,241,0.25)':'rgba(99,102,241,0.15)',borderRadius:4,borderSkipped:false}"
-            "]"
-            "},"
-            "options:{"
-            "responsive:true,"
-            "maintainAspectRatio:false,"
-            "plugins:{legend:{labels:{color:tickColor,font:{size:10,family:'Space Grotesk'},usePointStyle:true}}},"
-            "scales:{"
-            "x:{ticks:{color:tickColor,font:{size:9}},grid:{display:false},border:{display:false}},"
-            "y:{ticks:{color:tickColor,font:{size:9},stepSize:1},grid:{color:gridColor},border:{display:false},beginAtZero:true}"
-            "}"
-            "}"
-            "});}"
-            "if(c3el){"
-            "new Chart(c3el,{"
-            "type:'doughnut',"
-            "data:{"
-            "labels:['Alta','Media','Baja'],"
-            "datasets:[{"
-            "data:[0," + str(p+b+bl+c) + ",0],"
-            "backgroundColor:['#ef4444','#f59e0b','#22c55e'],"
-            "borderColor:isDark?'#111520':'#ffffff',"
-            "borderWidth:3,"
-            "hoverOffset:8"
-            "}]"
-            "},"
-            "options:{"
-            "responsive:true,"
-            "maintainAspectRatio:false,"
-            "layout:{padding:10},"
-            "plugins:{"
-            "legend:{position:'bottom',labels:{color:tickColor,font:{size:11,family:'Space Grotesk'},padding:12,usePointStyle:true,pointStyleWidth:8}}"
-            "},"
-            "cutout:'55%'"
-            "}"
-            "});}"
-        )
-    return (
-        "<script>"
-        "function tc(hd){hd.closest('.card').classList.toggle('open');}"
-        "let cur='all';"
-        "function setF(f,btn){cur=f;document.querySelectorAll('.fbtn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');applyF();}"
-        "function applyF(){var q=document.getElementById('sb')?document.getElementById('sb').value.toLowerCase():'';document.querySelectorAll('.card').forEach(function(c){var mf=cur==='all'||c.dataset.s===cur;var mq=!q||(c.dataset.q||'').includes(q);c.classList.toggle('hidden',!(mf&&mq));});}"
-        "function toggleTheme(){var d=document.documentElement.hasAttribute('data-theme');document.documentElement[d?'removeAttribute':'setAttribute']('data-theme','light');document.getElementById('toggleTrack').classList.toggle('on',!d);document.getElementById('themeIcon').textContent=d?'&#9728;':'&#9790;';document.getElementById('themeLabel').textContent=d?'Claro':'Oscuro';}"
-        "window.addEventListener('load',function(){"
-        + charts_js +
-        "});"
-        "</script>"
-    )
-
-
-
 def _build_completion_html(project, qa, version, period, fecha,
                            jira_bugs_rich, plan_data, context):
-    exitosos = [b for b in jira_bugs_rich if b.get('status') in ['Finalizada','Exitoso','Done','Finalizado']]
-    cancelados = [b for b in jira_bugs_rich if b.get('status') == 'Cancelado']
-    pendientes = [b for b in jira_bugs_rich if b.get('status') in ['Por hacer','En progreso','Bloqueado']]
-    bugs_activos = [b for b in jira_bugs_rich if 'Bug' in b.get('issueType','') and
-                    b.get('status') not in ['Finalizada','Exitoso','Done','Finalizado','Cancelado']]
+    DONE = ['Finalizada', 'Exitoso', 'Done', 'Finalizado']
 
-    total_j = len(jira_bugs_rich)
-    pass_j = len(exitosos)
-    bug_j = len(bugs_activos)
-    blk_j = len(pendientes)
-    cancelados_j = len(cancelados)
-    pct_global = round(pass_j / total_j * 100) if total_j > 0 else 0
+    plan_casos_list = plan_data.get('casos', [])
     plan_cps = plan_data.get('total_cps', 0)
 
-    # RFs del plan
-    plan_rfs = {r['id']: r['nombre'] for r in plan_data.get('rfs', [])}
-    rfs_str = ', '.join(list(plan_rfs.keys())[:8]) if plan_rfs else 'RF-10, RF-12, RF-17, RF-20, RF-23'
+    # Mapa de CP -> item Jira
+    jira_map_cp = {b.get('cp_id', ''): b for b in jira_bugs_rich if b.get('cp_id')}
 
-    # Agrupar por RF
+    # Calcular KPIs basados en el PLAN, no en Jira
+    bugs_activos_cp = []  # CPs del plan con bug activo en Jira
+    exitosos_cp = []      # CPs del plan sin bug activo (Exitoso o sin registro)
+
+    for cp in plan_casos_list:
+        cp_id = cp.get('id', '')
+        jira_item = jira_map_cp.get(cp_id)
+        if jira_item:
+            jira_status = jira_item.get('status', '')
+            if jira_status not in DONE + ['Cancelado']:
+                bugs_activos_cp.append(cp_id)
+            else:
+                exitosos_cp.append(cp_id)
+        else:
+            exitosos_cp.append(cp_id)  # Sin registro = Exitoso
+
+    # También bugs de Jira sin CP asignado
+    bugs_activos_sin_cp = [b for b in jira_bugs_rich if 'Bug' in b.get('issueType', '') and
+                           b.get('status') not in DONE + ['Cancelado'] and not b.get('cp_id')]
+
+    cancelados = [b for b in jira_bugs_rich if b.get('status') == 'Cancelado']
+    bugs_activos = [b for b in jira_bugs_rich if 'Bug' in b.get('issueType', '') and
+                    b.get('status') not in DONE + ['Cancelado']]
+
+    total_j = plan_cps
+    pass_j = len(exitosos_cp)
+    bug_j = len(bugs_activos_cp) + len(bugs_activos_sin_cp)
+    blk_j = len([b for b in jira_bugs_rich if b.get('status') in ['Por hacer', 'En progreso', 'Bloqueado'] and 'Bug' not in b.get('issueType','')])
+    cancelados_j = len(cancelados)
+    pct_global = round(pass_j / total_j * 100) if total_j > 0 else 0
+
+    plan_rfs = {r['id']: r['nombre'] for r in plan_data.get('rfs', [])}
+    rfs_str = ', '.join(list(plan_rfs.keys())[:8]) if plan_rfs else 'RF-General'
+
     rf_groups = {}
     for b in jira_bugs_rich:
         rf = b.get('rf', 'RF-General')
@@ -453,72 +243,38 @@ def _build_completion_html(project, qa, version, period, fecha,
             rf_groups[rf] = {'nombre': rf_nombre, 'bugs': []}
         rf_groups[rf]['bugs'].append(b)
 
-    # HEADER - construido en Python directamente
     header_html = (
         f"<button class='theme-toggle' onclick='toggleTheme()' id='themeBtn'>"
-        f"<span id='themeIcon'>☀️</span>"
+        f"<span id='themeIcon'>&#9728;</span>"
         f"<div class='toggle-track' id='toggleTrack'><div class='toggle-thumb'></div></div>"
         f"<span id='themeLabel' style='font-size:11px'>Claro</span></button>"
         f"<header><div class='hd-top'>"
-        f"<div><div class='tag'>QA COPILOT &mdash; ITHEALTH</div>"
+        f"<div><div class='tag'>NEXUSQA &mdash; ITHEALTH</div>"
         f"<h1>{project}</h1>"
         f"<p class='sub'>{qa} &middot; {period}</p></div>"
         f"<div class='hd-meta'>"
-        f"<span class='sp'>Plan de Pruebas Finalizado</span>"
+        f"<span class='sp'>Informe de Entrega</span>"
         f"<span class='dt'>{fecha}</span>"
         f"<span class='dt'>Version {version}</span>"
         f"</div></div></header>"
         f"<main>"
     )
 
-    # KPIs - construidos en Python
-    kpi_html = _build_kpi_section(total_j, pass_j, bug_j, blk_j, pct_global, plan_cps)
-
-    # Charts - construidos en Python
-    charts_html, chart_data = _build_charts_section(pass_j, bug_j, blk_j, cancelados_j, rf_groups)
-
-    # TABLA EXITOSOS
-    rows_exitosos = ""
-    for b in exitosos[:25]:
-        cp_id = b.get('cp_id', '')
-        rf = b.get('rf', '')
-        nombre = b.get('nombre_plan', b.get('summary',''))[:65]
-        modulo = b.get('modulo', project)
-        criticidad = b.get('criticidad', 'Media')
-        crit_class = 'crit-alta' if criticidad == 'Alta' else 'crit-baja' if criticidad == 'Baja' else 'crit-media'
-        key = b.get('key', '')
-        url = b.get('url', '')
-        rows_exitosos += (
-            f"<tr>"
-            f"<td><span class='cp-id'>{cp_id or key}</span></td>"
-            f"<td><a href='{url}' target='_blank' style='color:var(--acc);font-family:monospace;font-size:11px;text-decoration:none'>{key}</a></td>"
-            f"<td><span class='rf-tag'>{rf}</span></td>"
-            f"<td>{nombre}</td>"
-            f"<td>{modulo}</td>"
-            f"<td><span class='{crit_class}'>{criticidad}</span></td>"
-            f"</tr>"
-        )
-    if not rows_exitosos:
-        rows_exitosos = "<tr><td colspan='6' style='text-align:center;color:var(--mut);padding:20px'>No hay casos exitosos</td></tr>"
-
-    seccion_exitosos = (
-        f"<section>"
-        f"<div class='sec-title'>Casos Exitosos &mdash; {pass_j} de {total_j}</div>"
-        f"<div class='pass-table-wrap'>"
-        f"<div class='pass-table-header'><span>&#10003; Casos finalizados correctamente</span></div>"
-        f"<table class='pass-table'><thead><tr>"
-        f"<th>CP Plan</th><th>Key Jira</th><th>RF</th><th>Nombre en Plan</th><th>Modulo</th><th>Criticidad</th>"
-        f"</tr></thead><tbody>{rows_exitosos}</tbody></table></div></section>"
+    kpi_html = (
+        f"<section><div class='kpi-grid'>"
+        f"<div class='kpi a'><div class='kpi-lbl'>CPs en Plan</div><div class='kpi-val'>{plan_cps}</div><div class='kpi-sub'>Casos definidos</div><div class='kpi-bar'></div></div>"
+        f"<div class='kpi g'><div class='kpi-lbl'>Finalizados</div><div class='kpi-val'>{pass_j}</div><div class='kpi-sub'>{pct_global}% del total</div><div class='kpi-bar'></div></div>"
+        f"<div class='kpi r'><div class='kpi-lbl'>Bugs Activos</div><div class='kpi-val'>{bug_j}</div><div class='kpi-sub'>Sin resolver</div><div class='kpi-bar'></div></div>"
+        f"<div class='kpi y'><div class='kpi-lbl'>Pendientes</div><div class='kpi-val'>{blk_j}</div><div class='kpi-sub'>Por ejecutar</div><div class='kpi-bar'></div></div>"
+        f"</div></section>"
     )
 
-    # TABLA MODULOS
     rows_modulos = ""
     for rf, group in sorted(rf_groups.items()):
         bugs = group['bugs']
-        rf_exit = len([b for b in bugs if b.get('status') in ['Finalizada','Exitoso','Done','Finalizado']])
-        rf_bug = len([b for b in bugs if 'Bug' in b.get('issueType','') and
-                      b.get('status') not in ['Finalizada','Exitoso','Done','Finalizado','Cancelado']])
-        rf_blk = len([b for b in bugs if b.get('status') in ['Por hacer','Bloqueado','En progreso']])
+        rf_exit = len([b for b in bugs if b.get('status') in DONE])
+        rf_bug = len([b for b in bugs if 'Bug' in b.get('issueType', '') and b.get('status') not in DONE + ['Cancelado']])
+        rf_blk = len([b for b in bugs if b.get('status') in ['Por hacer', 'Bloqueado', 'En progreso']])
         rf_total = len(bugs)
         rf_pct = round(rf_exit / rf_total * 100) if rf_total > 0 else 0
         rf_cl = 'st-ok' if rf_pct >= 80 else 'st-mix' if rf_pct >= 50 else 'st-bug'
@@ -546,9 +302,8 @@ def _build_completion_html(project, qa, version, period, fecha,
         f"</tr></thead><tbody>{rows_modulos}</tbody></table></div></section>"
     )
 
-    # CARDS TODOS LOS ITEMS
     cards_html = ""
-    for b in jira_bugs_rich:
+    for b in bugs_activos:
         status = b.get('status', '')
         key = b.get('key', '')
         summary = b.get('summary', '')
@@ -557,27 +312,18 @@ def _build_completion_html(project, qa, version, period, fecha,
         issue_type = b.get('issueType', '')
         rf = b.get('rf', '')
         modulo = b.get('modulo', '')
+        submodulo = b.get('submodulo', '')
         criticidad = b.get('criticidad', 'Media')
         cp_id = b.get('cp_id', '')
 
-        if status in ['Finalizada','Exitoso','Done','Finalizado']:
-            card_class = "card"
-            badge = "<span class='badge badge-ok'>&#10003; Finalizado</span>"
-            data_s = "green"
-            detail_class = "detail-full ok"
-        elif status == 'Cancelado':
-            card_class = "card ylw-c"
-            badge = "<span class='badge badge-blk'>Cancelado</span>"
-            data_s = "yellow"
-            detail_class = "detail-full pend"
-        elif status == 'Por hacer':
+        if status == 'Por hacer':
             card_class = "card ylw-c"
             badge = "<span class='badge badge-blk'>Por hacer</span>"
             data_s = "yellow"
             detail_class = "detail-full pend"
         else:
             card_class = "card red-c"
-            badge = "<span class='badge badge-fail'>Bug</span>"
+            badge = "<span class='badge badge-fail'>Bug Activo</span>"
             data_s = "red"
             detail_class = "detail-full bug"
 
@@ -596,8 +342,8 @@ def _build_completion_html(project, qa, version, period, fecha,
             f"<div class='card-body'><div class='dg'>"
             f"<div><div class='dlbl'>CP en Plan</div><div class='dtxt'>{cp_id or 'Sin CP asignado'}</div></div>"
             f"<div><div class='dlbl'>Modulo</div><div class='dtxt'>{modulo}</div></div>"
-            f"<div><div class='dlbl'>Tipo Jira</div><div class='dtxt'>{issue_type}</div></div>"
-            f"<div><div class='dlbl'>Criticidad Plan</div><div class='dtxt'>{criticidad}</div></div>"
+            f"<div><div class='dlbl'>Sub-Modulo</div><div class='dtxt'>{submodulo}</div></div>"
+            f"<div><div class='dlbl'>Criticidad</div><div class='dtxt'>{criticidad}</div></div>"
             f"<div class='{detail_class}'>"
             f"Nombre en plan: {nombre_plan}\n"
             f"Resumen Jira: {summary}\n\n"
@@ -605,39 +351,105 @@ def _build_completion_html(project, qa, version, period, fecha,
             f"</div></div></div></div>"
         )
 
-    seccion_items = (
+    if not cards_html:
+        cards_html = "<div style='text-align:center;padding:40px;color:var(--grn)'>&#10003; Sin bugs activos pendientes</div>"
+
+    # TABLA CPs DEL PLAN vs JIRA
+    jira_map = {b.get('cp_id', ''): b for b in jira_bugs_rich if b.get('cp_id')}
+    jira_by_key = {b.get('key', ''): b for b in jira_bugs_rich}
+
+    rows_plan = ""
+    plan_casos = plan_data.get('casos', [])
+    for cp in plan_casos:
+        cp_id = cp.get('id', '')
+        cp_nombre = cp.get('nombre', '')[:60]
+        cp_rf = cp.get('rf', '')
+        cp_modulo = cp.get('modulo', '')
+        cp_submodulo = cp.get('submodulo', '')
+        cp_crit = cp.get('criticidad', 'Media')
+        crit_class = 'crit-alta' if cp_crit == 'Alta' else 'crit-baja' if cp_crit == 'Baja' else 'crit-media'
+
+        # Buscar en Jira
+        jira_item = jira_map.get(cp_id, {})
+        jira_status = jira_item.get('status', '') if jira_item else ''
+        jira_key = jira_item.get('key', '') if jira_item else ''
+        jira_url = jira_item.get('url', '') if jira_item else ''
+
+        if not jira_status:
+            # Sin registro en Jira = Exitoso
+            estado_badge = "<span style='color:var(--grn);font-weight:700;font-size:11px'>&#10003; Exitoso</span>"
+            key_html = "<span style='color:var(--mut);font-size:11px'>-</span>"
+        elif jira_status in DONE:
+            estado_badge = f"<span style='color:var(--grn);font-weight:700;font-size:11px'>&#10003; {jira_status}</span>"
+            key_html = f"<a href='{jira_url}' target='_blank' style='color:var(--grn);font-family:monospace;font-size:11px'>{jira_key}</a>" if jira_key else "<span style='color:var(--mut);font-size:11px'>-</span>"
+        else:
+            estado_badge = f"<span style='color:var(--red);font-weight:700;font-size:11px'>&#9888; {jira_status}</span>"
+            key_html = f"<a href='{jira_url}' target='_blank' style='color:var(--red);font-family:monospace;font-size:11px'>{jira_key}</a>" if jira_key else "<span style='color:var(--mut);font-size:11px'>-</span>"
+
+        rows_plan += (
+            f"<tr>"
+            f"<td><span class='cp-id' style='font-family:monospace;font-size:11px;color:var(--acc);background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);padding:2px 8px;border-radius:3px'>{cp_id}</span></td>"
+            f"<td style='font-size:12px'>{cp_nombre}</td>"
+            f"<td><span style='font-family:monospace;font-size:10px;color:var(--acc)'>{cp_rf}</span></td>"
+            f"<td style='font-size:11px'>{cp_modulo}</td>"
+            f"<td style='font-size:11px'>{cp_submodulo}</td>"
+            f"<td><span class='{crit_class}' style='font-size:11px;font-weight:600'>{cp_crit}</span></td>"
+            f"<td>{key_html}</td>"
+            f"<td>{estado_badge}</td>"
+            f"</tr>"
+        )
+
+    seccion_plan = (
         f"<section>"
-        f"<div class='sec-title'>Todos los Items Jira ({total_j})</div>"
+        f"<div class='sec-title'>Casos de Prueba del Plan ({len(plan_casos)})</div>"
+        f"<div class='mod-wrap'>"
+        f"<table class='mod-table'><thead><tr>"
+        f"<th>CP</th><th>Nombre</th><th>RF</th><th>Modulo</th><th>Sub-Modulo</th><th>Criticidad</th><th>Key Jira</th><th>Estado</th>"
+        f"</tr></thead><tbody>{rows_plan}</tbody></table></div></section>"
+    )
+
+    seccion_bugs = (
+        f"<section>"
+        f"<div class='sec-title'>Bugs Activos ({bug_j})</div>"
         f"<input class='search-bar' id='sb' placeholder='Buscar por key, CP, nombre...' oninput='applyF()'>"
-        f"<div class='filter-bar'>"
-        f"<button class='fbtn active' onclick='setF(\"all\",this)'>Todos ({total_j})</button>"
-        f"<button class='fbtn' style='color:var(--grn)' onclick='setF(\"green\",this)'>Finalizados ({pass_j})</button>"
-        f"<button class='fbtn r' onclick='setF(\"red\",this)'>Bugs ({bug_j})</button>"
-        f"<button class='fbtn y' onclick='setF(\"yellow\",this)'>Pendientes/Cancelados ({blk_j+cancelados_j})</button>"
-        f"</div>"
         f"<div class='cases-grid' id='cg'>{cards_html}</div>"
         f"</section>"
     )
 
-    # CONCLUSION - construida en Python
-    conclusion_html = _build_conclusion_section(
-        project, pass_j, total_j, pct_global, bug_j, blk_j, cancelados_j, rfs_str, context
+    aval = "SE DA AVAL" if pct_global >= 80 else "NO SE DA AVAL"
+    aval_color = "var(--grn)" if pct_global >= 80 else "var(--red)"
+    check_icon = "&#10003;" if pct_global >= 80 else "&#9888;"
+    bugs_txt = "No se registraron bugs criticos." if bug_j == 0 else "Los bugs activos requieren atencion."
+    context_html = f"<p>{context}</p>" if context else ""
+
+    bugs_pill = "<span class='pill p-h'>Resolver bugs activos</span>" if bug_j > 0 else "<span class='pill p-l'>Sin bugs activos</span>"
+    conclusion_html = (
+        f"<section><div class='conc'>"
+        f"<h3>Conclusion &mdash; {project}</h3>"
+        f"<p>El plan de <strong>{plan_cps} casos de prueba</strong> fue ejecutado contra "
+        f"<strong>{total_j} items de Jira</strong>. "
+        f"Se finalizaron <strong>{pass_j} items ({pct_global}%)</strong>. "
+        f"Quedan <strong>{bug_j} bugs activos</strong> sin resolver. {bugs_txt}</p>"
+        f"<p style='font-size:15px;font-weight:700;color:{aval_color};margin-top:8px'>"
+        f"{check_icon} {aval} A DESPLIEGUE</p>"
+        f"{context_html}"
+        f"<div class='pills'>"
+        f"{bugs_pill}"
+        f"<span class='pill p-l'>Cobertura {pct_global}%</span>"
+        f"<span class='pill p-l'>RFs: {rfs_str[:40]}</span>"
+        f"</div></div></section>"
     )
 
-    # SCRIPT - construido en Python
-    script_html = _build_script_section(chart_data)
+    script_html = (
+        "<script>"
+        "function tc(hd){hd.closest('.card').classList.toggle('open');}"
+        "function applyF(){var q=document.getElementById('sb')?document.getElementById('sb').value.toLowerCase():'';document.querySelectorAll('.card').forEach(function(c){var mq=!q||(c.dataset.q||'').includes(q);c.classList.toggle('hidden',!mq);});}"
+        "function toggleTheme(){var d=document.documentElement.hasAttribute('data-theme');document.documentElement[d?'removeAttribute':'setAttribute']('data-theme','light');document.getElementById('toggleTrack').classList.toggle('on',!d);document.getElementById('themeIcon').textContent=d?'&#9728;':'&#9790;';document.getElementById('themeLabel').textContent=d?'Claro':'Oscuro';}"
+        "</script>"
+    )
 
-    # ENSAMBLAR TODO
     return (
-        header_html
-        + kpi_html
-        + charts_html
-        + seccion_exitosos
-        + seccion_modulos
-        + seccion_items
-        + conclusion_html
-        + "</main>"
-        + script_html
+        header_html + kpi_html + seccion_modulos + seccion_plan + seccion_bugs + conclusion_html + "</main>" + script_html
     )
 
 
@@ -647,29 +459,22 @@ async def generate_completion_report(data: dict) -> str:
     version = data.get('version', '1.0')
     period = data.get('period', '')
     context = data.get('additionalContext', '')
-    doc_content = data.get('documentContent', '')
     doc_bytes = data.get('documentBytes', b'')
     jira_bugs = data.get('jiraBugs', [])
     fecha = datetime.datetime.now().strftime('%d/%m/%Y')
 
-    logger.info(f"DOC_CONTENT length: {len(doc_content)}")
+    logger.info(f"DOC_CONTENT length: {len(data.get('documentContent', ''))}")
     logger.info(f"JIRA_BUGS count: {len(jira_bugs)}")
 
-    # Parsear el plan de pruebas
     plan_data = {"proyecto": project, "qa": qa, "rfs": [], "casos": [], "total_cps": 0}
     if doc_bytes:
         plan_data = parse_test_plan_html(doc_bytes)
         logger.info(f"Plan parseado: {plan_data['total_cps']} CPs, {len(plan_data['rfs'])} RFs")
 
-    # Cruzar bugs con el plan
     jira_bugs_rich = _cruzar_jira_con_plan(jira_bugs, plan_data.get('casos', []))
     logger.info(f"Bugs enriquecidos: {len(jira_bugs_rich)}")
 
-    # Construir TODO el HTML en Python directamente - sin depender de la IA
-    return _build_completion_html(
-        project, qa, version, period, fecha,
-        jira_bugs_rich, plan_data, context
-    )
+    return _build_completion_html(project, qa, version, period, fecha, jira_bugs_rich, plan_data, context)
 
 
 async def generate_comparison_report(data: dict) -> str:
@@ -697,9 +502,8 @@ async def generate_comparison_report(data: dict) -> str:
         f"{doc_summary}"
         f"Contexto: {context}\n\n"
         "Estructura: print-btn, header.report-header, div.container con kpi-strip, "
-        "secciones numeradas 01-07 (Resumen, Tabla Comparativa con badges badge-ok/badge-partial/badge-fail, "
-        "Analisis Detallado, Inconsistencias, Brechas, CPs Propuestos, Conclusiones), report-footer.\n"
-        "NO markdown, NO ```html, NO texto plano como instrucciones. Genera HTML real ahora:"
+        "secciones numeradas 01-07, report-footer.\n"
+        "NO markdown, NO ```html. Genera HTML real ahora:"
     )
 
     client = get_ai_client()
@@ -723,11 +527,6 @@ async def generate_innovation_report(data: dict) -> str:
         f"Proyecto: {project} | QA: {qa} | Version: {version} | Periodo: {period} | Fecha: {fecha}\n\n"
         f"Innovacion descrita:\n{context}\n\n"
         f"Documento adjunto:\n{doc_content[:2000] if doc_content else 'No adjuntado'}\n\n"
-        "Estructura: header.header con logo-mark SVG y theme-toggle, div.filter-bar con filter-btns, "
-        "main.main con kpi-row 4 KPIs, "
-        "section#sec-mejoras con 3-5 cards (card-trigger, card-body con body-grid y body-block), "
-        "section#sec-propuestas con 2-4 cards, footer.footer, "
-        "script con toggleCard/setFilter/applyFilters/toggleTheme.\n"
         "NO markdown, NO ```html. Genera HTML real ahora:"
     )
 

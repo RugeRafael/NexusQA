@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QACopilot.Infrastructure.Data.Context;
 
@@ -11,9 +12,11 @@ using QACopilot.Infrastructure.Data.Context;
 namespace QACopilot.Migrations
 {
     [DbContext(typeof(QACopilotDbContext))]
-    partial class QACopilotDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260718012601_AddProjectIdToTrainingDocument")]
+    partial class AddProjectIdToTrainingDocument
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

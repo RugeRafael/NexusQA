@@ -19,30 +19,37 @@ public class AIService : IAIService
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
-    public AIService(HttpClient httpClient,
-        IConfiguration configuration,
-        ILogger<AIService> logger)
+    public AIService(HttpClient httpClient, IConfiguration configuration, ILogger<AIService> logger)
     {
         _httpClient = httpClient;
         _logger = logger;
         _aiServiceUrl = configuration["AIService:BaseUrl"] ?? "http://localhost:8000";
     }
 
-    public async Task<AIGenerationResultDto> GenerateTestCasesAsync(string documentContent)
+    public async Task<AIGenerationResultDto> GenerateTestCasesAsync(string documentContent, string? projectId = null)
     {
         try
         {
-            _logger.LogInformation("Calling AI microservice at {Url}", _aiServiceUrl);
-            var payload = new { document_content = documentContent };
+            _logger.LogInformation("Calling AI microservice at {Url} for project {ProjectId}", _aiServiceUrl, projectId ?? "global");
+
+            var payload = new
+            {
+                document_content = documentContent,
+                project_id = projectId ?? "global"  // RAG filtra por este namespace
+            };
+
             var json = JsonSerializer.Serialize(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync($"{_aiServiceUrl}/api/generate-testcases", content);
             response.EnsureSuccessStatusCode();
+
             var responseBody = await response.Content.ReadAsStringAsync();
             _logger.LogInformation("AI raw response: {Response}", responseBody[..Math.Min(200, responseBody.Length)]);
+
             var result = JsonSerializer.Deserialize<AIGenerationResultDto>(responseBody, _jsonOptions);
             _logger.LogInformation("AI microservice returned {Count} test cases with score {Score}",
                 result?.TotalTestCases, result?.ConfidenceScore);
+
             return result ?? new AIGenerationResultDto
             {
                 Content = "No content generated",
@@ -62,7 +69,7 @@ public class AIService : IAIService
         }
     }
 
-    public async Task<string> ChatAsync(string message, List<Dictionary<string, string>>? sessionHistory = null)
+    public async Task<string> ChatAsync(string message, List<Dictionary<string, string>>? sessionHistory = null, string? projectId = null)
     {
         try
         {
@@ -77,7 +84,7 @@ public class AIService : IAIService
             var response = await _httpClient.PostAsync($"{_aiServiceUrl}/api/chat", content);
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
-            _logger.LogInformation("Chat response received: {Length} chars", responseBody.Length);
+
             using var doc = JsonDocument.Parse(responseBody);
             var root = doc.RootElement;
             if (root.TryGetProperty("response", out var responseEl))

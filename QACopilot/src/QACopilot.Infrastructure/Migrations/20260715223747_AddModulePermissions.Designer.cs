@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QACopilot.Infrastructure.Data.Context;
 
@@ -11,9 +12,11 @@ using QACopilot.Infrastructure.Data.Context;
 namespace QACopilot.Migrations
 {
     [DbContext(typeof(QACopilotDbContext))]
-    partial class QACopilotDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260715223747_AddModulePermissions")]
+    partial class AddModulePermissions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -640,9 +643,6 @@ namespace QACopilot.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -655,8 +655,6 @@ namespace QACopilot.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
 
                     b.HasIndex("UploadedByUserId");
 
@@ -884,17 +882,11 @@ namespace QACopilot.Migrations
 
             modelBuilder.Entity("QACopilot.Domain.Entities.TrainingDocument", b =>
                 {
-                    b.HasOne("QACopilot.Domain.Entities.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId");
-
                     b.HasOne("QACopilot.Domain.Entities.User", "UploadedByUser")
                         .WithMany()
                         .HasForeignKey("UploadedByUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Project");
 
                     b.Navigation("UploadedByUser");
                 });

@@ -16,6 +16,7 @@ export interface AuthResponse {
   expiresAt: string;
   userName: string;
   role: string;
+  dashboardType: string; // 'admin' | 'senior' | 'qa'
 }
 
 export interface RefreshTokenRequest {

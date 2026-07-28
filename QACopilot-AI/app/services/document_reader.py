@@ -1,6 +1,8 @@
-import os
 import re
+import logging
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 
 def read_document(file_path: str, file_content: bytes, filename: str) -> str:
@@ -39,10 +41,8 @@ def read_document(file_path: str, file_content: bytes, filename: str) -> str:
 
 def parse_test_plan_html(file_content: bytes) -> dict:
     """
-    Parsea el HTML del plan de pruebas y extrae:
-    - Metadata del proyecto
-    - Tabla de RFs con nombres y rangos
-    - Casos de prueba con todos sus campos
+    Parsea el HTML del plan de pruebas.
+    Soporta CP- y TC-, extrae módulo, sub-módulo y RF desde tc-meta-cell.
     """
     try:
         from bs4 import BeautifulSoup
@@ -58,125 +58,107 @@ def parse_test_plan_html(file_content: bytes) -> dict:
             "casos": []
         }
 
-        # Extraer metadata del header
+        # ── Metadata ──────────────────────────────────────────────
         header = soup.find(class_='header')
         if header:
-            meta_items = header.find_all(class_='header-meta-item')
-            for item in meta_items:
+            for item in header.find_all(class_='header-meta-item'):
                 label_el = item.find(class_='label')
                 value_el = item.find(class_='value')
                 if label_el and value_el:
                     label = label_el.get_text(strip=True).lower()
                     value = value_el.get_text(strip=True)
-                    if 'proyecto' in label:
-                        result['proyecto'] = value
-                    elif 'qa' in label or 'engineer' in label:
-                        result['qa'] = value
-                    elif 'fecha' in label:
-                        result['fecha'] = value
-                    elif 'ambiente' in label:
-                        result['ambiente'] = value
+                    if 'proyecto' in label: result['proyecto'] = value
+                    elif 'qa' in label or 'engineer' in label: result['qa'] = value
+                    elif 'fecha' in label: result['fecha'] = value
+                    elif 'ambiente' in label: result['ambiente'] = value
 
-        # Extraer tabla de RFs
-        sections = soup.find_all(class_='section')
-        for section in sections:
+        # ── RFs ───────────────────────────────────────────────────
+        for section in soup.find_all(class_='section'):
             h2 = section.find('h2')
-            if not h2:
-                continue
+            if not h2: continue
             title = h2.get_text(strip=True)
-
-            # Tabla de Requerimientos Funcionales
             if 'Requerimientos' in title or 'Requisitos' in title:
-                rows = section.find_all('tr')
-                for row in rows:
+                for row in section.find_all('tr'):
                     cells = row.find_all('td')
-                    if len(cells) >= 3:
+                    if len(cells) >= 2:
                         rf_id = cells[0].get_text(strip=True)
-                        rf_nombre = cells[1].get_text(strip=True)
-                        rf_cantidad = cells[2].get_text(strip=True)
-                        rf_rango = cells[3].get_text(strip=True) if len(cells) > 3 else ''
-                        if rf_id.startswith('RF-') or rf_id.startswith('RF '):
+                        if re.match(r'RF-\d+', rf_id):
                             result['rfs'].append({
                                 'id': rf_id,
-                                'nombre': rf_nombre,
-                                'cantidad': rf_cantidad,
-                                'rango': rf_rango
+                                'nombre': cells[1].get_text(strip=True),
+                                'cantidad': cells[2].get_text(strip=True) if len(cells) > 2 else '',
+                                'rango': cells[3].get_text(strip=True) if len(cells) > 3 else ''
                             })
 
-            # Tabla de Casos de Prueba
-            elif 'Casos de Prueba' in title or 'Casos' in title:
-                tc_table = section.find(class_='tc-table')
-                if not tc_table:
-                    tc_table = section.find('table')
-                if not tc_table:
-                    continue
+        # ── Casos: estrategia 1 — tc-card (formato NexusQA/CRONOS) ─
+        tc_cards = soup.find_all(class_='tc-card')
+        if tc_cards:
+            for card in tc_cards:
+                head = card.find(class_='tc-head')
+                if not head: continue
 
-                current_rf = ''
-                current_rf_nombre = ''
-                rows = tc_table.find_all('tr')
+                tc_id_el = head.find(class_='tc-id') or head.find(class_='cp-id')
+                tc_name_el = head.find(class_='tc-name') or head.find(class_='cp-name')
+                priority_el = head.find(class_='priority-badge') or head.find(class_='priority-alta') or head.find(class_='priority-media') or head.find(class_='priority-baja')
 
-                for row in rows:
-                    # Fila de bloque RF
-                    if 'block-header' in row.get('class', []):
-                        header_text = row.get_text(strip=True)
-                        rf_match = re.search(r'(RF-[\d,\s]+)', header_text)
-                        if rf_match:
-                            current_rf = rf_match.group(1).strip()
-                        # Extraer nombre despues del guion
-                        parts = header_text.split('—')
-                        if len(parts) > 1:
-                            current_rf_nombre = parts[1].strip()
-                        elif len(parts) == 1:
-                            current_rf_nombre = header_text.replace(current_rf, '').strip(' —')
-                        continue
+                if not tc_id_el: continue
+                cp_id = tc_id_el.get_text(strip=True)
+                if not re.match(r'^(CP|TC)-\d+', cp_id): continue
 
-                    # Fila de caso de prueba
-                    cells = row.find_all('td')
-                    if len(cells) < 3:
-                        continue
+                nombre = tc_name_el.get_text(strip=True) if tc_name_el else ''
+                criticidad = priority_el.get_text(strip=True) if priority_el else 'Media'
 
-                    cp_id_el = row.find(class_='tc-id')
-                    cp_name_el = row.find(class_='tc-name')
-                    cp_rf_el = row.find(class_='tc-rf')
+                modulo = ''
+                submodulo = ''
+                rf = ''
 
-                    if not cp_id_el:
-                        continue
+                for cell in card.find_all(class_='tc-meta-cell'):
+                    text = cell.get_text(strip=True)
+                    # Remover prefijos de label
+                    for prefix in ['Módulo', 'Modulo', 'Module']:
+                        if text.startswith(prefix):
+                            modulo = text[len(prefix):].strip()
+                            break
+                    for prefix in ['Sub-módulo', 'Sub-modulo', 'Submodulo', 'Submódulo']:
+                        if text.startswith(prefix):
+                            submodulo = text[len(prefix):].strip()
+                            break
+                    if text.startswith('Requerimiento'):
+                        rf_candidate = text.replace('Requerimiento', '').strip()
+                        if re.match(r'RF-\d+', rf_candidate):
+                            rf = rf_candidate
 
-                    cp_id = cp_id_el.get_text(strip=True)
-                    if not cp_id.startswith('CP-'):
-                        continue
+                result['casos'].append({
+                    'id': cp_id,
+                    'nombre': nombre,
+                    'rf': rf or 'RF-General',
+                    'rf_nombre': '',
+                    'modulo': modulo,
+                    'submodulo': submodulo,
+                    'criticidad': criticidad,
+                    'marcado': False
+                })
 
-                    cp_name = cp_name_el.get_text(strip=True) if cp_name_el else ''
-                    cp_rf = cp_rf_el.get_text(strip=True) if cp_rf_el else current_rf
-
-                    # Modulo y submodulo
-                    modulo = cells[3].get_text(strip=True) if len(cells) > 3 else ''
-                    submodulo = cells[4].get_text(strip=True) if len(cells) > 4 else ''
-
-                    # Criticidad
-                    crit_badge = row.find(class_='crit-badge')
-                    criticidad = crit_badge.get_text(strip=True) if crit_badge else 'Media'
-
-                    # Marcado especial
-                    is_marked = 'marked' in row.get('class', [])
-
+        # ── Casos: estrategia 2 — fallback regex en texto completo ─
+        if not result['casos']:
+            logger.info("Usando fallback regex en texto completo")
+            seen_ids = set()
+            for m in re.finditer(r'\b(CP|TC)-(\d{1,4})\b', soup.get_text()):
+                cp_id = m.group(0)
+                if cp_id not in seen_ids:
+                    seen_ids.add(cp_id)
                     result['casos'].append({
-                        'id': cp_id,
-                        'nombre': cp_name,
-                        'rf': cp_rf,
-                        'rf_nombre': current_rf_nombre,
-                        'modulo': modulo,
-                        'submodulo': submodulo,
-                        'criticidad': criticidad,
-                        'marcado': is_marked
+                        'id': cp_id, 'nombre': cp_id,
+                        'rf': 'RF-General', 'rf_nombre': '',
+                        'modulo': '', 'submodulo': '',
+                        'criticidad': 'Media', 'marcado': False
                     })
 
         result['total_cps'] = len(result['casos'])
+        logger.info(f"Total casos: {result['total_cps']}, RFs: {len(result['rfs'])}")
         return result
 
     except Exception as e:
-        return {
-            "proyecto": "", "qa": "", "fecha": "", "ambiente": "",
-            "total_cps": 0, "rfs": [], "casos": [],
-            "error": str(e)
-        }
+        logger.error(f"Error parsing test plan: {e}")
+        return {"proyecto": "", "qa": "", "fecha": "", "ambiente": "",
+                "total_cps": 0, "rfs": [], "casos": [], "error": str(e)}

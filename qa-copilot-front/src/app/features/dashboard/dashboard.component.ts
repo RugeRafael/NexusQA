@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { SignalRService } from '../../core/services/signalr.service';
 import { ProjectService } from '../../core/services/project.service';
 import { DocumentService } from '../../core/services/document.service';
 import { TestcaseService } from '../../core/services/testcase.service';
+import { PermissionsService } from '../../core/services/permissions.service';
 import { DashboardMetrics } from '../../core/models/metrics.model';
 import { environment } from '../../../environments/environment';
 
@@ -28,13 +29,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   userName = '';
   greeting = '';
 
-  // Indicadores QA del Panel Senior
   myIndicators: any = null;
   indicatorsEnabled = false;
   loadingIndicators = false;
   teamSummary: any[] = [];
 
-  // Filtro por mes en widget QA
   indicatorYear: number = new Date().getFullYear();
   indicatorMonth: number = new Date().getMonth() + 1;
   indicatorFilterAll = true;
@@ -55,6 +54,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private documentService: DocumentService,
     private testcaseService: TestcaseService,
+    private permissionsService: PermissionsService,
     private http: HttpClient,
     private router: Router,
     private cdr: ChangeDetectorRef
@@ -65,9 +65,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.userRole = user?.role || '';
     this.userName = user?.userName || '';
     this.greeting = this.getGreeting();
-
     this.loadDataByRole();
-
     this.subs.add(
       this.signalRService.teamActivity$.subscribe(activity => {
         if (activity) {
@@ -79,6 +77,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  // ── Dashboard determinado por claim dashboardType del JWT ─────
+  // El backend asigna este valor según el rol configurado en appsettings
+  // Valores posibles: "admin", "senior", "qa"
+  // Así los módulos/permisos son independientes del dashboard que se muestra
+
+  private get dashboardType(): string {
+    const user = this.authService.getCurrentUser() as any;
+    return user?.dashboardType || 'qa';
+  }
+
+  isAdminRole(): boolean { return this.dashboardType === 'admin'; }
+  isSeniorRole(): boolean { return this.dashboardType === 'senior'; }
+  isQARole(): boolean { return this.dashboardType === 'qa'; }
+
+  // ── Verificar si tiene permiso a un módulo específico ─────────
+  hasModule(key: string): boolean {
+    return this.permissionsService.hasModule(key);
+  }
+
   private getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
@@ -86,15 +103,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   loadDataByRole(): void {
     this.loading = true;
-
-    if (this.userRole === 'Admin') {
+    if (this.isAdminRole()) {
       this.metricsService.getDashboard().subscribe({
         next: (data) => { this.metrics = data; this.loading = false; this.cdr.detectChanges(); },
         error: () => { this.loading = false; this.cdr.detectChanges(); }
       });
       this.loadTeamSummary();
-
-    } else if (this.userRole === 'Senior') {
+    } else if (this.isSeniorRole()) {
       this.metricsService.getDashboard().subscribe({
         next: (data) => { this.metrics = data; this.loading = false; this.cdr.detectChanges(); },
         error: () => { this.loading = false; this.cdr.detectChanges(); }
@@ -104,8 +119,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         error: () => {}
       });
       this.loadTeamSummary();
-
-    } else if (this.userRole === 'QAEngineer') {
+    } else {
       this.projectService.getMyProjects().subscribe({
         next: (projects) => { this.myProjects = projects; this.cdr.detectChanges(); },
         error: () => {}
@@ -120,10 +134,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
       this.loading = false;
       this.loadMyIndicators();
-      this.cdr.detectChanges();
-
-    } else {
-      this.loading = false;
       this.cdr.detectChanges();
     }
   }
@@ -143,100 +153,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loadMyIndicators(): void {
     this.loadingIndicators = true;
     let params: any = {};
-    if (!this.indicatorFilterAll) {
-      params = { year: this.indicatorYear, month: this.indicatorMonth };
-    }
+    if (!this.indicatorFilterAll) params = { year: this.indicatorYear, month: this.indicatorMonth };
     this.http.get<any>(`${environment.apiUrl}/api/senior-panel/my-indicators`,
       { headers: this.getHeaders(), params }
     ).subscribe({
       next: (res) => {
         const data = res.data;
-        if (data && data.enabled === false) {
-          this.indicatorsEnabled = false;
-        } else if (data) {
-          this.indicatorsEnabled = true;
-          this.myIndicators = data;
-        }
+        if (data && data.enabled === false) { this.indicatorsEnabled = false; }
+        else if (data) { this.indicatorsEnabled = true; this.myIndicators = data; }
         this.loadingIndicators = false;
         this.cdr.detectChanges();
       },
-      error: () => {
-        this.loadingIndicators = false;
-        this.cdr.detectChanges();
-      }
+      error: () => { this.loadingIndicators = false; this.cdr.detectChanges(); }
     });
   }
 
   loadTeamSummary(): void {
-    this.http.get<any>(`${environment.apiUrl}/api/senior-panel/team`,
-      { headers: this.getHeaders() }
-    ).subscribe({
-      next: (res) => {
-        this.teamSummary = (res.data || []).slice(0, 5);
-        this.cdr.detectChanges();
-      },
+    this.http.get<any>(`${environment.apiUrl}/api/senior-panel/team`, { headers: this.getHeaders() }).subscribe({
+      next: (res) => { this.teamSummary = (res.data || []).slice(0, 5); this.cdr.detectChanges(); },
       error: () => {}
     });
   }
 
-  getScoreClass(score: number): string {
-    if (score >= 80) return 'excellent';
-    if (score >= 60) return 'good';
-    return 'needs-improvement';
-  }
-
-  getScoreLabel(score: number): string {
-    if (score >= 80) return 'Excelente';
-    if (score >= 60) return 'Bueno';
-    if (score >= 40) return 'Regular';
-    return 'Por mejorar';
-  }
-
-  getScoreColor(score: number): string {
-    if (score >= 80) return '#22c55e';
-    if (score >= 60) return '#f59e0b';
-    return '#ef4444';
-  }
-
-  getGreeting(): string {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Buenos dÃ­as';
-    if (hour < 18) return 'Buenas tardes';
-    return 'Buenas noches';
-  }
-
-  navigate(path: string): void {
-    this.router.navigate([path]);
-  }
-
-  getStatusColor(status: string): string {
-    const colors: Record<string, string> = {
-      'Active': '#10B981', 'OnHold': '#F59E0B',
-      'Completed': '#3B82F6', 'Cancelled': '#EF4444'
-    };
-    return colors[status] || '#64748B';
-  }
-
-  getStatusLabel(status: string): string {
-    const labels: Record<string, string> = {
-      'Active': 'Activo', 'OnHold': 'En espera',
-      'Completed': 'Completado', 'Cancelled': 'Cancelado'
-    };
-    return labels[status] || status;
-  }
-
-  formatDate(date: string): string {
-    if (!date) return 'â€”';
-    return new Date(date).toLocaleDateString('es-CO', {
-      day: '2-digit', month: 'short', year: 'numeric'
-    });
-  }
-
-  get confidencePercent(): string {
-    return this.metrics?.averageConfidenceScore
-      ? (this.metrics.averageConfidenceScore * 100).toFixed(1) + '%'
-      : '0%';
-  }
+  getScoreClass(score: number): string { return score >= 80 ? 'excellent' : score >= 60 ? 'good' : 'needs-improvement'; }
+  getScoreLabel(score: number): string { return score >= 80 ? 'Excelente' : score >= 60 ? 'Bueno' : score >= 40 ? 'Regular' : 'Por mejorar'; }
+  getScoreColor(score: number): string { return score >= 80 ? '#22c55e' : score >= 60 ? '#f59e0b' : '#ef4444'; }
+  getGreeting(): string { const h = new Date().getHours(); return h < 12 ? 'Buenos días' : h < 18 ? 'Buenas tardes' : 'Buenas noches'; }
+  navigate(path: string): void { this.router.navigate([path]); }
+  getStatusColor(s: string): string { return ({Active:'#10B981',OnHold:'#F59E0B',Completed:'#3B82F6',Cancelled:'#EF4444'} as any)[s] || '#64748B'; }
+  getStatusLabel(s: string): string { return ({Active:'Activo',OnHold:'En espera',Completed:'Completado',Cancelled:'Cancelado'} as any)[s] || s; }
+  formatDate(date: string): string { if (!date) return '—'; return new Date(date).toLocaleDateString('es-CO', {day:'2-digit',month:'short',year:'numeric'}); }
+  get confidencePercent(): string { return this.metrics?.averageConfidenceScore ? (this.metrics.averageConfidenceScore * 100).toFixed(1) + '%' : '0%'; }
 
   get adminKpis() {
     return [
@@ -265,10 +212,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ];
   }
 
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
-  }
+  ngOnDestroy(): void { this.subs.unsubscribe(); }
 }
-
-
-

@@ -31,17 +31,12 @@ export class TopbarComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     this.userName = user?.userName || '';
     this.userRole = user?.role || '';
-    this.isDarkTheme = this.themeService.currentTheme;
 
-    this.themeService.isDark$.subscribe(dark => {
-      this.isDarkTheme = dark;
-    });
+    this.isDarkTheme = this.themeService.currentTheme;
+    this.themeService.isDark$.subscribe(dark => { this.isDarkTheme = dark; });
 
     this.signalRService.notification$.subscribe(notification => {
-      if (notification) {
-        this.notifications.unshift(notification);
-        this.unreadCount++;
-      }
+      if (notification) { this.notifications.unshift(notification); this.unreadCount++; }
     });
 
     this.signalRService.projectAssigned$.subscribe(notification => {
@@ -56,41 +51,31 @@ export class TopbarComponent implements OnInit {
     });
   }
 
-  toggleTheme(): void {
-    this.themeService.toggle();
-  }
+  toggleTheme(): void { this.themeService.toggle(); }
 
   logout(): void {
     this.signalRService.stopConnection();
     this.authService.logout();
   }
 
-  clearNotifications(): void {
-    this.notifications = [];
-    this.unreadCount = 0;
-  }
+  clearNotifications(): void { this.notifications = []; this.unreadCount = 0; }
 
-  navigateToProfile(): void {
-    this.router.navigate(['/profile']);
-  }
+  navigateToProfile(): void { this.router.navigate(['/profile']); }
 
+  // Muestra el rol tal como viene del servidor — sin hardcodear labels
   getRoleLabel(): string {
-    const labels: Record<string, string> = {
-      'Admin': 'Administrador',
-      'Senior': 'Senior QA',
-      'QAEngineer': 'QA Engineer',
-      'Viewer': 'Auditor'
-    };
-    return labels[this.userRole] || this.userRole;
+    return this.userRole || 'Usuario';
   }
 
+  // Color basado en posición del rol — sin hardcodear roles específicos
   getRoleColor(): string {
-    const colors: Record<string, string> = {
-      'Admin': '#ef4444',
-      'Senior': '#f59e0b',
-      'QAEngineer': '#3b82f6',
-      'Viewer': '#64748b'
-    };
-    return colors[this.userRole] || '#64748b';
+    const colors = ['#ef4444', '#f59e0b', '#3b82f6', '#8b5cf6', '#10b981', '#6366f1'];
+    if (!this.userRole) return '#6366f1';
+    // Hash simple del nombre del rol para color consistente
+    let hash = 0;
+    for (let i = 0; i < this.userRole.length; i++) {
+      hash = this.userRole.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return colors[Math.abs(hash) % colors.length];
   }
 }

@@ -177,10 +177,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.jiraBugs = data.bugs || [];
         this.loadingByUrl = false;
-        this.snackBar.open(
-          `${this.jiraBugs.length} items cargados de ${data.issueKey}`,
-          'Cerrar', { duration: 3000 }
-        );
+        this.snackBar.open(`${this.jiraBugs.length} items cargados`, 'Cerrar', { duration: 3000 });
         this.cdr.detectChanges();
       },
       error: () => {
@@ -196,21 +193,16 @@ export class ReportsComponent implements OnInit, OnDestroy {
     this.generating = true;
     const v = this.comparisonForm.value;
     this.reportService.generateComparison({
-      projectName: v.projectName,
-      qaEngineer: v.qaEngineer,
-      version: v.version,
-      period: v.period,
-      requirements: v.requirements || '',
-      testCases: v.testCases || '',
-      additionalContext: v.additionalContext || ''
+      projectName: v.projectName, qaEngineer: v.qaEngineer, version: v.version,
+      period: v.period, requirements: v.requirements || '',
+      testCases: v.testCases || '', additionalContext: v.additionalContext || ''
     }, this.comparisonFile || undefined).subscribe({
       next: (data) => {
         this.comparisonReport = data;
         this.comparisonBlobUrl = this.createBlobUrl(data.htmlContent);
         this.generating = false;
         this.cdr.detectChanges();
-        setTimeout(() => document.getElementById('comparison-preview')
-          ?.scrollIntoView({ behavior: 'smooth' }), 300);
+        setTimeout(() => document.getElementById('comparison-preview')?.scrollIntoView({ behavior: 'smooth' }), 300);
       },
       error: () => {
         this.generating = false;
@@ -224,37 +216,24 @@ export class ReportsComponent implements OnInit, OnDestroy {
     if (this.completionForm.invalid) return;
     this.generating = true;
     const v = this.completionForm.value;
-
     const total = this.jiraBugs.length;
-    const passed = this.jiraBugs.filter((b: any) =>
-      ['Finalizada', 'Exitoso', 'Done', 'Finalizado'].includes(b.status)).length;
-    const failed = this.jiraBugs.filter((b: any) =>
-      b.issueType?.includes('Bug') &&
-      !['Finalizada', 'Exitoso', 'Done', 'Finalizado', 'Cancelado'].includes(b.status)).length;
-    const blocked = this.jiraBugs.filter((b: any) =>
-      ['Por hacer', 'Bloqueado'].includes(b.status)).length;
+    const passed = this.jiraBugs.filter((b: any) => ['Finalizada', 'Exitoso', 'Done', 'Finalizado'].includes(b.status)).length;
+    const failed = this.jiraBugs.filter((b: any) => b.issueType?.includes('Bug') && !['Finalizada', 'Exitoso', 'Done', 'Finalizado', 'Cancelado'].includes(b.status)).length;
+    const blocked = this.jiraBugs.filter((b: any) => ['Por hacer', 'Bloqueado'].includes(b.status)).length;
 
     this.reportService.generateCompletion({
-      projectName: v.projectName,
-      qaEngineer: v.qaEngineer,
-      version: v.version,
-      period: v.period,
-      totalTestCases: total || 1,
-      passedTestCases: passed,
-      failedTestCases: failed,
-      blockedTestCases: blocked,
-      totalExecutionTimeMinutes: 0,
-      defects: '',
-      additionalContext: v.additionalContext || '',
-      jiraBugs: this.jiraBugs
+      projectName: v.projectName, qaEngineer: v.qaEngineer, version: v.version,
+      period: v.period, totalTestCases: total || 1, passedTestCases: passed,
+      failedTestCases: failed, blockedTestCases: blocked,
+      totalExecutionTimeMinutes: 0, defects: '',
+      additionalContext: v.additionalContext || '', jiraBugs: this.jiraBugs
     }, this.completionFile || undefined).subscribe({
       next: (data) => {
         this.completionReport = data;
         this.completionBlobUrl = this.createBlobUrl(data.htmlContent);
         this.generating = false;
         this.cdr.detectChanges();
-        setTimeout(() => document.getElementById('completion-preview')
-          ?.scrollIntoView({ behavior: 'smooth' }), 300);
+        setTimeout(() => document.getElementById('completion-preview')?.scrollIntoView({ behavior: 'smooth' }), 300);
       },
       error: () => {
         this.generating = false;
@@ -269,19 +248,15 @@ export class ReportsComponent implements OnInit, OnDestroy {
     this.generating = true;
     const v = this.innovationForm.value;
     this.reportService.generateInnovation({
-      projectName: v.projectName,
-      qaEngineer: v.qaEngineer,
-      version: v.version,
-      period: v.period,
-      additionalContext: v.additionalContext
+      projectName: v.projectName, qaEngineer: v.qaEngineer,
+      version: v.version, period: v.period, additionalContext: v.additionalContext
     }, this.innovationFile || undefined).subscribe({
       next: (data) => {
         this.innovationReport = data;
         this.innovationBlobUrl = this.createBlobUrl(data.htmlContent);
         this.generating = false;
         this.cdr.detectChanges();
-        setTimeout(() => document.getElementById('innovation-preview')
-          ?.scrollIntoView({ behavior: 'smooth' }), 300);
+        setTimeout(() => document.getElementById('innovation-preview')?.scrollIntoView({ behavior: 'smooth' }), 300);
       },
       error: () => {
         this.generating = false;
@@ -295,6 +270,15 @@ export class ReportsComponent implements OnInit, OnDestroy {
     if (this.selectedTab === 0) return this.comparisonReport;
     if (this.selectedTab === 1) return this.completionReport;
     return this.innovationReport;
+  }
+
+  // Getter que filtra solo Bug-Subtarea no finalizados
+  get jiraBugsOnly(): any[] {
+    const done = ['Finalizada', 'Exitoso', 'Done', 'Finalizado', 'Cancelado'];
+    return this.jiraBugs.filter(b => {
+      const type = (b.issueType || '').toLowerCase();
+      return type.includes('bug') && !done.includes(b.status);
+    });
   }
 
   exportToHtml(): void {
@@ -321,19 +305,23 @@ export class ReportsComponent implements OnInit, OnDestroy {
 
   exportToPdf(): void {
     this.openInNewTab();
-    this.snackBar.open('Usa Ctrl+P en la nueva pestaña para guardar como PDF', 'Cerrar', { duration: 5000 });
+    this.snackBar.open('Usa Ctrl+P en la nueva pestana para guardar como PDF', 'Cerrar', { duration: 5000 });
   }
 
   uploadToJira(): void {
     const report = this.currentReport;
     if (!report) return;
+    const activeJiraUrl = this.getActiveJiraUrl();
     this.uploadingToJira = true;
-    this.jiraService.createTestCase(
+    this.jiraService.createIssueWithHtml(
       report.title,
-      `Informe QA generado por QA Copilot\nFecha: ${new Date().toLocaleDateString()}`,
-      'Medium'
+      `Informe QA generado por NexusQA\nFecha: ${new Date().toLocaleDateString()}`,
+      'Task', 'Medium',
+      report.htmlContent || '',
+      `${(report.title || 'informe').replace(/ /g, '_')}.html`,
+      activeJiraUrl || undefined
     ).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.uploadingToJira = false;
         this.snackBar.open(`Subido a Jira — ${data.key}`, 'Abrir', { duration: 6000 })
           .onAction().subscribe(() => window.open(data.url, '_blank'));
@@ -351,38 +339,28 @@ export class ReportsComponent implements OnInit, OnDestroy {
     const report = this.currentReport;
     if (!report) return;
     this.uploadingToDocs = true;
-
     const activeJiraUrl = this.getActiveJiraUrl();
 
     if (activeJiraUrl && activeJiraUrl.trim()) {
-      const projectKey = this.jiraService.extractProjectKeyFromUrl(activeJiraUrl);
-      if (!projectKey) {
-        this.snackBar.open(
-          'No se pudo extraer el proyecto de la URL. Formato esperado: .../projects/SEQ/...',
-          'Cerrar', { duration: 5000 }
-        );
-        this.uploadingToDocs = false;
-        return;
-      }
-      this.jiraService.uploadToProject(
-        activeJiraUrl,
+      this.jiraService.createIssueWithHtml(
         report.title,
-        `Informe QA generado por QA Copilot — ${new Date().toLocaleDateString()}`
+        `Informe QA generado por NexusQA — ${new Date().toLocaleDateString()}`,
+        'Task', 'Medium',
+        report.htmlContent || '',
+        `${(report.title || 'informe').replace(/ /g, '_')}.html`,
+        activeJiraUrl
       ).subscribe({
-        next: (data) => {
+        next: (data: any) => {
           this.uploadingToDocs = false;
           this.snackBar.open(
-            `Subido al proyecto ${data.projectKey} — ${data.key}`,
+            `Subido a Jira — ${data.key}${data.parentIssueKey ? ' (subtarea de ' + data.parentIssueKey + ')' : ''}`,
             'Abrir', { duration: 6000 }
           ).onAction().subscribe(() => window.open(data.url, '_blank'));
           this.cdr.detectChanges();
         },
         error: () => {
           this.uploadingToDocs = false;
-          this.snackBar.open(
-            'Error subiendo a Jira — verifica la URL del proyecto',
-            'Cerrar', { duration: 4000 }
-          );
+          this.snackBar.open('Error subiendo a Jira — verifica la URL', 'Cerrar', { duration: 4000 });
           this.cdr.detectChanges();
         }
       });
@@ -408,6 +386,8 @@ export class ReportsComponent implements OnInit, OnDestroy {
   get activeJiraUrlLabel(): string {
     const url = this.getActiveJiraUrl();
     if (!url) return 'Guardar';
+    const issueMatch = url.match(/\/browse\/([A-Z][A-Z0-9]+-\d+)/i);
+    if (issueMatch) return `Subtarea en ${issueMatch[1].toUpperCase()}`;
     const key = this.jiraService.extractProjectKeyFromUrl(url);
     return key ? `Cargar a ${key}` : 'Cargar a Jira';
   }

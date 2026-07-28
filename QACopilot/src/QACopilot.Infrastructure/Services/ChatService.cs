@@ -3,9 +3,7 @@ using Microsoft.Extensions.Logging;
 using QACopilot.Application.DTOs.Chat;
 using QACopilot.Application.Interfaces.Services;
 using QACopilot.Domain.Entities;
-using QACopilot.Domain.Exceptions;
 using QACopilot.Infrastructure.Data.Context;
-using QACopilot.Infrastructure.Services.ExternalServices;
 
 namespace QACopilot.Infrastructure.Services;
 
@@ -15,10 +13,7 @@ public class ChatService : IChatService
     private readonly IAIService _aiService;
     private readonly ILogger<ChatService> _logger;
 
-    public ChatService(
-        QACopilotDbContext context,
-        IAIService aiService,
-        ILogger<ChatService> logger)
+    public ChatService(QACopilotDbContext context, IAIService aiService, ILogger<ChatService> logger)
     {
         _context = context;
         _aiService = aiService;
@@ -27,141 +22,60 @@ public class ChatService : IChatService
 
     public async Task<ChatResponseDto> SendMessageAsync(ChatRequestDto request, Guid userId)
     {
-        ChatSession session;
+        var sessionId = request.SessionId ?? Guid.NewGuid();
+        var session = await _context.ChatSessions
+            .Include(s => s.Messages)
+            .FirstOrDefaultAsync(s => s.Id == sessionId && s.UserId == userId);
 
-        if (request.SessionId.HasValue)
-        {
-            session = await _context.ChatSessions
-                .Include(s => s.Messages)
-                .FirstOrDefaultAsync(s => s.Id == request.SessionId && s.UserId == userId)
-                ?? throw new NotFoundException("ChatSession", request.SessionId);
-        }
-        else
+        if (session == null)
         {
             session = new ChatSession
             {
-                Id = Guid.NewGuid(),
+                Id = sessionId,
                 UserId = userId,
-                Title = request.Message.Length > 50
-                    ? request.Message[..50] + "..."
-                    : request.Message,
+                Title = request.Message.Length > 50 ? request.Message[..50] + "..." : request.Message,
                 CreatedAt = DateTime.UtcNow,
-                LastMessageAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow
             };
-            await _context.ChatSessions.AddAsync(session);
-            await _context.SaveChangesAsync();
+            _context.ChatSessions.Add(session);
         }
 
-        // Guardar mensaje del usuario
-        var userMessage = new ChatMessage
-        {
-            Id = Guid.NewGuid(),
-            SessionId = session.Id,
-            Role = "user",
-            Content = request.Message,
-            SentAt = DateTime.UtcNow
-        };
-        await _context.ChatMessages.AddAsync(userMessage);
+        var history = session.Messages?
+            .OrderBy(m => m.CreatedAt)
+            .TakeLast(10)
+            .Select(m => new Dictionary<string, string> { ["role"] = m.Role, ["content"] = m.Content })
+            .ToList() ?? new List<Dictionary<string, string>>();
 
-        // Construir historial de la sesión para contexto
-        var sessionHistory = new List<Dictionary<string, string>>();
-        if (request.SessionId.HasValue)
-        {
-            var history = await _context.ChatMessages
-                .Where(m => m.SessionId == session.Id && m.Id != userMessage.Id)
-                .OrderBy(m => m.SentAt)
-                .TakeLast(10)
-                .ToListAsync();
+        var projectId = request.ProjectId?.ToString() ?? "global";
+        _logger.LogInformation("Chat for project {ProjectId}: {Msg}", projectId, request.Message[..Math.Min(80, request.Message.Length)]);
 
-            sessionHistory = history.Select(m => new Dictionary<string, string>
-            {
-                { "role", m.Role },
-                { "content", m.Content }
-            }).ToList();
-        }
+        var response = await _aiService.ChatAsync(request.Message, history, projectId);
 
-        // Llamar al endpoint /api/chat del microservicio Python
-        string aiResponse;
-        if (_aiService is AIService aiServiceConcrete)
-        {
-            aiResponse = await aiServiceConcrete.ChatAsync(request.Message, sessionHistory);
-        }
-        else
-        {
-            // Fallback usando GenerateTestCasesAsync
-            var result = await _aiService.GenerateTestCasesAsync(
-                $"[CHAT_QA_ASSISTANT]\n{request.Message}");
-            aiResponse = result.Content;
-        }
+        _context.ChatMessages.Add(new ChatMessage { Id = Guid.NewGuid(), SessionId = sessionId, Role = "user", Content = request.Message, CreatedAt = DateTime.UtcNow });
+        var assistantMsg = new ChatMessage { Id = Guid.NewGuid(), SessionId = sessionId, Role = "assistant", Content = response, CreatedAt = DateTime.UtcNow };
+        _context.ChatMessages.Add(assistantMsg);
 
-        // Guardar respuesta del asistente
-        var assistantMessage = new ChatMessage
-        {
-            Id = Guid.NewGuid(),
-            SessionId = session.Id,
-            Role = "assistant",
-            Content = aiResponse,
-            SentAt = DateTime.UtcNow,
-            TokensUsed = 0
-        };
-        await _context.ChatMessages.AddAsync(assistantMessage);
-
-        session.LastMessageAt = DateTime.UtcNow;
+        session.UpdatedAt = DateTime.UtcNow;
         await _context.SaveChangesAsync();
 
-        _logger.LogInformation("Chat message processed for session {SessionId}", session.Id);
-
-        var fullHistory = await _context.ChatMessages
-            .Where(m => m.SessionId == session.Id)
-            .OrderBy(m => m.SentAt)
-            .Select(m => new ChatMessageDto
-            {
-                Id = m.Id,
-                Role = m.Role,
-                Content = m.Content,
-                SentAt = m.SentAt
-            })
-            .ToListAsync();
-
-        return new ChatResponseDto
-        {
-            SessionId = session.Id,
-            Response = aiResponse,
-            History = fullHistory
-        };
+        return new ChatResponseDto { SessionId = sessionId, Message = response, CreatedAt = assistantMsg.CreatedAt };
     }
 
     public async Task<IEnumerable<ChatMessageDto>> GetHistoryAsync(Guid sessionId, Guid userId)
     {
-        var session = await _context.ChatSessions
-            .FirstOrDefaultAsync(s => s.Id == sessionId && s.UserId == userId)
-            ?? throw new NotFoundException("ChatSession", sessionId);
-
         return await _context.ChatMessages
-            .Where(m => m.SessionId == sessionId)
-            .OrderBy(m => m.SentAt)
-            .Select(m => new ChatMessageDto
-            {
-                Id = m.Id,
-                Role = m.Role,
-                Content = m.Content,
-                SentAt = m.SentAt
-            })
+            .Where(m => m.SessionId == sessionId && m.Session.UserId == userId)
+            .OrderBy(m => m.CreatedAt)
+            .Select(m => new ChatMessageDto { Id = m.Id, Role = m.Role, Content = m.Content, CreatedAt = m.CreatedAt })
             .ToListAsync();
     }
 
     public async Task<IEnumerable<ChatResponseDto>> GetSessionsAsync(Guid userId)
     {
-        var sessions = await _context.ChatSessions
-            .Where(s => s.UserId == userId && s.IsActive)
-            .OrderByDescending(s => s.LastMessageAt)
+        return await _context.ChatSessions
+            .Where(s => s.UserId == userId)
+            .OrderByDescending(s => s.UpdatedAt)
+            .Select(s => new ChatResponseDto { SessionId = s.Id, Message = s.Title ?? "Conversacion", CreatedAt = s.UpdatedAt })
             .ToListAsync();
-
-        return sessions.Select(s => new ChatResponseDto
-        {
-            SessionId = s.Id,
-            Response = string.Empty,
-            History = []
-        });
     }
 }

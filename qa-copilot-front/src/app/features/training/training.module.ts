@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -17,17 +17,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   declarations: [TrainingComponent],
   imports: [
     CommonModule,
-  ReactiveFormsModule,
-  TrainingRoutingModule,
-  MatIconModule,
-  MatButtonModule,
-  MatProgressSpinnerModule,
-  MatInputModule,
-  MatSnackBarModule,
-  MatSelectModule,
-  MatTableModule,
-  MatChipsModule,
-  MatTooltipModule
+    ReactiveFormsModule,
+    FormsModule,
+    TrainingRoutingModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatTableModule,
+    MatChipsModule,
+    MatTooltipModule
   ]
 })
 export class TrainingModule {}

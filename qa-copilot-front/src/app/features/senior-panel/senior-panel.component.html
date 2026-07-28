@@ -10,20 +10,15 @@
         <mat-icon>dashboard_customize</mat-icon>
       </div>
       <div>
-        <h1>{{ viewMode === 'team' ? 'Panel Senior — Indicadores QA' : 'Detalle: ' + selectedUser?.userName }}</h1>
-        <p>{{ viewMode === 'team' ? 'Gestiona y monitorea el rendimiento del equipo' : 'Plan 50% · Documental 25% · Aportes 25%' }}</p>
+        <h1>{{ viewMode === 'detail' ? 'Detalle: ' + selectedUser?.userName : activeTab === 'usuarios' ? 'Gestión de Usuarios' : activeTab === 'permisos' ? 'Permisos de Módulos' : 'Panel Senior — Indicadores QA' }}</h1>
+        <p>{{ activeTab === 'usuarios' ? 'Administra usuarios, roles y accesos' : activeTab === 'permisos' ? 'Configura qué módulos puede ver cada rol' : 'Gestiona y monitorea el rendimiento del equipo' }}</p>
       </div>
     </div>
-    <div class="header-actions">
-      <!-- FILTRO DE FECHA -->
+    <div class="header-actions" *ngIf="activeTab === 'equipo'">
       <div class="date-filter">
         <div class="filter-toggle">
-          <button class="ftoggle-btn" [class.active]="filterAll" (click)="filterAll=true; onFilterChange()">
-            Todo
-          </button>
-          <button class="ftoggle-btn" [class.active]="!filterAll" (click)="filterAll=false; onFilterChange()">
-            Por mes
-          </button>
+          <button class="ftoggle-btn" [class.active]="filterAll" (click)="filterAll=true; onFilterChange()">Todo</button>
+          <button class="ftoggle-btn" [class.active]="!filterAll" (click)="filterAll=false; onFilterChange()">Por mes</button>
         </div>
         <div class="month-selectors" *ngIf="!filterAll">
           <select class="date-select" [(ngModel)]="selectedMonth" (change)="onFilterChange()">
@@ -42,221 +37,295 @@
         <mat-icon>refresh</mat-icon> Actualizar
       </button>
     </div>
+    <div class="header-actions" *ngIf="activeTab === 'usuarios' && isSeniorOrAdmin">
+      <button mat-raised-button color="primary" (click)="showCreateForm = !showCreateForm">
+        <mat-icon>person_add</mat-icon> Nuevo Usuario
+      </button>
+      <button mat-stroked-button (click)="loadUsers()">
+        <mat-icon>refresh</mat-icon> Actualizar
+      </button>
+    </div>
   </div>
 
-  <!-- LOADING -->
-  <div class="loading-state" *ngIf="loading">
-    <mat-spinner diameter="40"></mat-spinner>
-    <p>Calculando indicadores — {{ currentPeriodLabel }}...</p>
+  <!-- TABS -->
+  <div class="panel-tabs" *ngIf="isSeniorOrAdmin">
+    <button class="panel-tab" [class.active]="activeTab === 'equipo'" (click)="activeTab = 'equipo'; viewMode = 'team'">
+      <mat-icon>bar_chart</mat-icon> Indicadores Equipo
+    </button>
+    <button class="panel-tab" [class.active]="activeTab === 'usuarios'" (click)="activeTab = 'usuarios'">
+      <mat-icon>manage_accounts</mat-icon> Gestión de Usuarios
+    </button>
+    <button class="panel-tab" [class.active]="activeTab === 'permisos'" (click)="activeTab = 'permisos'; loadPermissions()">
+      <mat-icon>lock</mat-icon> Permisos de Módulos
+    </button>
   </div>
 
-  <!-- VISTA EQUIPO -->
-  <div class="team-view" *ngIf="!loading && viewMode === 'team'">
+  <!-- ══════════════════ TAB EQUIPO ══════════════════ -->
+  <ng-container *ngIf="activeTab === 'equipo'">
 
-    <!-- KPIs RESUMEN -->
-    <div class="summary-kpis">
-      <div class="skpi">
-        <span class="skpi-val">{{ teamData.length }}</span>
-        <span class="skpi-lbl">Miembros activos</span>
+    <div class="loading-state" *ngIf="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Calculando indicadores — {{ currentPeriodLabel }}...</p>
+    </div>
+
+    <div class="team-view" *ngIf="!loading && viewMode === 'team'">
+      <div class="summary-kpis">
+        <div class="skpi">
+          <span class="skpi-val">{{ teamData.length }}</span>
+          <span class="skpi-lbl">Miembros activos</span>
+        </div>
+        <div class="skpi green">
+          <span class="skpi-val">{{ (teamData | teamFilter:'enabled') }}</span>
+          <span class="skpi-lbl">Con indicadores activos</span>
+        </div>
+        <div class="skpi blue">
+          <span class="skpi-val">{{ (teamData | teamFilter:'avgScore') }}%</span>
+          <span class="skpi-lbl">Score promedio equipo</span>
+        </div>
+        <div class="skpi purple">
+          <span class="skpi-val">{{ teamData | teamFilter:'projects' }}</span>
+          <span class="skpi-lbl">Proyectos asignados</span>
+        </div>
       </div>
-      <div class="skpi green">
-        <span class="skpi-val">{{ teamData | teamFilter:'enabled' }}</span>
-        <span class="skpi-lbl">Con indicadores activos</span>
-      </div>
-      <div class="skpi blue">
-        <span class="skpi-val">{{ (teamData | teamFilter:'avgScore') }}%</span>
-        <span class="skpi-lbl">Score promedio equipo</span>
-      </div>
-      <div class="skpi purple">
-        <span class="skpi-val">{{ teamData | teamFilter:'projects' }}</span>
-        <span class="skpi-lbl">Proyectos asignados</span>
+
+      <div class="team-table-card">
+        <div class="table-header">
+          <span>Equipo QA</span>
+          <span class="table-hint">{{ currentPeriodLabel }} · Activa los indicadores para que el QA los vea en su dashboard</span>
+        </div>
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th>QA Engineer</th><th>Rol</th>
+              <th class="center">Plan (50%)</th><th class="center">Documental (25%)</th>
+              <th class="center">Aportes (25%)</th><th class="center">Score Final</th>
+              <th class="center">Meta Docs</th><th class="center">Indicadores</th>
+              <th class="center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of teamData">
+              <td>
+                <div class="user-cell">
+                  <div class="user-avatar" [style.background]="getScoreColor(user.scoreFinal)">{{ user.userName?.charAt(0)?.toUpperCase() }}</div>
+                  <div><div class="user-name">{{ user.userName }}</div><div class="user-email">{{ user.email }}</div></div>
+                </div>
+              </td>
+              <td><span class="role-badge" [class.senior]="user.role === 'Admin' || user.role === 'Senior'"><mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>{{ user.role }}</span></td>
+              <td class="center"><div class="score-cell"><div class="score-circle" [class]="getScoreClass(user.scorePlan)">{{ user.scorePlan }}%</div><div class="score-sub">{{ user.totalCPs }} CPs · {{ user.horasEfectivas }}h</div></div></td>
+              <td class="center"><div class="score-cell"><div class="score-circle" [class]="getScoreClass(user.scoreDocumental)">{{ user.scoreDocumental }}%</div><div class="score-sub">{{ user.totalDocumentos }}/{{ user.metaDocumentos }} docs</div></div></td>
+              <td class="center"><div class="score-cell"><div class="score-circle" [class]="getScoreClass(user.scoreAportes)">{{ user.scoreAportes }}%</div><div class="score-sub">{{ user.totalAportes }} aportes</div></div></td>
+              <td class="center"><div class="final-score" [class]="getScoreClass(user.scoreFinal)"><span class="final-num">{{ user.scoreFinal }}</span><span class="final-pct">%</span><div class="final-label">{{ getScoreLabel(user.scoreFinal) }}</div></div></td>
+              <td class="center">
+                <div class="meta-selector">
+                  <select [value]="getConfig(user.userId)?.metaDocumentos || 3" (change)="updateMetaDocs(user, +($any($event.target).value))" class="meta-select">
+                    <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="5">5</option><option value="10">10</option>
+                  </select>
+                  <span class="meta-label">docs/sprint</span>
+                </div>
+              </td>
+              <td class="center"><mat-slide-toggle [checked]="getConfig(user.userId)?.indicatorsEnabled" (change)="toggleIndicators(user)" color="primary"></mat-slide-toggle></td>
+              <td class="center"><button mat-icon-button (click)="viewDetail(user)" matTooltip="Ver detalle"><mat-icon>bar_chart</mat-icon></button></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <!-- TABLA DEL EQUIPO -->
-    <div class="team-table-card">
+    <div class="detail-view" *ngIf="!loading && viewMode === 'detail' && selectedUser">
+      <div class="detail-period-tag"><mat-icon>calendar_month</mat-icon> Período: {{ currentPeriodLabel }}</div>
+      <div class="detail-grid">
+        <div class="detail-card plan-card">
+          <div class="dc-header"><div class="dc-icon plan"><mat-icon>assignment</mat-icon></div><div><div class="dc-title">Plan de Pruebas</div><div class="dc-weight">Peso: 50%</div></div><div class="dc-score" [class]="getScoreClass(selectedUser.scorePlan)">{{ selectedUser.scorePlan }}%</div></div>
+          <div class="dc-body"><div class="dc-metric"><span class="dm-label">CPs ejecutados</span><span class="dm-val">{{ selectedUser.totalCPs }}</span></div><div class="dc-metric"><span class="dm-label">Horas efectivas</span><span class="dm-val">{{ selectedUser.horasEfectivas }}h</span></div><div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scorePlan" [style.background]="getScoreColor(selectedUser.scorePlan)"></div></div></div>
+        </div>
+        <div class="detail-card doc-card">
+          <div class="dc-header"><div class="dc-icon doc"><mat-icon>folder_open</mat-icon></div><div><div class="dc-title">Documental</div><div class="dc-weight">Peso: 25%</div></div><div class="dc-score" [class]="getScoreClass(selectedUser.scoreDocumental)">{{ selectedUser.scoreDocumental }}%</div></div>
+          <div class="dc-body"><div class="dc-metric"><span class="dm-label">Documentos generados</span><span class="dm-val">{{ selectedUser.totalDocumentos }}</span></div><div class="dc-metric"><span class="dm-label">Meta del sprint</span><span class="dm-val">{{ selectedUser.metaDocumentos }}</span></div><div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scoreDocumental" [style.background]="getScoreColor(selectedUser.scoreDocumental)"></div></div></div>
+        </div>
+        <div class="detail-card aportes-card">
+          <div class="dc-header"><div class="dc-icon aportes"><mat-icon>lightbulb</mat-icon></div><div><div class="dc-title">Aportes de Mejora</div><div class="dc-weight">Peso: 25%</div></div><div class="dc-score" [class]="getScoreClass(selectedUser.scoreAportes)">{{ selectedUser.scoreAportes }}%</div></div>
+          <div class="dc-body"><div class="dc-metric"><span class="dm-label">Total aportes</span><span class="dm-val">{{ selectedUser.totalAportes }}</span></div><div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scoreAportes" [style.background]="getScoreColor(selectedUser.scoreAportes)"></div></div></div>
+        </div>
+        <div class="detail-card final-card">
+          <div class="dc-header"><div class="dc-icon final"><mat-icon>emoji_events</mat-icon></div><div><div class="dc-title">Score Final</div><div class="dc-weight">{{ currentPeriodLabel }}</div></div></div>
+          <div class="dc-body center-body">
+            <div class="big-score" [class]="getScoreClass(selectedUser.scoreFinal)">{{ selectedUser.scoreFinal }}<span class="big-pct">%</span></div>
+            <div class="big-label" [class]="getScoreClass(selectedUser.scoreFinal)">{{ getScoreLabel(selectedUser.scoreFinal) }}</div>
+            <div class="score-formula">
+              <div class="sf-row"><span>Plan (50%)</span><span>{{ selectedUser.scorePlan }}% × 0.50 = <strong>{{ (selectedUser.scorePlan * 0.50).toFixed(1) }}</strong></span></div>
+              <div class="sf-row"><span>Documental (25%)</span><span>{{ selectedUser.scoreDocumental }}% × 0.25 = <strong>{{ (selectedUser.scoreDocumental * 0.25).toFixed(1) }}</strong></span></div>
+              <div class="sf-row"><span>Aportes (25%)</span><span>{{ selectedUser.scoreAportes }}% × 0.25 = <strong>{{ (selectedUser.scoreAportes * 0.25).toFixed(1) }}</strong></span></div>
+              <div class="sf-total"><span>Total</span><span><strong>{{ selectedUser.scoreFinal }}%</strong></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!-- ══════════════════ TAB USUARIOS ══════════════════ -->
+  <ng-container *ngIf="activeTab === 'usuarios' && isSeniorOrAdmin">
+
+    <!-- FORM CREAR USUARIO -->
+    <div class="create-user-form" *ngIf="showCreateForm">
+      <div class="form-card">
+        <h3><mat-icon>person_add</mat-icon> Nuevo Usuario</h3>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre completo</mat-label>
+            <input matInput [(ngModel)]="newUser.fullName" placeholder="Juan Pérez">
+            <mat-icon matPrefix>person</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="newUser.email" type="email" placeholder="juan@ithealth.co">
+            <mat-icon matPrefix>email</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [(ngModel)]="newUser.password" type="password">
+            <mat-icon matPrefix>lock</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Rol</mat-label>
+            <mat-select [(ngModel)]="newUser.role">
+              <mat-option *ngFor="let r of roles" [value]="r">{{ r }}</mat-option>
+            </mat-select>
+            <mat-icon matPrefix>badge</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="form-actions">
+          <button mat-raised-button color="primary" (click)="createUser()"><mat-icon>save</mat-icon> Crear</button>
+          <button mat-stroked-button (click)="showCreateForm = false"><mat-icon>close</mat-icon> Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESET PASSWORD DIALOG -->
+    <div class="create-user-form" *ngIf="showResetPassword">
+      <div class="form-card">
+        <h3><mat-icon>lock_reset</mat-icon> Restablecer Contraseña</h3>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nueva contraseña</mat-label>
+          <input matInput [(ngModel)]="newPassword" type="password" placeholder="Mínimo 6 caracteres">
+          <mat-icon matPrefix>lock</mat-icon>
+        </mat-form-field>
+        <div class="form-actions">
+          <button mat-raised-button color="warn" (click)="confirmResetPassword()"><mat-icon>lock_reset</mat-icon> Restablecer</button>
+          <button mat-stroked-button (click)="showResetPassword = false"><mat-icon>close</mat-icon> Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading-state" *ngIf="loadingUsers">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando usuarios...</p>
+    </div>
+
+    <!-- TABLA USUARIOS -->
+    <div class="team-table-card" *ngIf="!loadingUsers">
       <div class="table-header">
-        <span>Equipo QA</span>
-        <span class="table-hint">{{ currentPeriodLabel }} · Activa los indicadores para que el QA los vea en su dashboard</span>
+        <span>Usuarios del sistema ({{ users.length }})</span>
       </div>
       <table class="team-table">
         <thead>
           <tr>
-            <th>QA Engineer</th>
+            <th>Usuario</th>
             <th>Rol</th>
-            <th class="center">Plan (50%)</th>
-            <th class="center">Documental (25%)</th>
-            <th class="center">Aportes (25%)</th>
-            <th class="center">Score Final</th>
-            <th class="center">Meta Docs</th>
-            <th class="center">Indicadores</th>
+            <th class="center">Estado</th>
+            <th class="center">Documentos</th>
+            <th class="center">Test Cases</th>
+            <th class="center">Creado</th>
+            <th class="center">Último acceso</th>
             <th class="center">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of teamData">
+          <tr *ngFor="let user of users" [class.inactive-row]="!user.isActive">
             <td>
               <div class="user-cell">
-                <div class="user-avatar" [style.background]="getScoreColor(user.scoreFinal)">
-                  {{ user.userName?.charAt(0)?.toUpperCase() }}
+                <div class="user-avatar" [style.background]="user.isActive ? '#6366f1' : '#64748b'">
+                  {{ user.fullName?.charAt(0)?.toUpperCase() }}
                 </div>
                 <div>
-                  <div class="user-name">{{ user.userName }}</div>
+                  <div class="user-name">{{ user.fullName }}</div>
                   <div class="user-email">{{ user.email }}</div>
                 </div>
               </div>
             </td>
             <td>
-              <span class="role-badge" [class.senior]="user.role === 'Admin' || user.role === 'Senior'">
-                <mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>
-                {{ user.role }}
+              <mat-select [(ngModel)]="user.role" (ngModelChange)="changeRole(user, $event)" class="role-select">
+                <mat-option *ngFor="let r of roles" [value]="r">{{ r }}</mat-option>
+              </mat-select>
+            </td>
+            <td class="center">
+              <span class="status-badge" [class.active]="user.isActive" [class.inactive]="!user.isActive">
+                {{ user.isActive ? 'Activo' : 'Inactivo' }}
               </span>
             </td>
+            <td class="center">{{ user.totalDocuments }}</td>
+            <td class="center">{{ user.totalTestCasesGenerated }}</td>
+            <td class="center" style="font-size:11px">{{ user.createdAt | date:'dd/MM/yyyy' }}</td>
+            <td class="center" style="font-size:11px">{{ user.lastLoginAt ? (user.lastLoginAt | date:'dd/MM/yyyy HH:mm') : 'Nunca' }}</td>
             <td class="center">
-              <div class="score-cell">
-                <div class="score-circle" [class]="getScoreClass(user.scorePlan)">{{ user.scorePlan }}%</div>
-                <div class="score-sub">{{ user.totalCPs }} CPs · {{ user.horasEfectivas }}h</div>
-              </div>
-            </td>
-            <td class="center">
-              <div class="score-cell">
-                <div class="score-circle" [class]="getScoreClass(user.scoreDocumental)">{{ user.scoreDocumental }}%</div>
-                <div class="score-sub">{{ user.totalDocumentos }}/{{ user.metaDocumentos }} docs</div>
-              </div>
-            </td>
-            <td class="center">
-              <div class="score-cell">
-                <div class="score-circle" [class]="getScoreClass(user.scoreAportes)">{{ user.scoreAportes }}%</div>
-                <div class="score-sub">{{ user.totalAportes }} aportes</div>
-              </div>
-            </td>
-            <td class="center">
-              <div class="final-score" [class]="getScoreClass(user.scoreFinal)">
-                <span class="final-num">{{ user.scoreFinal }}</span>
-                <span class="final-pct">%</span>
-                <div class="final-label">{{ getScoreLabel(user.scoreFinal) }}</div>
-              </div>
-            </td>
-            <td class="center">
-              <div class="meta-selector">
-                <select [value]="getConfig(user.userId)?.metaDocumentos || 3"
-                  (change)="updateMetaDocs(user, +($any($event.target).value))" class="meta-select">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                </select>
-                <span class="meta-label">docs/sprint</span>
-              </div>
-            </td>
-            <td class="center">
-              <mat-slide-toggle
-                [checked]="getConfig(user.userId)?.indicatorsEnabled"
-                (change)="toggleIndicators(user)" color="primary">
-              </mat-slide-toggle>
-            </td>
-            <td class="center">
-              <button mat-icon-button (click)="viewDetail(user)" matTooltip="Ver detalle">
-                <mat-icon>bar_chart</mat-icon>
+              <button mat-icon-button [matTooltip]="user.isActive ? 'Desactivar' : 'Activar'" (click)="toggleUserActive(user)">
+                <mat-icon>{{ user.isActive ? 'person_off' : 'person' }}</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Restablecer contraseña" (click)="openResetPassword(user.id)">
+                <mat-icon>lock_reset</mat-icon>
               </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
 
-  <!-- VISTA DETALLE -->
-  <div class="detail-view" *ngIf="!loading && viewMode === 'detail' && selectedUser">
-    <div class="detail-period-tag">
-      <mat-icon>calendar_month</mat-icon> Período: {{ currentPeriodLabel }}
+  </ng-container>
+
+  <!-- ══════════════════ TAB PERMISOS ══════════════════ -->
+  <ng-container *ngIf="activeTab === 'permisos' && isSeniorOrAdmin">
+
+    <div class="loading-state" *ngIf="loadingPermissions">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando configuración de permisos...</p>
     </div>
-    <div class="detail-grid">
 
-      <!-- CARD PLAN -->
-      <div class="detail-card plan-card">
-        <div class="dc-header">
-          <div class="dc-icon plan"><mat-icon>assignment</mat-icon></div>
-          <div>
-            <div class="dc-title">Plan de Pruebas</div>
-            <div class="dc-weight">Peso: 50%</div>
-          </div>
-          <div class="dc-score" [class]="getScoreClass(selectedUser.scorePlan)">{{ selectedUser.scorePlan }}%</div>
-        </div>
-        <div class="dc-body">
-          <div class="dc-metric"><span class="dm-label">CPs ejecutados</span><span class="dm-val">{{ selectedUser.totalCPs }}</span></div>
-          <div class="dc-metric"><span class="dm-label">Horas efectivas</span><span class="dm-val">{{ selectedUser.horasEfectivas }}h</span></div>
-          <div class="dc-metric"><span class="dm-label">Eficiencia temporal</span><span class="dm-val">{{ selectedUser.eficienciaTemporal }} CPs/h</span></div>
-          <div class="dc-metric"><span class="dm-label">Proyectos asignados</span><span class="dm-val">{{ selectedUser.proyectosAsignados }}</span></div>
-          <div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scorePlan" [style.background]="getScoreColor(selectedUser.scorePlan)"></div></div>
-          <div class="dc-formula">Horas efectivas/día = 7h (8.5h - 1h daily - 0.5h pausas)</div>
-        </div>
+    <div class="permissions-container" *ngIf="!loadingPermissions">
+      <div class="permissions-info">
+        <mat-icon>info_outline</mat-icon>
+        <span>Los cambios aplican al siguiente inicio de sesión del usuario.</span>
       </div>
 
-      <!-- CARD DOCUMENTAL -->
-      <div class="detail-card doc-card">
-        <div class="dc-header">
-          <div class="dc-icon doc"><mat-icon>folder_open</mat-icon></div>
-          <div>
-            <div class="dc-title">Documental</div>
-            <div class="dc-weight">Peso: 25%</div>
+      <div class="role-permissions-card" *ngFor="let roleData of allPermissions">
+        <div class="role-header">
+          <div class="role-title">
+            <mat-icon>badge</mat-icon>
+            <span>{{ roleData.role }}</span>
           </div>
-          <div class="dc-score" [class]="getScoreClass(selectedUser.scoreDocumental)">{{ selectedUser.scoreDocumental }}%</div>
+          <button mat-raised-button color="primary" (click)="savePermissions(roleData)" [disabled]="savingPermissions[roleData.role]">
+            <mat-spinner diameter="14" *ngIf="savingPermissions[roleData.role]"></mat-spinner>
+            <mat-icon *ngIf="!savingPermissions[roleData.role]">save</mat-icon>
+            {{ savingPermissions[roleData.role] ? 'Guardando...' : 'Guardar' }}
+          </button>
         </div>
-        <div class="dc-body">
-          <div class="dc-metric"><span class="dm-label">Documentos generados</span><span class="dm-val">{{ selectedUser.totalDocumentos }}</span></div>
-          <div class="dc-metric"><span class="dm-label">Meta del sprint</span><span class="dm-val">{{ selectedUser.metaDocumentos }}</span></div>
-          <div class="dc-metric"><span class="dm-label">Docs en proyectos</span><span class="dm-val">{{ selectedUser.documentosEnProyectos }}</span></div>
-          <div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scoreDocumental" [style.background]="getScoreColor(selectedUser.scoreDocumental)"></div></div>
-          <div class="dc-formula">Score = (docs generados / meta sprint) × 100</div>
-        </div>
-      </div>
-
-      <!-- CARD APORTES -->
-      <div class="detail-card aportes-card">
-        <div class="dc-header">
-          <div class="dc-icon aportes"><mat-icon>lightbulb</mat-icon></div>
-          <div>
-            <div class="dc-title">Aportes de Mejora</div>
-            <div class="dc-weight">Peso: 25%</div>
-          </div>
-          <div class="dc-score" [class]="getScoreClass(selectedUser.scoreAportes)">{{ selectedUser.scoreAportes }}%</div>
-        </div>
-        <div class="dc-body">
-          <div class="dc-metric"><span class="dm-label">Total aportes</span><span class="dm-val">{{ selectedUser.totalAportes }}</span></div>
-          <div class="dc-metric"><span class="dm-label">Fuente</span><span class="dm-val">Jira + Sistema</span></div>
-          <div class="dc-bar"><div class="dc-bar-fill" [style.width.%]="selectedUser.scoreAportes" [style.background]="getScoreColor(selectedUser.scoreAportes)"></div></div>
-          <div class="dc-formula">Incluye: reportes, chats IA, documentos, casos de prueba</div>
-        </div>
-      </div>
-
-      <!-- CARD SCORE FINAL -->
-      <div class="detail-card final-card">
-        <div class="dc-header">
-          <div class="dc-icon final"><mat-icon>emoji_events</mat-icon></div>
-          <div>
-            <div class="dc-title">Score Final</div>
-            <div class="dc-weight">{{ currentPeriodLabel }}</div>
-          </div>
-        </div>
-        <div class="dc-body center-body">
-          <div class="big-score" [class]="getScoreClass(selectedUser.scoreFinal)">
-            {{ selectedUser.scoreFinal }}<span class="big-pct">%</span>
-          </div>
-          <div class="big-label" [class]="getScoreClass(selectedUser.scoreFinal)">
-            {{ getScoreLabel(selectedUser.scoreFinal) }}
-          </div>
-          <div class="score-formula">
-            <div class="sf-row"><span>Plan (50%)</span><span>{{ selectedUser.scorePlan }}% × 0.50 = <strong>{{ (selectedUser.scorePlan * 0.50).toFixed(1) }}</strong></span></div>
-            <div class="sf-row"><span>Documental (25%)</span><span>{{ selectedUser.scoreDocumental }}% × 0.25 = <strong>{{ (selectedUser.scoreDocumental * 0.25).toFixed(1) }}</strong></span></div>
-            <div class="sf-row"><span>Aportes (25%)</span><span>{{ selectedUser.scoreAportes }}% × 0.25 = <strong>{{ (selectedUser.scoreAportes * 0.25).toFixed(1) }}</strong></span></div>
-            <div class="sf-total"><span>Total</span><span><strong>{{ selectedUser.scoreFinal }}%</strong></span></div>
+        <div class="modules-grid">
+          <div class="module-toggle" *ngFor="let moduleKey of moduleKeys">
+            <mat-slide-toggle
+              [checked]="isModuleEnabled(roleData, moduleKey)"
+              (change)="togglePermission(roleData, moduleKey)"
+              color="primary">
+            </mat-slide-toggle>
+            <span class="module-label">{{ moduleLabels[moduleKey] }}</span>
           </div>
         </div>
       </div>
-
     </div>
-  </div>
+
+  </ng-container>
 
 </div>

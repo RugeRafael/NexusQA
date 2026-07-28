@@ -13,6 +13,18 @@ public class AuthService : IAuthService
     private readonly TokenService _tokenService;
     private readonly ILogger<AuthService> _logger;
 
+    private static readonly Dictionary<string, string> DashboardTypeMap = new()
+    {
+        ["Administrador"]   = "admin",
+        ["Admin"]           = "admin",
+        ["IngenieroSenior"] = "senior",
+        ["Senior"]          = "senior",
+        ["IngenieroQA"]     = "qa",
+        ["QAEngineer"]      = "qa",
+        ["Scrum"]           = "qa",
+        ["Viewer"]          = "qa"
+    };
+
     public AuthService(
         QACopilotDbContext context,
         TokenService tokenService,
@@ -39,21 +51,14 @@ public class AuthService : IAuthService
         {
             _logger.LogWarning("Account locked for {Email} after {Attempts} failed attempts",
                 request.Email, recentAttempts);
-
             await _context.LoginAttempts.AddAsync(new LoginAttempt
             {
-                Id = Guid.NewGuid(),
-                Email = request.Email,
-                IpAddress = ip,
-                Success = false,
-                FailureReason = "Account temporarily locked",
-                IsBlocked = true,
-                AttemptedAt = DateTime.UtcNow
+                Id = Guid.NewGuid(), Email = request.Email, IpAddress = ip,
+                Success = false, FailureReason = "Account temporarily locked",
+                IsBlocked = true, AttemptedAt = DateTime.UtcNow
             });
             await _context.SaveChangesAsync();
-
-            throw new UnauthorizedAccessException(
-                "Account temporarily locked. Try again in 15 minutes.");
+            throw new UnauthorizedAccessException("Account temporarily locked. Try again in 15 minutes.");
         }
 
         if (!request.Email.EndsWith("@ithealth.co", StringComparison.OrdinalIgnoreCase))
@@ -73,11 +78,8 @@ public class AuthService : IAuthService
 
         await _context.LoginAttempts.AddAsync(new LoginAttempt
         {
-            Id = Guid.NewGuid(),
-            Email = request.Email,
-            IpAddress = ip,
-            Success = true,
-            AttemptedAt = DateTime.UtcNow
+            Id = Guid.NewGuid(), Email = request.Email, IpAddress = ip,
+            Success = true, AttemptedAt = DateTime.UtcNow
         });
         await _context.SaveChangesAsync();
 
@@ -90,25 +92,18 @@ public class AuthService : IAuthService
             throw new UnauthorizedAccessException("Registration restricted to ithealth.co domain.");
 
         var exists = await _context.Users.AnyAsync(u => u.Email == request.Email);
-        if (exists)
-            throw new InvalidOperationException("A user with this email already exists.");
+        if (exists) throw new InvalidOperationException("A user with this email already exists.");
 
         var user = new User
         {
-            Id = Guid.NewGuid(),
-            FullName = request.FullName,
-            Email = request.Email,
+            Id = Guid.NewGuid(), FullName = request.FullName, Email = request.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-            Role = request.Role,
-            IsActive = true,
-            CreatedAt = DateTime.UtcNow
+            Role = request.Role, IsActive = true, CreatedAt = DateTime.UtcNow
         };
 
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
-
         _logger.LogInformation("New user registered: {Email}", user.Email);
-
         return await GenerateTokensAsync(user);
     }
 
@@ -117,15 +112,13 @@ public class AuthService : IAuthService
         var refreshToken = await _context.RefreshTokens
             .Include(r => r.User)
             .FirstOrDefaultAsync(r => r.Token == request.RefreshToken
-                && !r.IsRevoked
-                && r.ExpiresAt > DateTime.UtcNow);
+                && !r.IsRevoked && r.ExpiresAt > DateTime.UtcNow);
 
         if (refreshToken is null)
             throw new UnauthorizedAccessException("Invalid or expired refresh token.");
 
         refreshToken.IsRevoked = true;
         await _context.SaveChangesAsync();
-
         return await GenerateTokensAsync(refreshToken.User);
     }
 
@@ -134,10 +127,7 @@ public class AuthService : IAuthService
         var tokens = await _context.RefreshTokens
             .Where(r => r.UserId == userId && !r.IsRevoked)
             .ToListAsync();
-
-        foreach (var token in tokens)
-            token.IsRevoked = true;
-
+        foreach (var token in tokens) token.IsRevoked = true;
         await _context.SaveChangesAsync();
         _logger.LogInformation("User {UserId} logged out", userId);
     }
@@ -146,12 +136,8 @@ public class AuthService : IAuthService
     {
         await _context.LoginAttempts.AddAsync(new LoginAttempt
         {
-            Id = Guid.NewGuid(),
-            Email = email,
-            IpAddress = ip,
-            Success = false,
-            FailureReason = reason,
-            AttemptedAt = DateTime.UtcNow
+            Id = Guid.NewGuid(), Email = email, IpAddress = ip,
+            Success = false, FailureReason = reason, AttemptedAt = DateTime.UtcNow
         });
         await _context.SaveChangesAsync();
     }
@@ -163,17 +149,15 @@ public class AuthService : IAuthService
 
         var refreshToken = new RefreshToken
         {
-            Id = Guid.NewGuid(),
-            Token = refreshTokenValue,
-            UserId = user.Id,
-            ExpiresAt = DateTime.UtcNow.AddDays(7),
-            CreatedAt = DateTime.UtcNow
+            Id = Guid.NewGuid(), Token = refreshTokenValue, UserId = user.Id,
+            ExpiresAt = DateTime.UtcNow.AddDays(7), CreatedAt = DateTime.UtcNow
         };
 
         await _context.RefreshTokens.AddAsync(refreshToken);
-
         user.LastLoginAt = DateTime.UtcNow;
         await _context.SaveChangesAsync();
+
+        var dashboardType = DashboardTypeMap.TryGetValue(user.Role, out var dt) ? dt : "qa";
 
         return new AuthResponseDto
         {
@@ -181,7 +165,8 @@ public class AuthService : IAuthService
             RefreshToken = refreshTokenValue,
             ExpiresAt = DateTime.UtcNow.AddMinutes(60),
             UserName = user.FullName,
-            Role = user.Role
+            Role = user.Role,
+            DashboardType = dashboardType
         };
     }
 }

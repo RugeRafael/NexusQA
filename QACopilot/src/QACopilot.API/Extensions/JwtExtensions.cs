@@ -23,8 +23,7 @@ public static class JwtExtensions
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(secretKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                 ValidateIssuer = true,
                 ValidIssuer = jwtSettings["Issuer"],
                 ValidateAudience = true,
@@ -32,26 +31,21 @@ public static class JwtExtensions
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
-
             options.Events = new JwtBearerEvents
             {
                 OnAuthenticationFailed = context =>
                 {
                     var logger = context.HttpContext.RequestServices
                         .GetRequiredService<ILogger<JwtBearerEvents>>();
-                    logger.LogWarning("JWT authentication failed: {Error}",
-                        context.Exception.Message);
+                    logger.LogWarning("JWT authentication failed: {Error}", context.Exception.Message);
                     return Task.CompletedTask;
                 },
                 OnMessageReceived = context =>
                 {
                     var accessToken = context.Request.Query["access_token"];
                     var path = context.HttpContext.Request.Path;
-                    if (!string.IsNullOrEmpty(accessToken) &&
-                        path.StartsWithSegments("/hubs"))
-                    {
+                    if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
                         context.Token = accessToken;
-                    }
                     return Task.CompletedTask;
                 }
             };
@@ -61,28 +55,36 @@ public static class JwtExtensions
         {
             const string roleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
 
+            // Roles: Administrador, IngenieroSenior, IngenieroQA, Scrum
             options.AddPolicy("SeniorOrAdmin", policy =>
                 policy.RequireAssertion(ctx =>
                     ctx.User.HasClaim(c =>
                         c.Type == roleClaimType &&
-                        (c.Value == "Admin" || c.Value == "Senior"))));
+                        (c.Value == "Administrador" || c.Value == "IngenieroSenior" ||
+                         // Compatibilidad con roles anteriores
+                         c.Value == "Admin" || c.Value == "Senior"))));
 
             options.AddPolicy("AdminOnly", policy =>
                 policy.RequireAssertion(ctx =>
                     ctx.User.HasClaim(c =>
-                        c.Type == roleClaimType && c.Value == "Admin")));
+                        c.Type == roleClaimType &&
+                        (c.Value == "Administrador" || c.Value == "Admin"))));
 
             options.AddPolicy("QAEngineer", policy =>
                 policy.RequireAssertion(ctx =>
                     ctx.User.HasClaim(c =>
                         c.Type == roleClaimType &&
-                        (c.Value == "Admin" || c.Value == "QAEngineer"))));
+                        (c.Value == "Administrador" || c.Value == "IngenieroQA" ||
+                         c.Value == "IngenieroSenior" || c.Value == "Scrum" ||
+                         c.Value == "Admin" || c.Value == "QAEngineer"))));
 
             options.AddPolicy("ViewerOrAbove", policy =>
                 policy.RequireAssertion(ctx =>
                     ctx.User.HasClaim(c =>
                         c.Type == roleClaimType &&
-                        (c.Value == "Admin" || c.Value == "QAEngineer" || c.Value == "Viewer"))));
+                        (c.Value == "Administrador" || c.Value == "IngenieroQA" ||
+                         c.Value == "IngenieroSenior" || c.Value == "Scrum" ||
+                         c.Value == "Admin" || c.Value == "QAEngineer" || c.Value == "Viewer"))));
         });
 
         return services;

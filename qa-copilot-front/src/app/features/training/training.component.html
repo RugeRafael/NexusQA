@@ -7,6 +7,7 @@
   </div>
 
   <div class="content-grid">
+    <!-- PANEL IZQUIERDO: UPLOAD -->
     <div class="upload-panel">
       <h3>Subir Documento de Contexto</h3>
 
@@ -16,55 +17,70 @@
         (dragleave)="onDragLeave()"
         (drop)="onDrop($event)">
         <div class="upload-content" *ngIf="!uploading">
-          <div class="upload-icon">
-            <mat-icon>model_training</mat-icon>
-          </div>
+          <div class="upload-icon"><mat-icon>model_training</mat-icon></div>
           <h4>Arrastra el documento aquí</h4>
-          <p>PDF, DOCX, XLSX — Máximo 10MB</p>
+          <p>PDF, DOCX, TXT, MD — Máximo 10MB</p>
           <label class="upload-btn">
-            <input type="file" hidden
-              accept=".pdf,.docx,.xlsx,.txt"
-              (change)="onFileSelected($event)">
-            <mat-icon>attach_file</mat-icon>
-            Seleccionar archivo
+            <input type="file" hidden accept=".pdf,.docx,.doc,.txt,.md,.html" (change)="onFileSelected($event)">
+            <mat-icon>attach_file</mat-icon> Seleccionar archivo
           </label>
         </div>
         <div class="upload-progress" *ngIf="uploading">
           <mat-spinner diameter="36"></mat-spinner>
-          <p>Subiendo documento de entrenamiento...</p>
+          <p>Subiendo e indexando en RAG...</p>
         </div>
       </div>
 
       <form [formGroup]="form">
+        <!-- Alcance del documento -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Alcance</mat-label>
+          <mat-select formControlName="projectId">
+            <mat-option [value]="null">🌐 Global (todos los proyectos)</mat-option>
+            <mat-option *ngFor="let p of projects" [value]="p.id">
+              📁 {{ p.name }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>folder_special</mat-icon>
+          <mat-hint>Global = aplica a todos los proyectos</mat-hint>
+        </mat-form-field>
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Categoría</mat-label>
           <mat-select formControlName="category">
-            <mat-option *ngFor="let cat of categories" [value]="cat.value">
-              {{ cat.label }}
-            </mat-option>
+            <mat-option *ngFor="let cat of categories" [value]="cat.value">{{ cat.label }}</mat-option>
           </mat-select>
           <mat-icon matPrefix>category</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Descripción (opcional)</mat-label>
-          <input matInput formControlName="description"
-            placeholder="Describe el contenido del documento">
+          <input matInput formControlName="description" placeholder="Describe el contenido del documento">
           <mat-icon matPrefix>notes</mat-icon>
         </mat-form-field>
       </form>
 
       <div class="info-box">
         <mat-icon>info</mat-icon>
-        <p>Los documentos subidos aquí son usados como contexto por la IA al generar casos de prueba e informes.</p>
+        <p>Los documentos <strong>globales</strong> aplican a todos los proyectos. Los documentos de <strong>proyecto específico</strong> solo enriquecen la IA en ese contexto.</p>
       </div>
     </div>
 
-    <!-- DOCUMENTS LIST -->
+    <!-- PANEL DERECHO: LISTA -->
     <div class="docs-card">
       <div class="card-header">
         <h3>Documentos de Entrenamiento</h3>
-        <span class="doc-count">{{ documents.length }} documentos</span>
+        <div class="card-header-right">
+          <!-- Filtro por proyecto -->
+          <select class="project-filter" [(ngModel)]="selectedProjectFilter" (change)="onProjectFilterChange()">
+            <option value="all">Todos los proyectos</option>
+            <option *ngFor="let p of projects" [value]="p.id">{{ p.name }}</option>
+          </select>
+          <span class="doc-count">{{ documents.length }} docs</span>
+          <button mat-icon-button (click)="loadDocuments()" matTooltip="Actualizar">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
       </div>
 
       <div class="loading-row" *ngIf="loading">
@@ -77,8 +93,7 @@
         <p>Sube el primer documento para enriquecer el contexto de la IA</p>
       </div>
 
-      <table mat-table [dataSource]="documents"
-        *ngIf="!loading && documents.length > 0">
+      <table mat-table [dataSource]="documents" *ngIf="!loading && documents.length > 0">
 
         <ng-container matColumnDef="fileName">
           <th mat-header-cell *matHeaderCellDef>Archivo</th>
@@ -93,6 +108,15 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="project">
+          <th mat-header-cell *matHeaderCellDef>Alcance</th>
+          <td mat-cell *matCellDef="let doc">
+            <span class="project-badge" [class.global]="!doc.projectId">
+              {{ doc.projectId ? doc.projectName : '🌐 Global' }}
+            </span>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef>Categoría</th>
           <td mat-cell *matCellDef="let doc">
@@ -101,12 +125,13 @@
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <th mat-header-cell *matHeaderCellDef>Estado RAG</th>
           <td mat-cell *matCellDef="let doc">
             <span class="status-badge"
-              [class.active]="doc.isActive"
-              [class.inactive]="!doc.isActive">
-              {{ doc.isActive ? 'Activo' : 'Inactivo' }}
+              [style.background]="getStatusColor(doc.status) + '20'"
+              [style.color]="getStatusColor(doc.status)">
+              <mat-spinner diameter="12" *ngIf="doc.status === 'Pending'" style="display:inline-block;margin-right:4px"></mat-spinner>
+              {{ getStatusLabel(doc.status) }}
             </span>
           </td>
         </ng-container>
@@ -119,10 +144,13 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let doc">
-            <button mat-icon-button [matTooltip]="doc.isActive ? 'Desactivar' : 'Activar'">
-              <mat-icon [style.color]="doc.isActive ? '#10B981' : '#94A3B8'">
-                {{ doc.isActive ? 'toggle_on' : 'toggle_off' }}
+            <button mat-icon-button [matTooltip]="doc.status === 'Active' ? 'Desactivar' : 'Activar'" (click)="toggleStatus(doc)">
+              <mat-icon [style.color]="doc.status === 'Active' ? '#10B981' : '#94A3B8'">
+                {{ doc.status === 'Active' ? 'toggle_on' : 'toggle_off' }}
               </mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Eliminar" (click)="deleteDocument(doc.id)">
+              <mat-icon style="color:#ef4444">delete</mat-icon>
             </button>
           </td>
         </ng-container>

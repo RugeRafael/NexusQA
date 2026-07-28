@@ -1,13 +1,14 @@
-﻿import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../../../core/services/auth.service';
+import { PermissionsService } from '../../../core/services/permissions.service';
 
 interface NavItem {
   label: string;
   icon: string;
   route: string;
-  roles: string[];
+  moduleKey: string;
   badge?: number;
 }
 
@@ -23,37 +24,58 @@ export class SidebarComponent implements OnInit {
 
   currentRoute = '';
   userRole = '';
+  allowedModules: string[] = [];
 
   navItems: NavItem[] = [
-    { label: 'Dashboard', icon: 'dashboard', route: '/dashboard', roles: ['Admin', 'Senior', 'QAEngineer', 'Viewer'] },
-    { label: 'Mis Proyectos', icon: 'folder_open', route: '/projects/my', roles: ['QAEngineer', 'Senior', 'Admin'] },
-    { label: 'Documentos', icon: 'description', route: '/documents', roles: ['QAEngineer', 'Senior', 'Admin'] },
-    { label: 'Generar Casos', icon: 'auto_awesome', route: '/testcases', roles: ['QAEngineer', 'Senior', 'Admin'] },
-    { label: 'Plan de Pruebas', icon: 'assignment', route: '/testplan', roles: ['QAEngineer', 'Senior', 'Admin'] },
-    { label: 'Historial', icon: 'history', route: '/history', roles: ['QAEngineer', 'Senior', 'Admin'] },
-    { label: 'Chat QA', icon: 'smart_toy', route: '/chat', roles: ['QAEngineer', 'Senior', 'Admin'] },
-    { label: 'Proyectos', icon: 'work', route: '/projects', roles: ['Senior', 'Admin'] },
-    { label: 'Informes', icon: 'summarize', route: '/reports', roles: ['Senior', 'Admin'] },
-    { label: 'Actividad QA', icon: 'insights', route: '/analytics', roles: ['Senior', 'Admin'] },
-    { label: 'Panel Senior', icon: 'dashboard_customize', route: '/senior-panel', roles: ['Senior', 'Admin'] },
-    { label: 'Entrenamiento IA', icon: 'model_training', route: '/training', roles: ['Admin'] },
-    { label: 'MÃ©tricas', icon: 'bar_chart', route: '/metrics', roles: ['Admin'] },
+    { label: 'Dashboard',        icon: 'dashboard',           route: '/dashboard',    moduleKey: 'dashboard' },
+    { label: 'Mis Proyectos',    icon: 'folder_open',         route: '/projects/my',  moduleKey: 'my-projects' },
+    { label: 'Documentos',       icon: 'description',         route: '/documents',    moduleKey: 'documents' },
+    { label: 'Generar Casos',    icon: 'auto_awesome',        route: '/testcases',    moduleKey: 'testcases' },
+    { label: 'Plan de Pruebas',  icon: 'assignment',          route: '/testplan',     moduleKey: 'testplan' },
+    { label: 'Historial',        icon: 'history',             route: '/history',      moduleKey: 'history' },
+    { label: 'Chat QA',          icon: 'smart_toy',           route: '/chat',         moduleKey: 'chat' },
+    { label: 'Proyectos',        icon: 'work',                route: '/projects',     moduleKey: 'projects' },
+    { label: 'Informes',         icon: 'summarize',           route: '/reports',      moduleKey: 'reports' },
+    { label: 'Actividad QA',     icon: 'insights',            route: '/analytics',    moduleKey: 'analytics' },
+    { label: 'Panel Senior',     icon: 'dashboard_customize', route: '/senior-panel', moduleKey: 'senior-panel' },
+    { label: 'Entrenamiento IA', icon: 'model_training',      route: '/training',     moduleKey: 'training' },
+    { label: 'Métricas',         icon: 'bar_chart',           route: '/metrics',      moduleKey: 'metrics' },
   ];
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private permissionsService: PermissionsService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.userRole = this.authService.getUserRole();
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       this.currentRoute = event.urlAfterRedirects;
+      this.cdr.detectChanges();
     });
     this.currentRoute = this.router.url;
+
+    // Cargar módulos permitidos — con caché para carga instantánea
+    this.permissionsService.getMyModules().subscribe({
+      next: (modules) => {
+        this.allowedModules = modules;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.allowedModules = ['dashboard'];
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   get filteredNavItems(): NavItem[] {
-    return this.navItems.filter(item => item.roles.includes(this.userRole));
+    if (this.allowedModules.length === 0) return [];
+    return this.navItems.filter(item => this.allowedModules.includes(item.moduleKey));
   }
 
   isActive(route: string): boolean {

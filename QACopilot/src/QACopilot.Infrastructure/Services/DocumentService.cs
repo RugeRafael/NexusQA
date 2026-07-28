@@ -11,6 +11,7 @@ public class DocumentService : IDocumentService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<DocumentService> _logger;
+    private const string BaseUploadPath = "C:/NexusQA/QACopilot/uploads/documents";
 
     public DocumentService(IUnitOfWork unitOfWork, ILogger<DocumentService> logger)
     {
@@ -20,14 +21,23 @@ public class DocumentService : IDocumentService
 
     public async Task<DocumentResponseDto> UploadAsync(UploadDocumentDto request, Guid userId)
     {
-        _logger.LogInformation("Uploading document {FileName} for user {UserId}",
-            request.FileName, userId);
+        _logger.LogInformation("Uploading document {FileName} for user {UserId}", request.FileName, userId);
+
+        // Guardar archivo en disco
+        var userDir = Path.Combine(BaseUploadPath, userId.ToString());
+        Directory.CreateDirectory(userDir);
+        var filePath = Path.Combine(userDir, request.FileName);
+
+        if (request.FileContent != null && request.FileContent.Length > 0)
+        {
+            await File.WriteAllBytesAsync(filePath, request.FileContent);
+        }
 
         var document = new Document
         {
             Id = Guid.NewGuid(),
             FileName = request.FileName,
-            FilePath = $"uploads/{userId}/{request.FileName}",
+            FilePath = filePath.Replace("\\", "/"),
             ContentType = request.ContentType,
             FileSizeBytes = request.FileSizeBytes,
             Status = DocumentStatus.Uploaded.ToString(),
@@ -38,8 +48,7 @@ public class DocumentService : IDocumentService
         await _unitOfWork.Documents.AddAsync(document);
         await _unitOfWork.SaveChangesAsync();
 
-        _logger.LogInformation("Document {DocumentId} uploaded successfully", document.Id);
-
+        _logger.LogInformation("Document {DocumentId} uploaded successfully to {FilePath}", document.Id, filePath);
         return MapToDto(document);
     }
 

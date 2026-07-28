@@ -25,6 +25,7 @@ public class QACopilotDbContext : DbContext
     public DbSet<SessionTracking> SessionTrackings => Set<SessionTracking>();
     public DbSet<LoginAttempt> LoginAttempts => Set<LoginAttempt>();
     public DbSet<SeniorPanelConfig> SeniorPanelConfigs => Set<SeniorPanelConfig>();
+public DbSet<ModulePermission> ModulePermissions => Set<ModulePermission>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -169,6 +170,14 @@ public class QACopilotDbContext : DbContext
                   .OnDelete(DeleteBehavior.Cascade);
             entity.ToTable("SeniorPanelConfigs");
         });
+        modelBuilder.Entity<ModulePermission>(entity =>
+{
+    entity.HasKey(m => m.Id);
+    entity.Property(m => m.Role).IsRequired().HasMaxLength(100);
+    entity.Property(m => m.ModuleKey).IsRequired().HasMaxLength(100);
+    entity.HasIndex(m => new { m.Role, m.ModuleKey }).IsUnique();
+    entity.ToTable("ModulePermissions");
+});
 
         base.OnModelCreating(modelBuilder);
     }

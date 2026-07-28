@@ -8,7 +8,7 @@ namespace QACopilot.API.Controllers;
 
 [ApiController]
 [Route("api/metrics")]
-[Authorize(Policy = "AdminOnly")]
+[Authorize(Policy = "SeniorOrAdmin")]
 public class MetricsController : ControllerBase
 {
     private readonly IMetricsService _metricsService;
