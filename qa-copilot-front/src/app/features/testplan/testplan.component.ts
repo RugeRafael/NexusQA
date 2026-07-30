@@ -85,8 +85,12 @@ export class TestplanComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: () => {
+        // NOTA: el mensaje de error ya lo muestra el ErrorInterceptor global
+        // (con el ErrorCode correcto: AI_RATE_LIMIT, AI_TIMEOUT, etc).
+        // Aqui solo actualizamos el estado local del componente, sin
+        // abrir un snackbar propio para evitar que compita/reemplace
+        // al del interceptor.
         this.analyzing = false;
-        this.snackBar.open('Error al analizar el plan', 'Cerrar', { duration: 3000 });
         this.cdr.detectChanges();
       }
     });
@@ -106,16 +110,16 @@ export class TestplanComponent implements OnInit {
         this.reportSaved = true;
         this.saving = false;
         this.snackBar.open('Informe guardado correctamente', 'Cerrar', { duration: 3000 });
-        // Descargar automáticamente
+        // Descargar automaticamente
         this.downloadHtml(html);
         this.loadHistory();
         this.cdr.detectChanges();
       },
       error: () => {
         this.saving = false;
-        // Si falla el guardado, igual descargamos
+        // Si falla el guardado, igual descargamos.
+        // El error de red ya lo notifica el interceptor global.
         this.downloadHtml(html);
-        this.snackBar.open('Informe descargado (error al guardar en servidor)', 'Cerrar', { duration: 3000 });
         this.cdr.detectChanges();
       }
     });

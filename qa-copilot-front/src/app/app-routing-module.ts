@@ -76,6 +76,7 @@ const routes: Routes = [
       {
         path: 'jira',
         loadChildren: () => import('./features/jira/jira.module').then(m => m.JiraModule),
+        canActivate: [PermissionGuard], data: { moduleKey: 'jira' }
       },
       {
         path: 'senior-panel',

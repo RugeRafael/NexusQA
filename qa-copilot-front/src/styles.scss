@@ -1,5 +1,10 @@
 @use '@angular/material' as mat;
 
+// Estilos base de Angular Material / CDK (overlays, z-index, reset).
+// SIN ESTO, componentes basados en overlay (snackbar, menu, tooltip, select panel)
+// pueden fallar visualmente (se crean en el DOM pero sin posicionamiento/z-index correcto).
+@include mat.core();
+
 // ─── PALETA PERSONALIZADA QA COPILOT ───
 $qa-primary: mat.m2-define-palette((
   50: #eff6ff,
@@ -83,15 +88,12 @@ $qa-dark-theme: mat.m2-define-dark-theme((
 // Tema oscuro
 .dark-theme {
   @include mat.all-component-colors($qa-dark-theme);
-
   body { background: #0a0f1e; color: #f8fafc; }
   .layout-wrapper { background: #0a0f1e; }
   .layout-content { background: #0a0f1e; }
   .main-content { background: #0a0f1e; }
-
   .sidebar { background: #060b15; }
   .topbar { background: #111827; border-color: #1e293b; }
-
   .dashboard-greeting,
   .kpi-card,
   .chart-card,
@@ -113,7 +115,6 @@ $qa-dark-theme: mat.m2-define-dark-theme((
     border-color: #1e293b !important;
     color: #f8fafc !important;
   }
-
   h1, h2, h3, h4 { color: #f8fafc !important; }
   p, td, .nav-label { color: #94a3b8 !important; }
   th { color: #64748b !important; }
@@ -122,13 +123,52 @@ $qa-dark-theme: mat.m2-define-dark-theme((
   .assistant-bubble { background: #1e293b !important; border-color: #334155 !important; }
   .messages-area { background: #111827 !important; }
   .chat-input-area { background: #111827 !important; border-color: #1e293b !important; }
- .template-item {
-  background: #1e293b !important;
-  border-color: #334155 !important;
-  color: #e2e8f0 !important;
+  .template-item {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+  }
+  .template-item.selected {
+    background: #1e3a5f !important;
+    border-color: #3b82f6 !important;
+  }
 }
-.template-item.selected {
-  background: #1e3a5f !important;
-  border-color: #3b82f6 !important;
+
+// Estilos del snackbar de error/warning global
+// Se apunta directo a los elementos internos del MDC snackbar con !important
+// porque las CSS custom properties (--mdc-snackbar-*) no siempre tienen
+// prioridad suficiente segun la version/tema de Angular Material instalado.
+.snackbar-error {
+  .mdc-snackbar__surface {
+    background-color: #dc2626 !important;
+  }
+  .mdc-snackbar__label,
+  .mat-mdc-snack-bar-label {
+    color: #ffffff !important;
+  }
+  .mat-mdc-snack-bar-actions .mdc-button__label,
+  .mat-mdc-snack-bar-actions .mat-mdc-button-persistent-ripple + span {
+    color: #ffffff !important;
+  }
+  .mdc-button {
+    color: #ffffff !important;
+  }
 }
+
+.snackbar-warning {
+  .mdc-snackbar__surface {
+    background-color: #f59e0b !important;
+  }
+  .mdc-snackbar__label,
+  .mat-mdc-snack-bar-label {
+    color: #0a0f1e !important;
+    font-weight: 500;
+  }
+  .mat-mdc-snack-bar-actions .mdc-button__label,
+  .mat-mdc-snack-bar-actions .mat-mdc-button-persistent-ripple + span {
+    color: #0a0f1e !important;
+  }
+  .mdc-button {
+    color: #0a0f1e !important;
+  }
 }

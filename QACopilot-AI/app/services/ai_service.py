@@ -30,7 +30,7 @@ def get_ai_client():
 
 
 def _build_rag_context(query: str, project_id: str = "global") -> str:
-    """Obtiene contexto relevante del índice RAG filtrando por proyecto + global."""
+    """Obtiene contexto relevante del indice RAG filtrando por proyecto + global."""
     try:
         context = search_context(query, project_id=project_id)
         if context:
@@ -52,7 +52,6 @@ async def generate_test_cases(
     if additional_context:
         context += f"Contexto adicional: {additional_context}\n"
 
-    # Enriquecer con contexto RAG filtrando por proyecto
     rag_context = _build_rag_context(f"casos de prueba {project_name} {document_content[:200]}", project_id=project_id)
     context += rag_context
 
@@ -77,7 +76,7 @@ async def generate_test_cases(
         if 'istqb' in content.lower():
             confidence = min(0.95, confidence + 0.03)
         if rag_context:
-            confidence = min(0.95, confidence + 0.03)  # Bonus por contexto RAG
+            confidence = min(0.95, confidence + 0.03)
 
     return TestCaseGenerationResponse(
         content=content,
@@ -94,8 +93,6 @@ async def analyze_test_plan(
 ) -> TestPlanAnalysisResponse:
     client, model_name = get_ai_client()
     context = f"Proyecto: {project_name}\n" if project_name else ""
-
-    # Enriquecer con contexto RAG
     rag_context = _build_rag_context(f"plan de pruebas {project_name}")
     context += rag_context
 
@@ -129,30 +126,52 @@ async def analyze_test_plan(
 async def chat_with_qa_assistant(
     message: str,
     session_history: list[dict] = [],
-    project_id: str = "global"
+    project_id: str = "global",
+    project_name: str | None = None
 ) -> ChatResponse:
+    """
+    project_name viene resuelto dinamicamente desde la BD (.NET -> ChatService.cs
+    consulta la tabla Projects). No hay diccionario hardcodeado aqui.
+    Si no llega (ej. llamadas antiguas o project_id="global"), se usa un fallback neutro.
+    """
     client, model_name = get_ai_client()
 
-    # Enriquecer con contexto RAG relevante para la pregunta y el proyecto
     rag_context = _build_rag_context(message, project_id=project_id)
 
-    try:
-        if session_history and len(session_history) > 0:
-            system_content = BASE_SYSTEM_PROMPT
-            if rag_context:
-                system_content += f"\n\n{rag_context}"
+    # Fallback si por alguna razon no llega el nombre (compatibilidad hacia atras)
+    resolved_name = project_name or (project_id if project_id and project_id != "global" else "")
 
-            messages = [{"role": "system", "content": system_content}]
+    system_content = BASE_SYSTEM_PROMPT
+    if rag_context:
+        project_line = f'\nEl proyecto actual se llama "{resolved_name}". ' if resolved_name else ""
+        system_content += (
+            f"\n\nIMPORTANTE: Tienes acceso al siguiente contexto especifico del proyecto."
+            f"{project_line}"
+            f" El contexto puede ser tecnico (manuales, configuraciones, interfaces) y puede no mencionar "
+            f"el nombre del proyecto textualmente, pero SI pertenece a este proyecto. DEBES usarlo para responder"
+            + (f', tratando todo el contenido como perteneciente a "{resolved_name}"' if resolved_name else "")
+            + f":\n{rag_context}\n"
+            f"NO digas que no tienes informacion sobre el proyecto si el contexto anterior existe. "
+            f"Resume y explica ese contenido como informacion del proyecto."
+        )
+
+    logger.info(
+        "RAG chat -> project_id=%s | project_name=%s | rag_context_len=%d",
+        project_id, resolved_name or "N/A", len(rag_context)
+    )
+
+    try:
+        messages = [{"role": "system", "content": system_content}]
+
+        if session_history:
             recent_history = session_history[-10:] if len(session_history) > 10 else session_history
             for msg in recent_history:
                 if msg.get("role") in ["user", "assistant"]:
                     messages.append({"role": msg["role"], "content": msg["content"]})
-            messages.append({"role": "user", "content": message})
-            content, tokens = await client.generate_with_history(messages)
-        else:
-            context_prefix = rag_context if rag_context else ""
-            prompt = f"{CHAT_QA_PROMPT}{context_prefix}{message}"
-            content, tokens = await client.generate(prompt)
+
+        messages.append({"role": "user", "content": message})
+
+        content, tokens = await client.generate_with_history(messages)
 
         return ChatResponse(response=content, model_used=model_name, tokens_used=tokens)
     except Exception as e:
@@ -168,8 +187,6 @@ async def generate_report(
     context: str = ""
 ) -> ReportResponse:
     client, model_name = get_ai_client()
-
-    # Enriquecer con contexto RAG
     rag_context = _build_rag_context(f"informe {structure[:100]}")
     if rag_context:
         context = context + rag_context if context else rag_context
@@ -177,7 +194,7 @@ async def generate_report(
     prompt = REPORT_GENERATION_PROMPT.format(
         structure=structure,
         instructions=instructions,
-        context=context or "No se proporcionó contexto adicional."
+        context=context or "No se proporciono contexto adicional."
     )
     content, tokens = await client.generate(prompt)
     return ReportResponse(content=content, model_used=model_name, tokens_used=tokens)
@@ -247,16 +264,16 @@ def _extract_section(content: str, keyword: str) -> str:
             result.append(line)
         if capturing and len(result) > 12:
             break
-    return '\n'.join(result).strip() if result else f"Ver análisis completo para detalles de {keyword}."
+    return '\n'.join(result).strip() if result else f"Ver analisis completo para detalles de {keyword}."
 
 
 def _extract_time_estimation(content: str) -> str:
     time_data = {}
     patterns = {
-        "planificacion": [r"planificaci[oó]n[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
-        "diseno_casos": [r"dise[nñ]o[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
-        "preparacion_entorno": [r"preparaci[oó]n[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
-        "ejecucion": [r"ejecuci[oó]n[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
+        "planificacion": [r"planificaci[o\u00f3]n[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
+        "diseno_casos": [r"dise[n\u00f1]o[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
+        "preparacion_entorno": [r"preparaci[o\u00f3]n[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
+        "ejecucion": [r"ejecuci[o\u00f3]n[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
         "reporte_cierre": [r"reporte[^\d]*(\d+)[^\d]*(\d+)[^\d]*(\d+)"],
     }
     for key, pats in patterns.items():
@@ -274,10 +291,11 @@ def _extract_time_estimation(content: str) -> str:
             }
             time_data[key] = defaults.get(key, "2-5 dias")
 
-    total_match = re.search(r'optimista[:\s]*(\d+)\s*d[íi]as', content.lower())
+    total_match = re.search(r'optimista[:\s]*(\d+)\s*d[\u00ed\u00ed]as', content.lower())
     time_data["total_optimista"] = f"{total_match.group(1)} dias" if total_match else "19-22 dias"
-    total_match = re.search(r'probable[:\s]*(\d+)\s*d[íi]as', content.lower())
+    total_match = re.search(r'probable[:\s]*(\d+)\s*d[\u00ed\u00ed]as', content.lower())
     time_data["total_probable"] = f"{total_match.group(1)} dias" if total_match else "28-34 dias"
-    total_match = re.search(r'pesimista[:\s]*(\d+)\s*d[íi]as', content.lower())
+    total_match = re.search(r'pesimista[:\s]*(\d+)\s*d[\u00ed\u00ed]as', content.lower())
     time_data["total_pesimista"] = f"{total_match.group(1)} dias" if total_match else "38-43 dias"
+
     return json.dumps(time_data, ensure_ascii=False)

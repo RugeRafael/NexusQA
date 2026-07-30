@@ -18,7 +18,9 @@ async def chat_endpoint(request: ChatRequest):
         logger.info("Chat request received: %s...", request.message[:50])
         result = await chat_with_qa_assistant(
             message=request.message,
-            session_history=request.session_history or []
+            session_history=request.session_history or [],
+            project_id=request.project_id or "global",
+            project_name=request.project_name
         )
         return result
     except Exception as e:

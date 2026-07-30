@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QACopilot.API.Helpers;
 using QACopilot.Domain.Entities;
+using QACopilot.Domain.Exceptions;
 using QACopilot.Infrastructure.Data.Context;
 using QACopilot.Infrastructure.Services.ExternalServices;
 using QACopilot.Application.Interfaces.Services;
@@ -30,7 +31,7 @@ public class TestPlanController : ControllerBase
     public async Task<IActionResult> Analyze([FromBody] AnalyzeTestPlanRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.PlanContent) || request.PlanContent.Length < 50)
-            return BadRequest(ApiResponse<object>.Fail("El plan debe tener al menos 50 caracteres"));
+            return BadRequest(ApiResponse<object>.Fail("El plan debe tener al menos 50 caracteres", errorCode: "VALIDATION_ERROR"));
 
         var userId = Guid.Parse(User.FindFirst("uid")!.Value);
         var startTime = DateTime.UtcNow;
@@ -39,7 +40,7 @@ public class TestPlanController : ControllerBase
         {
             var aiServiceConcrete = _aiService as AIService;
             if (aiServiceConcrete == null)
-                return StatusCode(503, ApiResponse<object>.Fail("Servicio IA no disponible"));
+                return StatusCode(503, ApiResponse<object>.Fail("Servicio IA no disponible", errorCode: "AI_UNAVAILABLE"));
 
             var result = await aiServiceConcrete.AnalyzeTestPlanAsync(request.PlanContent, request.ProjectName ?? "");
 
@@ -63,6 +64,7 @@ public class TestPlanController : ControllerBase
             };
 
             await _context.TestPlanAnalyses.AddAsync(analysis);
+
             await _context.AuditMetrics.AddAsync(new AuditMetric
             {
                 Id = Guid.NewGuid(),
@@ -74,6 +76,7 @@ public class TestPlanController : ControllerBase
                 IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "",
                 OccurredAt = DateTime.UtcNow
             });
+
             await _context.SaveChangesAsync();
 
             return Ok(ApiResponse<object>.Ok(new
@@ -89,10 +92,16 @@ public class TestPlanController : ControllerBase
                 analysis_id = analysis.Id
             }));
         }
+        catch (AiServiceException)
+        {
+            // Dejar que el ExceptionMiddleware global lo maneje:
+            // ya trae el ErrorCode y el status HTTP correctos (ej. AI_RATE_LIMIT -> 429)
+            throw;
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error analyzing test plan");
-            return StatusCode(500, ApiResponse<object>.Fail("Error al analizar el plan"));
+            return StatusCode(500, ApiResponse<object>.Fail("Error al analizar el plan", errorCode: "UNKNOWN"));
         }
     }
 
@@ -105,7 +114,7 @@ public class TestPlanController : ControllerBase
             .FirstOrDefaultAsync(a => a.Id == id && a.UserId == userId);
 
         if (analysis == null)
-            return NotFound(ApiResponse<object>.Fail("Análisis no encontrado"));
+            return NotFound(ApiResponse<object>.Fail("Análisis no encontrado", errorCode: "NOT_FOUND"));
 
         analysis.ReportHtml = request.HtmlContent;
         await _context.SaveChangesAsync();
@@ -122,13 +131,14 @@ public class TestPlanController : ControllerBase
             .FirstOrDefaultAsync(a => a.Id == id && a.UserId == userId);
 
         if (analysis == null)
-            return NotFound(ApiResponse<object>.Fail("Análisis no encontrado"));
+            return NotFound(ApiResponse<object>.Fail("Análisis no encontrado", errorCode: "NOT_FOUND"));
 
         if (string.IsNullOrEmpty(analysis.ReportHtml))
-            return NotFound(ApiResponse<object>.Fail("Reporte no generado aún"));
+            return NotFound(ApiResponse<object>.Fail("Reporte no generado aún", errorCode: "NOT_FOUND"));
 
         var bytes = System.Text.Encoding.UTF8.GetBytes(analysis.ReportHtml);
         var fileName = $"Analisis_{analysis.FileName}_{analysis.AnalyzedAt:yyyyMMdd}.html";
+
         return File(bytes, "text/html", fileName);
     }
 
@@ -162,6 +172,7 @@ public class AnalyzeTestPlanRequest
 {
     [System.Text.Json.Serialization.JsonPropertyName("plan_content")]
     public string PlanContent { get; set; } = string.Empty;
+
     [System.Text.Json.Serialization.JsonPropertyName("project_name")]
     public string? ProjectName { get; set; }
 }

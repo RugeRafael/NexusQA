@@ -37,6 +37,7 @@ export class SidebarComponent implements OnInit {
     { label: 'Proyectos',        icon: 'work',                route: '/projects',     moduleKey: 'projects' },
     { label: 'Informes',         icon: 'summarize',           route: '/reports',      moduleKey: 'reports' },
     { label: 'Actividad QA',     icon: 'insights',            route: '/analytics',    moduleKey: 'analytics' },
+    { label: 'Jira',             icon: 'bug_report',          route: '/jira',         moduleKey: 'jira' },
     { label: 'Panel Senior',     icon: 'dashboard_customize', route: '/senior-panel', moduleKey: 'senior-panel' },
     { label: 'Entrenamiento IA', icon: 'model_training',      route: '/training',     moduleKey: 'training' },
     { label: 'Métricas',         icon: 'bar_chart',           route: '/metrics',      moduleKey: 'metrics' },
@@ -60,7 +61,6 @@ export class SidebarComponent implements OnInit {
     });
     this.currentRoute = this.router.url;
 
-    // Cargar módulos permitidos — con caché para carga instantánea
     this.permissionsService.getMyModules().subscribe({
       next: (modules) => {
         this.allowedModules = modules;

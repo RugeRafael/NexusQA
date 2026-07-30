@@ -24,24 +24,37 @@ class ClaudeService:
 
         content = message.content[0].text
         tokens = message.usage.input_tokens + message.usage.output_tokens
-
         return content, tokens
 
     async def generate_with_history(
         self, messages: list[dict], system_extra: str = ""
     ) -> tuple[str, int]:
+        # La API de Anthropic NO acepta role "system" dentro de messages.
+        # Si el caller (ai_service.py) incluyo un mensaje system (con contexto RAG),
+        # lo extraemos y lo pasamos por el parametro system= correcto.
+        clean_messages = list(messages)
         system = BASE_SYSTEM_PROMPT
+
+        if clean_messages and clean_messages[0].get("role") == "system":
+            # Usar el contenido del system embebido (incluye contexto RAG) en vez del BASE_SYSTEM_PROMPT plano
+            system = clean_messages[0]["content"]
+            clean_messages = clean_messages[1:]
+
         if system_extra:
             system += f"\n\n{system_extra}"
+
+        # Anthropic requiere que el primer mensaje sea "user". Si por alguna razon
+        # queda vacio o empieza con "assistant", lo protegemos.
+        if not clean_messages or clean_messages[0].get("role") != "user":
+            clean_messages = [{"role": "user", "content": "Continuemos."}] + clean_messages
 
         response = self.client.messages.create(
             model=self.model,
             max_tokens=2048,
             system=system,
-            messages=messages
+            messages=clean_messages
         )
 
         content = response.content[0].text
         tokens = response.usage.input_tokens + response.usage.output_tokens
-
         return content, tokens

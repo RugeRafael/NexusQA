@@ -33,18 +33,20 @@ public class ExceptionMiddleware
     {
         context.Response.ContentType = "application/json";
 
-        var (statusCode, message) = ex switch
+        var (statusCode, message, errorCode) = ex switch
         {
-            NotFoundException => (HttpStatusCode.NotFound, ex.Message),
-            UnauthorizedException => (HttpStatusCode.Forbidden, ex.Message),
-            UnauthorizedAccessException => (HttpStatusCode.Unauthorized, ex.Message),
-            InvalidOperationException => (HttpStatusCode.BadRequest, ex.Message),
-            _ => (HttpStatusCode.InternalServerError, "An unexpected error occurred.")
+            AiServiceException aiEx => (aiEx.StatusCode, aiEx.Message, aiEx.ErrorCode),
+            NotFoundException => (HttpStatusCode.NotFound, ex.Message, "NOT_FOUND"),
+            UnauthorizedException => (HttpStatusCode.Forbidden, ex.Message, "FORBIDDEN"),
+            UnauthorizedAccessException => (HttpStatusCode.Unauthorized, ex.Message, "UNAUTHORIZED"),
+            ValidationException => (HttpStatusCode.BadRequest, ex.Message, "VALIDATION_ERROR"),
+            InvalidOperationException => (HttpStatusCode.BadRequest, ex.Message, "BAD_REQUEST"),
+            _ => (HttpStatusCode.InternalServerError, "An unexpected error occurred.", "UNKNOWN")
         };
 
         context.Response.StatusCode = (int)statusCode;
 
-        var response = ApiResponse<object>.Fail(message);
+        var response = ApiResponse<object>.Fail(message, errorCode: errorCode);
         var json = JsonSerializer.Serialize(response,
             new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 

@@ -35,38 +35,72 @@ public class ChatService : IChatService
                 UserId = userId,
                 Title = request.Message.Length > 50 ? request.Message[..50] + "..." : request.Message,
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                LastMessageAt = DateTime.UtcNow
             };
             _context.ChatSessions.Add(session);
         }
 
         var history = session.Messages?
-            .OrderBy(m => m.CreatedAt)
+            .OrderBy(m => m.SentAt)
             .TakeLast(10)
             .Select(m => new Dictionary<string, string> { ["role"] = m.Role, ["content"] = m.Content })
             .ToList() ?? new List<Dictionary<string, string>>();
 
         var projectId = request.ProjectId?.ToString() ?? "global";
-        _logger.LogInformation("Chat for project {ProjectId}: {Msg}", projectId, request.Message[..Math.Min(80, request.Message.Length)]);
 
-        var response = await _aiService.ChatAsync(request.Message, history, projectId);
+        // Resolver el nombre real del proyecto desde la BD (dinamico, sin hardcode)
+        string? projectName = null;
+        if (request.ProjectId.HasValue)
+        {
+            projectName = await _context.Projects
+                .Where(p => p.Id == request.ProjectId.Value)
+                .Select(p => p.Name)
+                .FirstOrDefaultAsync();
+        }
 
-        _context.ChatMessages.Add(new ChatMessage { Id = Guid.NewGuid(), SessionId = sessionId, Role = "user", Content = request.Message, CreatedAt = DateTime.UtcNow });
-        var assistantMsg = new ChatMessage { Id = Guid.NewGuid(), SessionId = sessionId, Role = "assistant", Content = response, CreatedAt = DateTime.UtcNow };
+        _logger.LogInformation("Chat for project {ProjectId} ({ProjectName}): {Msg}",
+            projectId, projectName ?? "N/A", request.Message[..Math.Min(80, request.Message.Length)]);
+
+        var response = await _aiService.ChatAsync(request.Message, history, projectId, projectName);
+
+        _context.ChatMessages.Add(new ChatMessage
+        {
+            Id = Guid.NewGuid(),
+            SessionId = sessionId,
+            Role = "user",
+            Content = request.Message,
+            SentAt = DateTime.UtcNow
+        });
+
+        var assistantMsg = new ChatMessage
+        {
+            Id = Guid.NewGuid(),
+            SessionId = sessionId,
+            Role = "assistant",
+            Content = response,
+            SentAt = DateTime.UtcNow
+        };
         _context.ChatMessages.Add(assistantMsg);
 
-        session.UpdatedAt = DateTime.UtcNow;
+        session.LastMessageAt = DateTime.UtcNow;
         await _context.SaveChangesAsync();
 
-        return new ChatResponseDto { SessionId = sessionId, Message = response, CreatedAt = assistantMsg.CreatedAt };
+        return new ChatResponseDto
+        {
+            SessionId = sessionId,
+            Response = response,
+            History = session.Messages?
+                .Select(m => new ChatMessageDto { Id = m.Id, Role = m.Role, Content = m.Content, SentAt = m.SentAt })
+                .ToList() ?? new List<ChatMessageDto>()
+        };
     }
 
     public async Task<IEnumerable<ChatMessageDto>> GetHistoryAsync(Guid sessionId, Guid userId)
     {
         return await _context.ChatMessages
             .Where(m => m.SessionId == sessionId && m.Session.UserId == userId)
-            .OrderBy(m => m.CreatedAt)
-            .Select(m => new ChatMessageDto { Id = m.Id, Role = m.Role, Content = m.Content, CreatedAt = m.CreatedAt })
+            .OrderBy(m => m.SentAt)
+            .Select(m => new ChatMessageDto { Id = m.Id, Role = m.Role, Content = m.Content, SentAt = m.SentAt })
             .ToListAsync();
     }
 
@@ -74,8 +108,8 @@ public class ChatService : IChatService
     {
         return await _context.ChatSessions
             .Where(s => s.UserId == userId)
-            .OrderByDescending(s => s.UpdatedAt)
-            .Select(s => new ChatResponseDto { SessionId = s.Id, Message = s.Title ?? "Conversacion", CreatedAt = s.UpdatedAt })
+            .OrderByDescending(s => s.LastMessageAt)
+            .Select(s => new ChatResponseDto { SessionId = s.Id, Response = s.Title ?? "Conversacion" })
             .ToListAsync();
     }
 }

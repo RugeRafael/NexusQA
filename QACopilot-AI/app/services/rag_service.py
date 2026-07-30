@@ -198,7 +198,7 @@ def search_context(query: str, project_id: Optional[str] = None, top_k: int = TO
             results = fetch_results({"category": project_id})
             if results and results["documents"] and results["documents"][0]:
                 for doc, distance in zip(results["documents"][0], results["distances"][0]):
-                    if distance < 0.7 and doc not in seen_chunks:
+                    if distance < 0.85 and doc not in seen_chunks:
                         if total_chars + len(doc) <= MAX_CONTEXT_CHARS // 2:
                             context_parts.append(doc)
                             total_chars += len(doc)
@@ -208,7 +208,7 @@ def search_context(query: str, project_id: Optional[str] = None, top_k: int = TO
         results = fetch_results({"category": "global"})
         if results and results["documents"] and results["documents"][0]:
             for doc, distance in zip(results["documents"][0], results["distances"][0]):
-                if distance < 0.7 and doc not in seen_chunks:
+                if distance < 0.85 and doc not in seen_chunks:
                     if total_chars + len(doc) <= MAX_CONTEXT_CHARS:
                         context_parts.append(doc)
                         total_chars += len(doc)

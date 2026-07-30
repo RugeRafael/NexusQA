@@ -1,9 +1,11 @@
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using QACopilot.Application.DTOs.TestCases;
 using QACopilot.Application.Interfaces.Services;
+using QACopilot.Domain.Exceptions;
 
 namespace QACopilot.Infrastructure.Services.ExternalServices;
 
@@ -35,15 +37,20 @@ public class AIService : IAIService
             var payload = new
             {
                 document_content = documentContent,
-                project_id = projectId ?? "global"  // RAG filtra por este namespace
+                project_id = projectId ?? "global"
             };
 
             var json = JsonSerializer.Serialize(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync($"{_aiServiceUrl}/api/generate-testcases", content);
-            response.EnsureSuccessStatusCode();
 
             var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ThrowMappedException(response.StatusCode, responseBody);
+            }
+
             _logger.LogInformation("AI raw response: {Response}", responseBody[..Math.Min(200, responseBody.Length)]);
 
             var result = JsonSerializer.Deserialize<AIGenerationResultDto>(responseBody, _jsonOptions);
@@ -57,41 +64,71 @@ public class AIService : IAIService
                 ConfidenceScore = 0
             };
         }
+        catch (TaskCanceledException ex)
+        {
+            _logger.LogError(ex, "AI microservice timed out");
+            throw new AiServiceException(
+                "AI_TIMEOUT",
+                "La IA tardó demasiado en responder. Intenta con un documento más corto o vuelve a intentarlo.",
+                HttpStatusCode.GatewayTimeout);
+        }
         catch (HttpRequestException ex)
         {
-            _logger.LogError(ex, "AI microservice unavailable");
-            return new AIGenerationResultDto
-            {
-                Content = "AI service temporarily unavailable. Please try again later.",
-                TotalTestCases = 0,
-                ConfidenceScore = 0
-            };
+            _logger.LogError(ex, "AI microservice unreachable");
+            throw new AiServiceException(
+                "AI_UNAVAILABLE",
+                "El servicio de IA no está disponible en este momento. Intenta de nuevo más tarde.",
+                HttpStatusCode.ServiceUnavailable);
         }
     }
 
-    public async Task<string> ChatAsync(string message, List<Dictionary<string, string>>? sessionHistory = null, string? projectId = null)
+    public async Task<string> ChatAsync(string message, List<Dictionary<string, string>>? sessionHistory = null, string? projectId = null, string? projectName = null)
     {
         try
         {
             _logger.LogInformation("Chat request to AI microservice: {Msg}", message[..Math.Min(80, message.Length)]);
+
             var payload = new
             {
                 message,
-                session_history = sessionHistory ?? new List<Dictionary<string, string>>()
+                session_history = sessionHistory ?? new List<Dictionary<string, string>>(),
+                project_id = projectId ?? "global",
+                project_name = projectName
             };
+
             var json = JsonSerializer.Serialize(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync($"{_aiServiceUrl}/api/chat", content);
-            response.EnsureSuccessStatusCode();
+
             var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var lower = responseBody.ToLowerInvariant();
+                if (lower.Contains("rate_limit") || lower.Contains("429") || lower.Contains("too many requests"))
+                {
+                    _logger.LogWarning("AI rate limit hit in chat: {Body}", responseBody);
+                    return "El servicio de IA está muy solicitado en este momento (límite de uso alcanzado). Intenta de nuevo en unos segundos.";
+                }
+
+                _logger.LogError("AI chat service returned error {Status}: {Body}", response.StatusCode, responseBody);
+                return "El servicio de IA no está disponible en este momento. Por favor intenta de nuevo.";
+            }
 
             using var doc = JsonDocument.Parse(responseBody);
             var root = doc.RootElement;
+
             if (root.TryGetProperty("response", out var responseEl))
                 return responseEl.GetString() ?? "Sin respuesta";
             if (root.TryGetProperty("content", out var contentEl))
                 return contentEl.GetString() ?? "Sin respuesta";
+
             return responseBody;
+        }
+        catch (TaskCanceledException ex)
+        {
+            _logger.LogError(ex, "AI chat microservice timed out");
+            return "La IA tardó demasiado en responder. Intenta de nuevo en unos segundos.";
         }
         catch (HttpRequestException ex)
         {
@@ -107,28 +144,65 @@ public class AIService : IAIService
 
     public async Task<TestPlanAnalysisResultDto> AnalyzeTestPlanAsync(string planContent, string projectName = "")
     {
+        _logger.LogInformation("Analyzing test plan for project: {Project}", projectName);
+
+        HttpResponseMessage response;
         try
         {
-            _logger.LogInformation("Analyzing test plan for project: {Project}", projectName);
             var payload = new { plan_content = planContent, project_name = projectName };
             var json = JsonSerializer.Serialize(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync($"{_aiServiceUrl}/api/analyze-testplan", content);
-            response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<TestPlanAnalysisResultDto>(responseBody, _jsonOptions);
-            return result ?? new TestPlanAnalysisResultDto { IsViable = false, ConfidenceScore = 0 };
+            response = await _httpClient.PostAsync($"{_aiServiceUrl}/api/analyze-testplan", content);
+        }
+        catch (TaskCanceledException ex)
+        {
+            _logger.LogError(ex, "AI test plan microservice timed out");
+            throw new AiServiceException(
+                "AI_TIMEOUT",
+                "La IA tardó demasiado en responder. Intenta con un documento más corto o vuelve a intentarlo.",
+                HttpStatusCode.GatewayTimeout);
         }
         catch (HttpRequestException ex)
         {
-            _logger.LogError(ex, "AI test plan microservice unavailable");
-            return new TestPlanAnalysisResultDto
-            {
-                IsViable = false,
-                ViabilityReason = "Servicio de IA no disponible",
-                ConfidenceScore = 0
-            };
+            _logger.LogError(ex, "AI test plan microservice unreachable");
+            throw new AiServiceException(
+                "AI_UNAVAILABLE",
+                "El servicio de IA no está disponible en este momento. Intenta de nuevo más tarde.",
+                HttpStatusCode.ServiceUnavailable);
         }
+
+        var responseBody = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            ThrowMappedException(response.StatusCode, responseBody);
+        }
+
+        var result = JsonSerializer.Deserialize<TestPlanAnalysisResultDto>(responseBody, _jsonOptions);
+        return result ?? new TestPlanAnalysisResultDto { IsViable = false, ConfidenceScore = 0 };
+    }
+
+    /// <summary>
+    /// Inspecciona el body de error devuelto por el microservicio Python y lanza
+    /// una excepcion con el ErrorCode correcto (rate limit vs. fallo generico).
+    /// </summary>
+    private static void ThrowMappedException(HttpStatusCode statusCode, string responseBody)
+    {
+        var lower = responseBody.ToLowerInvariant();
+        var isRateLimit = lower.Contains("rate_limit") || lower.Contains("429") || lower.Contains("too many requests");
+
+        if (isRateLimit)
+        {
+            throw new AiServiceException(
+                "AI_RATE_LIMIT",
+                "El documento es demasiado grande para procesarlo en este momento (límite de la IA alcanzado). Intenta con un documento más corto o espera unos minutos.",
+                HttpStatusCode.TooManyRequests);
+        }
+
+        throw new AiServiceException(
+            "AI_UNAVAILABLE",
+            "El servicio de IA no está disponible en este momento. Intenta de nuevo más tarde.",
+            HttpStatusCode.ServiceUnavailable);
     }
 }
 

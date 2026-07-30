@@ -32,11 +32,20 @@ class OpenAIService:
     async def generate_with_history(
         self, messages: list[dict], system_extra: str = ""
     ) -> tuple[str, int]:
-        system = BASE_SYSTEM_PROMPT
-        if system_extra:
-            system += f"\n\n{system_extra}"
-
-        full_messages = [{"role": "system", "content": system}] + messages
+        # Si el caller ya incluyo un mensaje "system" (ej. con contexto RAG),
+        # NO anteponer otro, para evitar duplicados que confundan al modelo.
+        if messages and messages[0].get("role") == "system":
+            full_messages = list(messages)
+            if system_extra:
+                full_messages[0] = {
+                    "role": "system",
+                    "content": full_messages[0]["content"] + f"\n\n{system_extra}"
+                }
+        else:
+            system = BASE_SYSTEM_PROMPT
+            if system_extra:
+                system += f"\n\n{system_extra}"
+            full_messages = [{"role": "system", "content": system}] + messages
 
         response = self.client.chat.completions.create(
             model=self.model,
