@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SecurityContext } from '@angular/core';
 import { ChatService } from '../../core/services/chat.service';
 import { ChatMessage } from '../../core/models/chat.model';
 import { environment } from '../../../environments/environment';
@@ -177,7 +178,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
       .replace(/\n\n/g, '</p><p>')
       .replace(/\n/g, '<br>');
-    return this.sanitizer.bypassSecurityTrustHtml('<p>' + html + '</p>');
+
+    // SEGURIDAD: content viene directo de OpenAI/Claude. NUNCA usar
+    // bypassSecurityTrustHtml sobre HTML crudo, porque anula la proteccion
+    // XSS de Angular. Se sanitiza primero (elimina script/onerror/onclick/
+    // javascript: URIs) y solo entonces se marca como confiable para el bind.
+    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, '<p>' + html + '</p>') || '';
+    return this.sanitizer.bypassSecurityTrustHtml(sanitized);
   }
 
   formatTime(sentAt: string): string {

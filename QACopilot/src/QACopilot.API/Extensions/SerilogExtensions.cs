@@ -13,6 +13,11 @@ public static class SerilogExtensions
             .MinimumLevel.Information()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+            // Override especifico: los logs de diagnostico de hosting incluyen
+            // la URL completa del request (incluyendo query string), lo cual
+            // expone access_token en las conexiones de SignalR. Se restringe
+            // a Error para que nunca se impriman en Information/Warning.
+            .MinimumLevel.Override("Microsoft.AspNetCore.Hosting.Diagnostics", LogEventLevel.Error)
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
             .Enrich.WithThreadId()
@@ -34,6 +39,12 @@ public static class SerilogExtensions
             .ReadFrom.Configuration(builder.Configuration)
             .CreateLogger();
 
+        // CRITICO: sin esto, el logger por defecto de ASP.NET Core
+        // (Microsoft.Extensions.Logging.Console) sigue activo EN PARALELO
+        // a Serilog, ignorando por completo los overrides configurados arriba.
+        // Ese logger por defecto es el que imprimia las URLs completas de
+        // SignalR con el access_token JWT en texto plano.
+        builder.Logging.ClearProviders();
         builder.Host.UseSerilog();
 
         return builder;

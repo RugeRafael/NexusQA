@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SecurityContext } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TestplanService } from '../../core/services/testplan.service';
 import { environment } from '../../../environments/environment';
@@ -176,7 +177,15 @@ export class TestplanComponent implements OnInit {
       .replace(/(`[^`]+`)/g, '<code>$1</code>')
       .replace(/\n\n/g, '</p><p>')
       .replace(/\n/g, '<br>');
-    return this.sanitizer.bypassSecurityTrustHtml('<p>' + html + '</p>');
+
+    // SEGURIDAD: el contenido viene de la IA (openai/claude) o de documentos
+    // subidos por usuarios. NUNCA usar bypassSecurityTrustHtml aqui, porque
+    // eso desactiva por completo la proteccion XSS de Angular. En su lugar,
+    // se pasa por el sanitizador real (sanitize + SecurityContext.HTML), que
+    // elimina scripts, atributos on*, y URLs javascript: pero conserva las
+    // etiquetas seguras (p, strong, em, li, code, h1-h3, br) que generamos arriba.
+    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, '<p>' + html + '</p>') || '';
+    return this.sanitizer.bypassSecurityTrustHtml(sanitized);
   }
 
   private buildReportHtml(): string {

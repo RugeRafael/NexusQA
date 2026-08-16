@@ -4,6 +4,7 @@
 # ==========================
 **/bin/
 **/obj/
+appsetting.json
 
 # ==========================
 # Python
@@ -13,6 +14,7 @@
 *.pyo
 .env
 .env.*
+
 
 # Permitir el ejemplo
 !.env.example

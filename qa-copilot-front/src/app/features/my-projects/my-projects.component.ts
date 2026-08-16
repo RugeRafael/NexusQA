@@ -46,12 +46,10 @@ export class MyProjectsComponent implements OnInit {
     this.loading = true;
     this.projectService.getMyProjects().subscribe({
       next: (projects) => {
-  console.log('Proyectos recibidos:', projects);
-  console.log('Status del primero:', projects[0]?.status);
-  this.projects = projects;
-  this.loading = false;
-  this.cdr.detectChanges();
-},
+        this.projects = projects;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
       error: () => {
         this.loading = false;
         this.cdr.detectChanges();
